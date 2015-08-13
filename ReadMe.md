@@ -12,7 +12,7 @@ It can significantly reduce file sizes.
 
 "Unordering", thus, is the attempt to merge the actual linked file by the chapter track to the main file itself.
 
-Ordered chapters has its own benefit, but this phenomena is useful when you are trying to play these MKV files on players that doesn't support segment linking on MKV files, while consequently gaining a percentage increase in file sizes (and losing the chapters information, for now).
+Ordered chapters has its own benefit, but this "unordering" phenomenon is useful when you are trying to play these MKV files on players that doesn't support segment linking on MKV files, while consequently gaining a percentage increase in file sizes (and losing the chapters information, for now).
 
 Although all descriptions above may be inaccurate. You can find more about them by searching through the vast space of the Internet.
 
@@ -30,7 +30,7 @@ To build, open the respective *.csproj in this project folder in Visual Studio 2
 The produced executable file is usually found under "bin\debug" or "bin\release".
 
 ## Why
-ChapterMerger was conceived not because of lack of tools and techniques to do the same task (e.g. MKVToolNix GUI options), but because simply searching for the right segment linked file in many MKV files and manually merging them is a pain in the buttocks. This program attempts to simplify these tasks. Although, this program was also born from simple frustration and at the same time as a pet project for C#.
+ChapterMerger was conceived not because of lack of tools and techniques to do the same task (e.g. MKVToolNix GUI options), but because simply searching for the right segment linked file in many MKV files and manually merging them is a pain in the buttocks. This program attempts to simplify these tasks. Although, this program was also born as a pet project for C#.
 
 ## Mono implementation support
 This program is not tested in [Mono](http://www.mono-project.com/). This program does not currently support Mono. Maybe, in the near future!
