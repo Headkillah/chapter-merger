@@ -34,3 +34,6 @@ ChapterMerger was conceived not because of lack of tools and techniques to do th
 
 ## Mono implementation support
 This program is not tested in [Mono](http://www.mono-project.com/). This program does not currently support Mono. Maybe, in the near future!
+
+## Thanks
+[MKVToolNix team](https://www.bunkus.org/videotools/mkvtoolnix/) for the great tool. The idea behind this program was conceived merely upon using mkvtoolnix tools.
