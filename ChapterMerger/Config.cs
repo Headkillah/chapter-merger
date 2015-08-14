@@ -34,7 +34,7 @@ namespace ChapterMerger
   {
     public static Configure Configure;
 
-    public static string configPath = Program.thisProgramPath;
+    public static string configPath = Program.defaultPath;
     public static string configFile = Path.Combine(configPath, "config.xml");
 
     public static void Initialize()

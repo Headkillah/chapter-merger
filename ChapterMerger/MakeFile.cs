@@ -35,8 +35,8 @@ namespace ChapterMerger
     //private int progress = 1;
     //private int processPercent = 0;
 
-    public static string outputPath = Program.thisProgramPath;
-    public static string dumpPath = Program.thisProgramPath + "\\dump";
+    public static string outputPath = Program.defaultPath;
+    public static string dumpPath = Program.defaultPath + "\\dump";
     private static bool doMakeFile = false;
 
   /// <summary>

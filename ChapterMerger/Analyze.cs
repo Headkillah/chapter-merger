@@ -163,7 +163,7 @@ namespace ChapterMerger
 
         Analyze.backgroundWorker.ReportProgress(progressArg, progressState);
 
-        processList.processList(argList, "various files", this, Program.thisProgramPath);
+        processList.processList(argList, "various files", this, Program.defaultPath);
 
       }
 

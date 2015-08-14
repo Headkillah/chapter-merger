@@ -79,7 +79,7 @@ namespace ChapterMerger
       }
       else
       {
-        outputPath = Program.thisProgramPath;
+        outputPath = Program.defaultPath;
       }
 
       Directory.CreateDirectory(Path.Combine(outputPath, "output"));

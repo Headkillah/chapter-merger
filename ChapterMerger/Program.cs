@@ -30,8 +30,9 @@ namespace ChapterMerger
   static class Program
   {
 
-    private static string environmentPath = System.Environment.GetEnvironmentVariable("PATH");
-    public static string thisProgramPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+    private static string environmentPath = Environment.GetEnvironmentVariable("PATH");
+    //public static string thisProgramPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+    public static string defaultPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
     public static string mergeExe;
     public static string infoExe;
     public static string ffmpegExe;
@@ -119,7 +120,7 @@ namespace ChapterMerger
     /// <returns></returns>
     public static string getExe(string exe)
     {
-      string currentDirExe = Path.Combine(Program.thisProgramPath, exe);
+      string currentDirExe = Path.Combine(Program.defaultPath, exe);
       string envPathExe = getEnvPathExe(exe);
 
       if (envPathExe != null)

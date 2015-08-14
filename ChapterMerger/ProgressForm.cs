@@ -215,7 +215,7 @@ namespace ChapterMerger
 
     private void backgroundWorker3_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
-      Analyze processor = e.Result as Analyze;
+      
       DialogResult result = new DialogResult();
 
       // Check to see if an error occurred in the
@@ -235,6 +235,7 @@ namespace ChapterMerger
         {
           // Everything completed normally.
           // process the response using e.Result
+          Analyze processor = e.Result as Analyze;
           result = MessageBox.Show("Merging complete! View output files?", "Confirm", MessageBoxButtons.YesNo);
 
           if (result == DialogResult.Yes)
@@ -249,7 +250,10 @@ namespace ChapterMerger
     private void stopButton_Click(object sender, EventArgs e)
     {
       stopButton.Text = "Cancelling...";
-      backgroundWorker1.CancelAsync();
+      if (doMerge)
+        backgroundWorker3.CancelAsync();
+      else
+        backgroundWorker1.CancelAsync();
       stopButton.Enabled = false;
     }
   }
