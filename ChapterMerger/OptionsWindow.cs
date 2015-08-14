@@ -28,9 +28,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
-using ChapterMerger;
 
-namespace ChapterMergerForm
+namespace ChapterMerger
 {
   public partial class OptionsWindow : Form
   {

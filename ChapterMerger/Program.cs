@@ -24,7 +24,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.IO;
-using ChapterMergerForm;
 
 namespace ChapterMerger
 {
@@ -35,6 +34,7 @@ namespace ChapterMerger
     public static string thisProgramPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
     public static string mergeExe;
     public static string infoExe;
+    public static string ffmpegExe;
 
     /// <summary>
     /// The main entry point for the application.
@@ -47,6 +47,7 @@ namespace ChapterMerger
 
       mergeExe = Program.getExe("mkvmerge.exe");
       infoExe = Program.getExe("mkvinfo.exe");
+      ffmpegExe = Program.getExe("ffmpeg.exe");
 
       try
       {

@@ -27,9 +27,8 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Windows.Forms;
-using ChapterMerger;
 
-namespace ChapterMergerForm
+namespace ChapterMerger
 {
   public class ProjectManager
   {
@@ -47,7 +46,7 @@ namespace ChapterMergerForm
   /// <summary>
   /// Optional. Holds the Analyze object.
   /// </summary>
-    public Analyze analyze;
+    public Analyze analyze = new Analyze();
 
     public ProjectManager()
     {
@@ -118,7 +117,8 @@ namespace ChapterMergerForm
     public void ClearProject()
     {
       this.argumentList.Clear();
-      this.analyze.fileLists.Clear();
+      if (this.analyze.fileLists.Count > 0)
+        this.analyze.fileLists.Clear();
       this.analyze.hasOrdered = false;
     }
   }

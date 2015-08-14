@@ -7,7 +7,7 @@
     <ProjectGuid>{FF4C67DE-88A5-4944-B330-5DDE891355BB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChapterMergerForm</RootNamespace>
+    <RootNamespace>ChapterMerger</RootNamespace>
     <AssemblyName>ChapterMerger</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -23,8 +23,8 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>5</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>0.9.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -81,6 +81,8 @@
     </Compile>
     <Compile Include="ChapterGenerator.cs" />
     <Compile Include="ConfigObj.cs" />
+    <Compile Include="ConvertConfigObj.cs" />
+    <Compile Include="Converter.cs" />
     <Compile Include="ExtensionClass.cs" />
     <Compile Include="MergeExecute.cs" />
     <Compile Include="Collection.cs" />
@@ -91,6 +93,12 @@
     </Compile>
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OptionsConvertWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OptionsConvertWindow.Designer.cs">
+      <DependentUpon>OptionsConvertWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="OptionsWindow.cs">
       <SubType>Form</SubType>
@@ -118,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OptionsConvertWindow.resx">
+      <DependentUpon>OptionsConvertWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionsWindow.resx">
       <DependentUpon>OptionsWindow.cs</DependentUpon>

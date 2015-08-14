@@ -28,7 +28,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace ChapterMergerForm
+namespace ChapterMerger
 {
   public partial class About : Form
   {

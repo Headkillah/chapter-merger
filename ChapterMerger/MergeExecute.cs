@@ -25,7 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.IO;
-using ChapterMergerForm;
+using ChapterMerger;
 
 namespace ChapterMerger
 {
@@ -69,7 +69,9 @@ namespace ChapterMerger
       processPercent = 0;
 
       if (fileList.hasOrdered)
+      {
         Directory.CreateDirectory(Path.Combine(fileList.folderPath, "output"));
+      }
 
       if (Config.Configure.sourceOutputFolder)
       {
@@ -154,7 +156,8 @@ namespace ChapterMerger
           if (file.shouldJoin)
           {
 
-            processor.orderedGroups.Add(outputPath);
+            //processor.orderedGroups.Add(outputPath); //should be inside a check outside this loop, else it would add needless duplicates of outputPath
+
 
             if (file.splitCount > 1)
             {
@@ -235,6 +238,11 @@ namespace ChapterMerger
 
         progress++;
 
+      }
+
+      if (fileList.hasOrdered && !processor.orderedGroups.Contains(outputPath))
+      {
+        processor.orderedGroups.Add(outputPath + "\\output");
       }
 
     }

@@ -28,7 +28,6 @@ using System.IO;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using ChapterMergerForm;
 
 namespace ChapterMerger
 {
@@ -87,7 +86,7 @@ namespace ChapterMerger
          * arguments normally should not contain empty strings
          * 
          */
-        if (string.IsNullOrEmpty(arg))
+        if (!string.IsNullOrEmpty(arg))
         {
           //FileObject file = new FileObject(arg);
           fullpath = Path.GetFullPath(arg);
@@ -184,7 +183,7 @@ namespace ChapterMerger
           if (selectFile)
             Process.Start("explorer.exe", string.Format("/select,\"{0}\"", outputPath));
           else
-            Process.Start("explorer.exe", outputPath + "\\output");
+            Process.Start("explorer.exe", outputPath);
         }
       }
       else
@@ -192,7 +191,7 @@ namespace ChapterMerger
         if (selectFile)
           Process.Start("explorer.exe", string.Format("/select,\"{0}\"", argument));
         else
-          Process.Start("explorer.exe", argument + "\\output");
+          Process.Start("explorer.exe", argument);
       }
       
     }

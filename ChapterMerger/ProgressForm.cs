@@ -27,9 +27,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using ChapterMerger;
 
-namespace ChapterMergerForm
+namespace ChapterMerger
 {
   public partial class ProgressForm : Form
   {

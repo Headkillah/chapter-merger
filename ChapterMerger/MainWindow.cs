@@ -27,10 +27,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using ChapterMerger;
 using System.IO;
 
-namespace ChapterMergerForm
+namespace ChapterMerger
 {
   public partial class MainWindow : Form
   {
@@ -83,11 +82,14 @@ namespace ChapterMergerForm
       this.saveProjectButton.Enabled = state;
       this.clearListButton.Enabled = state;
 
-      if (projectManager.analyze.hasOrdered)
-        this.executeButton.Enabled = true;
+      if (projectManager.analyze != null)
+      {
+        if (projectManager.analyze.hasOrdered)
+          this.executeButton.Enabled = true;
+      }
       else
         this.executeButton.Enabled = false;
-
+      
       //if (!state | mode == 1)
       //  this.executeButton.Enabled = false;
 
@@ -357,6 +359,11 @@ namespace ChapterMergerForm
     {
       About about = new About();
       about.ShowDialog();
+    }
+
+    private void convertOptionsButton_Click(object sender, EventArgs e)
+    {
+
     }
 
   }
