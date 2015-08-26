@@ -84,4 +84,38 @@ namespace ChapterMerger
     public int progressPercent { get; set; }
     public int progressArg { get; set; }
   }
+
+  public class MediaInfo
+  {
+    public string inputInfo { get; set; }
+    //public string vcodec { get; set; }  //removed; MediaStream already includes this
+    //public string acodec { get; set; }  //removed; MediaStream already includes this
+    public string duration { get; set; }
+    //public int vheight { get; set; }    //removed; MediaStream already includes this
+    //public int vwidth { get; set; }     //removed; MediaStream already includes this
+    //public int videobitkb { get; set; } //removed; input info doesn't provide this data
+    //public int audiobitkb { get; set; } //removed; input info doesn't provide this data
+    public int bitratekb { get; set; }
+    public List<MediaStream> mediaStreams { get; set; }
+
+  }
+
+  public class MediaStream
+  {
+    public MediaType mediaType { get; set; }
+    public string codec { get; set; }
+    public string codecInfo { get; set; }
+    public string metaData { get; set; }
+
+  }
+
+  public enum MediaType
+  {
+    None,
+    Video,
+    Audio,
+    Image,
+    Subtitle,
+    Attachment
+  }
 }

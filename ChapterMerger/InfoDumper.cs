@@ -52,7 +52,7 @@ namespace ChapterMerger
          */
         ProcessStartInfo p = new ProcessStartInfo(Program.infoExe);
 
-        p.FileName = Program.infoExe;
+        //p.FileName = Program.infoExe; //Unneeded since it was supplied to the constructor?
         p.Arguments = "\"" + file.fullpath + "\"";
         p.UseShellExecute = false;
         p.CreateNoWindow = true;
@@ -80,5 +80,69 @@ namespace ChapterMerger
       return file;
 
     }
+
+    public static FileObject ffInfoDump(FileObject file)
+    {
+
+      ProcessStartInfo p = new ProcessStartInfo(Program.ffmpegExe);
+
+      p.Arguments = "-i \"" + file.fullpath + "\"";
+      p.UseShellExecute = false;
+      p.CreateNoWindow = true;
+      p.WindowStyle = ProcessWindowStyle.Hidden;
+      p.RedirectStandardOutput = true;
+      p.RedirectStandardError = true;
+
+      using (Process process = Process.Start(p))
+      {
+        using (StreamReader reader = process.StandardError)
+        {
+          string output = reader.ReadToEnd();
+          file.addFFInfo(output);
+
+        }
+        process.WaitForExit();
+      }
+
+      return file;
+
+    }
+
+    public static FileObject ffProbeDump(FileObject file)
+    {
+
+      ProcessStartInfo p = new ProcessStartInfo(Program.ffprobeExe);
+      string output = "";
+
+      p.Arguments = "-show_streams -i \"" + file.fullpath + "\"";
+      p.UseShellExecute = false;
+      p.CreateNoWindow = true;
+      p.WindowStyle = ProcessWindowStyle.Hidden;
+      p.RedirectStandardOutput = true;
+      p.RedirectStandardError = true;
+
+      using (Process process = Process.Start(p))
+      {
+        /*
+        using (StreamReader reader = process.StandardError)
+        {
+          output = reader.ReadToEnd();
+        }
+        
+        */
+        using (StreamReader reader = process.StandardOutput)
+        {
+          output += reader.ReadToEnd();
+        }
+
+        file.addFFInfo(output);
+
+        process.WaitForExit();
+      }
+
+      return file;
+
+    }
+
   }
 }

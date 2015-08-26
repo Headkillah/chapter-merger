@@ -73,7 +73,6 @@ namespace ChapterMerger
       bool bIsDirectory;
       string fullpath;
 
-      //FileObjectCollection fileList = new FileObjectCollection();
       ListProcessor processList = new ListProcessor();
       List<string> argList = new List<string>();
       
@@ -103,24 +102,6 @@ namespace ChapterMerger
           //If it's a file, add it to a fileList, if not, process it as a fileList
           if (bIsDirectory == false)
           {
-            /*
-             * Legacy code - no need for an extra FileObjectCollection
-             * 
-            FileObject file = new FileObject(arg);
-
-            //Diagnostic purposes only.
-            if (Config.Configure.diagnose >= 30)
-            {
-              Console.WriteLine("{0}\n{1}\n{2}\n{3}\n{4}",
-                file.extension,
-                file.filename,
-                file.filenameNoExtension,
-                file.root,
-                file.fullpath);
-            }
-
-            fileList.addFile(file);
-             * */
             argList.Add(arg);
           }
           else

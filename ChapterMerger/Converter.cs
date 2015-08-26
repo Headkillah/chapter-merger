@@ -7,5 +7,10 @@ namespace ChapterMerger
 {
   class Converter
   {
+
+    public void Convert(FileObjectCollection fileList)
+    {
+
+    }
   }
 }

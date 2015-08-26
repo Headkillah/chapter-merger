@@ -36,6 +36,8 @@ namespace ChapterMerger
 
     Configure defaultConf = new Configure();
 
+    private OptionsConvertWindow convertOptionDialog = new OptionsConvertWindow();
+
     public OptionsWindow()
     {
       InitializeComponent();
@@ -102,6 +104,11 @@ namespace ChapterMerger
       else if (Configure.splitModeTimeStart)
         this.timeStartRadioButton.Checked = Configure.splitModeTimeStart;
 
+    }
+
+    private void convOptionButton_Click(object sender, EventArgs e)
+    {
+      convertOptionDialog.ShowDialog();
     }
   
   }

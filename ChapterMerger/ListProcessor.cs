@@ -81,6 +81,7 @@ namespace ChapterMerger
         try
         {
           file = InfoDumper.infoDump(file);
+          if (!String.IsNullOrEmpty(Program.ffmpegExe)) file = InfoDumper.ffInfoDump(file);
         }
         catch (Exception ex)
         {
@@ -92,9 +93,13 @@ namespace ChapterMerger
         Analyze.backgroundWorker.ReportProgress(processor.progressArg, progressState);
         
         file = chapterGet.chapterDump(file);
+        if (!String.IsNullOrEmpty(file.ffInfo)) file = chapterGet.mediaDump(file);
 
         if (!Config.Configure.includeMkvInfoOnFiles)
           file.mkvInfo = null;
+
+        if (!Config.Configure.includeMediaInfoOnFiles)
+          file.ffInfo = null;
 
         fileList.addFile(file);
 

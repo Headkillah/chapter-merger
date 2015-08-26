@@ -78,7 +78,7 @@ namespace ChapterMerger
         project = (ProjectManager)xmlRead.Deserialize(fileStream);
       }
 
-      Config.Configure = project.configuration;
+      Config.setConfiguration(project.configuration);
       return project;
 
     }
@@ -117,9 +117,12 @@ namespace ChapterMerger
     public void ClearProject()
     {
       this.argumentList.Clear();
+      /*
       if (this.analyze.fileLists.Count > 0)
         this.analyze.fileLists.Clear();
       this.analyze.hasOrdered = false;
+       * */
+      this.analyze = null;
     }
   }
 }

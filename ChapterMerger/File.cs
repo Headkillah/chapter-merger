@@ -42,6 +42,7 @@ namespace ChapterMerger
     public string directoryname;
     public string suid;
     public string mkvInfo;
+    public string ffInfo;
     public int splitCount;
     public bool shouldJoin;
 
@@ -49,6 +50,9 @@ namespace ChapterMerger
     public List<MergeArgument> mergeArgument = new List<MergeArgument>();
     public List<DelArgument> delArgument = new List<DelArgument>();
     public List<TimeCode> timeCode = new List<TimeCode>();
+    //public List<MediaStream> mediaStream = new List<MediaStream>();
+
+    public MediaInfo mediaInfo = new MediaInfo();
 
     public FileObject()
     {
@@ -71,6 +75,11 @@ namespace ChapterMerger
     public void addMkvInfo(string mkvinfo)
     {
       this.mkvInfo = mkvinfo;
+    }
+
+    public void addFFInfo(string ffinfo)
+    {
+      this.ffInfo = ffinfo;
     }
 
     public void addChapter(int chapterNum, string timeStart, string timeEnd, string suid = null, string chapterInfo = null)

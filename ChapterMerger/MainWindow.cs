@@ -292,6 +292,8 @@ namespace ChapterMerger
   /// <param name="e"></param>
     private void openProjectButton_Click(object sender, EventArgs e)
     {
+      //openFileDialog2.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath); //Chose current user's documents path instead
+      openFileDialog2.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
       DialogResult result = openFileDialog2.ShowDialog();
 
       if (result == DialogResult.OK)
@@ -318,6 +320,7 @@ namespace ChapterMerger
   /// <param name="e"></param>
     private void saveProjectButton_Click(object sender, EventArgs e)
     {
+      saveFileDialog1.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
       saveFileDialog1.ShowDialog();
     }
 
@@ -361,10 +364,6 @@ namespace ChapterMerger
       about.ShowDialog();
     }
 
-    private void convertOptionsButton_Click(object sender, EventArgs e)
-    {
-
-    }
 
   }
 

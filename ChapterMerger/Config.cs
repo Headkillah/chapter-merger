@@ -40,6 +40,7 @@ namespace ChapterMerger
     public static void Initialize()
     {
       Configure = new Configure();
+      Configure.ConvertConfigure = new ConvertConfigure();
     }
 
     public static void writeConfiguration()
@@ -77,6 +78,9 @@ namespace ChapterMerger
         {
           Configure = (Configure)xmlRead.Deserialize(fileStream);
         }
+
+        if (Configure.ConvertConfigure == null) //In case old config file doesn't have a Convert Configuration
+          Configure.ConvertConfigure = new ConvertConfigure();
       }
       else
       {
@@ -84,6 +88,14 @@ namespace ChapterMerger
         writeConfiguration();
       }
 
+    }
+
+    public static void setConfiguration(Configure configuration)
+    {
+      Configure = configuration;
+
+      if (Configure.ConvertConfigure == null) //In case old project files doesn't have a Convert Configuration
+        Configure.ConvertConfigure = new ConvertConfigure();
     }
   }
 }

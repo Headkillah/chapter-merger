@@ -30,6 +30,7 @@ namespace ChapterMerger
   public class Configure
   {
     public int diagnose = 0;
+    public bool shutdownDevice = false;
 
     public bool launchGui = true;
     //public bool doAnalyze = false;
@@ -41,6 +42,7 @@ namespace ChapterMerger
     public int universalsplit = 1;
     public bool includeMkvInfoOnFiles = false;
     public bool includeChapterInfoOnFiles = false;
+    public bool includeMediaInfoOnFiles = false;
 
     public bool sourceOutputFolder = true;
     public bool alwaysExecuteScript = false;
@@ -65,6 +67,8 @@ namespace ChapterMerger
 
     public bool diagnoseMkvinfoDump = false;
     public bool diagnoseChapterinfoDump = false;
+
+    public ConvertConfigure ConvertConfigure;
 
   }
 }

@@ -36,6 +36,7 @@ namespace ChapterMerger
     public static string mergeExe;
     public static string infoExe;
     public static string ffmpegExe;
+    public static string ffprobeExe;
 
     /// <summary>
     /// The main entry point for the application.
@@ -48,7 +49,8 @@ namespace ChapterMerger
 
       mergeExe = Program.getExe("mkvmerge.exe");
       infoExe = Program.getExe("mkvinfo.exe");
-      ffmpegExe = Program.getExe("ffmpeg.exe");
+      ffmpegExe = Program.getExe("ffmpeg.exe");   //added for convert function
+      ffprobeExe = Program.getExe("ffprobe.exe"); //added for convert function
 
       try
       {

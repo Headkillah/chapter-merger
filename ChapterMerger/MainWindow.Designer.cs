@@ -68,7 +68,6 @@ namespace ChapterMerger
       this.aboutButton = new System.Windows.Forms.Button();
       this.label1 = new System.Windows.Forms.Label();
       this.fileListPanel = new System.Windows.Forms.Panel();
-      this.convertOptionsButton = new System.Windows.Forms.Button();
       this.fileListPanel.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -111,7 +110,7 @@ namespace ChapterMerger
       // 
       // optionsButton
       // 
-      this.optionsButton.Location = new System.Drawing.Point(347, 209);
+      this.optionsButton.Location = new System.Drawing.Point(347, 224);
       this.optionsButton.Name = "optionsButton";
       this.optionsButton.Size = new System.Drawing.Size(133, 23);
       this.optionsButton.TabIndex = 5;
@@ -212,19 +211,17 @@ namespace ChapterMerger
       // openFileDialog2
       // 
       this.openFileDialog2.Filter = "ChapterMerger Project File|*.cmproj";
-      this.openFileDialog2.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
       this.openFileDialog2.Title = "Open Project";
       // 
       // saveFileDialog1
       // 
       this.saveFileDialog1.Filter = "ChapterMerger Project File|*.cmproj";
-      this.saveFileDialog1.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
       this.saveFileDialog1.Title = "Save Project File";
       this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
       // 
       // aboutButton
       // 
-      this.aboutButton.Location = new System.Drawing.Point(347, 267);
+      this.aboutButton.Location = new System.Drawing.Point(347, 253);
       this.aboutButton.Name = "aboutButton";
       this.aboutButton.Size = new System.Drawing.Size(133, 23);
       this.aboutButton.TabIndex = 19;
@@ -254,23 +251,11 @@ namespace ChapterMerger
       this.fileListPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.fileList_DragDrop);
       this.fileListPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.fileList_DragEnter);
       // 
-      // convertOptionsButton
-      // 
-      this.convertOptionsButton.Enabled = false;
-      this.convertOptionsButton.Location = new System.Drawing.Point(347, 238);
-      this.convertOptionsButton.Name = "convertOptionsButton";
-      this.convertOptionsButton.Size = new System.Drawing.Size(133, 23);
-      this.convertOptionsButton.TabIndex = 22;
-      this.convertOptionsButton.Text = "Convert Options";
-      this.convertOptionsButton.UseVisualStyleBackColor = true;
-      this.convertOptionsButton.Click += new System.EventHandler(this.convertOptionsButton_Click);
-      // 
       // MainWindow
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(504, 358);
-      this.Controls.Add(this.convertOptionsButton);
       this.Controls.Add(this.aboutButton);
       this.Controls.Add(this.saveProjectButton);
       this.Controls.Add(this.executeButton);
@@ -316,7 +301,6 @@ namespace ChapterMerger
     private System.Windows.Forms.Button aboutButton;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Panel fileListPanel;
-    private System.Windows.Forms.Button convertOptionsButton;
   }
 }
 

@@ -59,6 +59,7 @@ namespace ChapterMerger
       this.dumpInfoCheckBox = new System.Windows.Forms.CheckBox();
       this.dumpChapterInfoCheckBox = new System.Windows.Forms.CheckBox();
       this.generalGroupBox = new System.Windows.Forms.GroupBox();
+      this.projectIncludeFileListCheckBox = new System.Windows.Forms.CheckBox();
       this.noChapterCheckBox = new System.Windows.Forms.CheckBox();
       this.alwaysMergeCheckBox = new System.Windows.Forms.CheckBox();
       this.sourceOutputCheckBox = new System.Windows.Forms.CheckBox();
@@ -68,7 +69,7 @@ namespace ChapterMerger
       this.okButton = new System.Windows.Forms.Button();
       this.cancelButton = new System.Windows.Forms.Button();
       this.defaultButton = new System.Windows.Forms.Button();
-      this.projectIncludeFileListCheckBox = new System.Windows.Forms.CheckBox();
+      this.convOptionButton = new System.Windows.Forms.Button();
       this.panel1.SuspendLayout();
       this.fileOptionsGroupBox.SuspendLayout();
       this.diagnoseGroupBox.SuspendLayout();
@@ -176,6 +177,16 @@ namespace ChapterMerger
       this.generalGroupBox.TabStop = false;
       this.generalGroupBox.Text = "General";
       // 
+      // projectIncludeFileListCheckBox
+      // 
+      this.projectIncludeFileListCheckBox.CheckAlign = System.Drawing.ContentAlignment.TopLeft;
+      this.projectIncludeFileListCheckBox.Location = new System.Drawing.Point(5, 82);
+      this.projectIncludeFileListCheckBox.Name = "projectIncludeFileListCheckBox";
+      this.projectIncludeFileListCheckBox.Size = new System.Drawing.Size(219, 30);
+      this.projectIncludeFileListCheckBox.TabIndex = 3;
+      this.projectIncludeFileListCheckBox.Text = "Include analyzed data on project file (results in larger project file size)";
+      this.projectIncludeFileListCheckBox.UseVisualStyleBackColor = true;
+      // 
       // noChapterCheckBox
       // 
       this.noChapterCheckBox.AutoSize = true;
@@ -272,21 +283,22 @@ namespace ChapterMerger
       this.defaultButton.UseVisualStyleBackColor = true;
       this.defaultButton.Click += new System.EventHandler(this.defaultButton_Click);
       // 
-      // projectIncludeFileListCheckBox
+      // convOptionButton
       // 
-      this.projectIncludeFileListCheckBox.CheckAlign = System.Drawing.ContentAlignment.TopLeft;
-      this.projectIncludeFileListCheckBox.Location = new System.Drawing.Point(5, 82);
-      this.projectIncludeFileListCheckBox.Name = "projectIncludeFileListCheckBox";
-      this.projectIncludeFileListCheckBox.Size = new System.Drawing.Size(219, 30);
-      this.projectIncludeFileListCheckBox.TabIndex = 3;
-      this.projectIncludeFileListCheckBox.Text = "Include analyzed data on project file (results in larger project file size)";
-      this.projectIncludeFileListCheckBox.UseVisualStyleBackColor = true;
+      this.convOptionButton.Location = new System.Drawing.Point(267, 129);
+      this.convOptionButton.Name = "convOptionButton";
+      this.convOptionButton.Size = new System.Drawing.Size(123, 23);
+      this.convOptionButton.TabIndex = 4;
+      this.convOptionButton.Text = "Convert Options...";
+      this.convOptionButton.UseVisualStyleBackColor = true;
+      this.convOptionButton.Click += new System.EventHandler(this.convOptionButton_Click);
       // 
       // OptionsWindow
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(402, 413);
+      this.Controls.Add(this.convOptionButton);
       this.Controls.Add(this.defaultButton);
       this.Controls.Add(this.cancelButton);
       this.Controls.Add(this.okButton);
@@ -332,5 +344,6 @@ namespace ChapterMerger
     private System.Windows.Forms.Button defaultButton;
     private System.Windows.Forms.TextBox newFileSuffixTextBox;
     private System.Windows.Forms.CheckBox projectIncludeFileListCheckBox;
+    private System.Windows.Forms.Button convOptionButton;
   }
 }
