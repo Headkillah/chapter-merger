@@ -117,4 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label27.Text" xml:space="preserve">
+    <value>Note: Input on the following items are comprised of options separated by a comma (for maps) or a semi-colon (for filters).
+
+In case of mapping, each option is a stream identifier.
+For the video filter, each option is a filter chain. Each filter description inside a filter chain is separated by a comma (,).
+
+Escape the special characters accordingly.
+
+Examples:
+VFilter: subtitles=(input):si=0,scale=-2:480
+Map: 0:v,-0:a</value>
+  </data>
+  <data name="label13.Text" xml:space="preserve">
+    <value>Note: Providing manual options here will nullify all options in these pages.
+
+Use (inputfile) and (outputname) to refer to analyzed input and outputs programmatically.
+
+Caution: Incorrect/invalid options here could result in failure, file loss, broken hardware, cancer, dead kittens, and nuclear warfare.
+</value>
+  </data>
 </root>

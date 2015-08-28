@@ -51,7 +51,7 @@ namespace ChapterMerger
     {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(About));
       this.label1 = new System.Windows.Forms.Label();
-      this.label2 = new System.Windows.Forms.Label();
+      this.versionLabel = new System.Windows.Forms.Label();
       this.label3 = new System.Windows.Forms.Label();
       this.licenseGroupBox = new System.Windows.Forms.GroupBox();
       this.licenseTextBox = new System.Windows.Forms.TextBox();
@@ -69,14 +69,14 @@ namespace ChapterMerger
       this.label1.TabIndex = 0;
       this.label1.Text = "ChapterMerger Beta";
       // 
-      // label2
+      // versionLabel
       // 
-      this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(12, 59);
-      this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(69, 13);
-      this.label2.TabIndex = 1;
-      this.label2.Text = "Version 0.9.0";
+      this.versionLabel.AutoSize = true;
+      this.versionLabel.Location = new System.Drawing.Point(12, 59);
+      this.versionLabel.Name = "versionLabel";
+      this.versionLabel.Size = new System.Drawing.Size(69, 13);
+      this.versionLabel.TabIndex = 1;
+      this.versionLabel.Text = "Version 0.9.0";
       // 
       // label3
       // 
@@ -125,13 +125,14 @@ namespace ChapterMerger
       this.ClientSize = new System.Drawing.Size(380, 300);
       this.Controls.Add(this.licenseGroupBox);
       this.Controls.Add(this.label3);
-      this.Controls.Add(this.label2);
+      this.Controls.Add(this.versionLabel);
       this.Controls.Add(this.label1);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "About";
       this.ShowIcon = false;
       this.Text = "About";
+      this.Load += new System.EventHandler(this.About_Load);
       this.licenseGroupBox.ResumeLayout(false);
       this.licenseGroupBox.PerformLayout();
       this.ResumeLayout(false);
@@ -142,7 +143,7 @@ namespace ChapterMerger
     #endregion
 
     private System.Windows.Forms.Label label1;
-    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.Label versionLabel;
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.GroupBox licenseGroupBox;
     private System.Windows.Forms.TextBox licenseTextBox;

@@ -57,6 +57,8 @@ namespace ChapterMerger
     private void MainWindow_Load(object sender, EventArgs e)
     {
 
+      this.Text = "ChapterMerger - New Project *";
+
       if (projectManager.argumentList.Count() > 0)
       {
         updateDisplay(projectManager.argumentList.ToArray());
@@ -82,14 +84,26 @@ namespace ChapterMerger
       this.saveProjectButton.Enabled = state;
       this.clearListButton.Enabled = state;
 
-      if (projectManager.analyze != null)
+      if (projectManager.analyze.fileLists.Count > 0)
       {
         if (projectManager.analyze.hasOrdered)
+        {
           this.executeButton.Enabled = true;
+        }
+        if (Program.hasFFmpeg)
+          this.convertButton.Enabled = state;
       }
       else
+      {
         this.executeButton.Enabled = false;
-      
+      }
+
+      if (!state)
+      {
+        this.Text = "ChapterMerger - New Project *";
+        this.convertButton.Enabled = state;
+      }
+        
       //if (!state | mode == 1)
       //  this.executeButton.Enabled = false;
 
@@ -302,6 +316,12 @@ namespace ChapterMerger
         try
         {
           projectManager = ProjectManager.openProject(openFileDialog2.FileName);
+
+          if (!String.IsNullOrWhiteSpace(projectManager.projectFileName))
+            this.Text = "ChapterMerger - " + projectManager.projectFileName + " *";
+          else
+            this.Text = "ChapterMerger - " + Path.GetFileName(openFileDialog2.FileName) + " *";
+
           updateDisplay(projectManager.argumentList.ToArray(), 1);
         }
         catch (Exception ex)
@@ -328,14 +348,21 @@ namespace ChapterMerger
     {
       string file = saveFileDialog1.FileName;
 
+      /*
+       * Deprecated
+       * What this does to exclude analyzed filelist is clear the actual analyze object, which is undesirable.
+       * 
       if (!Config.Configure.projectIncludeFileList && projectManager.analyze.fileLists.Count > 0)
       {
         projectManager.analyze = null;
       }
+       * */
 
       try
       {
         projectManager.saveProject(file);
+        projectManager.projectFileName = Path.GetFileName(file);
+        this.Text = "ChapterMerger - " + projectManager.projectFileName + " *";
       }
       catch (Exception ex)
       {
@@ -362,6 +389,12 @@ namespace ChapterMerger
     {
       About about = new About();
       about.ShowDialog();
+    }
+
+    private void convertButton_Click(object sender, EventArgs e)
+    {
+      ProgressForm progressBar = new ProgressForm(2);
+      progressBar.ShowDialog();
     }
 
 

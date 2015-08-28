@@ -81,7 +81,7 @@ namespace ChapterMerger
         try
         {
           file = InfoDumper.infoDump(file);
-          if (!String.IsNullOrEmpty(Program.ffmpegExe)) file = InfoDumper.ffInfoDump(file);
+          if (Program.hasFFmpeg) file = InfoDumper.ffInfoDump(file);
         }
         catch (Exception ex)
         {

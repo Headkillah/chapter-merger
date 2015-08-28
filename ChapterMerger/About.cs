@@ -27,14 +27,39 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Reflection;
+using System.Diagnostics;
+using System.Deployment.Application;
 
 namespace ChapterMerger
 {
   public partial class About : Form
   {
+
+    /// <summary>
+    /// Get current product version.
+    /// </summary>
+    public string CurrentVersion
+    {
+      get
+      {
+
+        return ApplicationDeployment.IsNetworkDeployed
+               ? ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString()
+               //: Assembly.GetExecutingAssembly().GetName().Version.ToString();
+               : typeof(About).Assembly.GetName().Version.ToString();
+        
+      }
+    }
+
     public About()
     {
       InitializeComponent();
+    }
+
+    private void About_Load(object sender, EventArgs e)
+    {
+      this.versionLabel.Text = "Version " + CurrentVersion;
     }
   }
 }

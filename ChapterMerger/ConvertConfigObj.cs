@@ -16,43 +16,57 @@ namespace ChapterMerger
 
     public string vcodec = "libx264";
     public string acodec = "libmp3lame";
-
-    public int videobitkb = 500;
-    public int audiobitkb = 128;
+    public int? videobitkb = 500;
+    public int? audiobitkb = 128;
 
     public bool vresize = false;
+    public bool maintainAspectRatio = true;
     public string vscaler = "lanczos";
     public int vheight = 720;
-    public int vwidth = 1280;
+    public int vwidth = -2;
+    public string vprofile = "";
 
     public int x264crf = 19;
     public string x264preset = "veryfast";
     public string x264tune = "";
     public bool x264hi10 = false;
+    public string x264profile = "";
+    public string x264level = "";
+    public bool x264faststart = false;
+    public bool x264pretest = false;
+    public int x264offsettime = 0;
+    public int x264outduration = 0;
+    public string x264fps = ""; //Used string instead of decimal, since it will be parsed and passed as a string anyway
+    public bool usex264opts = false;
+    public string x264optsarg = "";
+    public string customx264arg = "";
 
     public bool audioexperimental = false;
-
+    public int audiochannel = 0;
     public bool audlangswitch = false;
-    public string vlanguge = "jpn";
+    public string alanguage = "";
     
     public bool useVFilter = false;
     public bool fixsubduration = false;
     public bool externalsubs = false;
     public string externalsubsext = "ass";
-
     public bool useSubFilter = false;
     public int subindex = 0;
+
+    public bool includeVidStreams = true;
+    public bool includeAudStreams = true;
+    public bool includeSubStreams = true;
+    public bool includeAttStreams = true;
 
     //public string[] vfilters = { "" }; //Temporary placeholders for vfilters; yet for use
     //public string[] mapping = { "0" };
 
     public string customvfilter = "";
     public string custommapping = "";
+    public string customffmpegarg = "";
 
     public int fps = 0;
     public int rframerate = 0;
-
-    public string ffmpegarg = "";
 
     public string newfileprefix = "";
     public string newfilesuffix = "(Converted)";
@@ -65,13 +79,12 @@ namespace ChapterMerger
    * */
   public enum X264Presets
   {
-    Default,
     ultrafast,
     superfast,
     veryfast,
     faster,
     fast,
-    medium,
+    medium = 0,
     slow,
     slower,
     veryslow,
@@ -80,7 +93,6 @@ namespace ChapterMerger
 
   public enum VideoCodecs
   {
-    Default,
     libx264,
     libx265,
     mpeg4,
@@ -92,7 +104,6 @@ namespace ChapterMerger
 
   public enum AudioCodecs
   {
-    Default,
     libmp3lame,
     aac,
     libvo_aacenc,
@@ -126,7 +137,6 @@ namespace ChapterMerger
 
   public enum X264Tunes
   {
-    Default,
     film,
     animation,
     grain,
@@ -147,7 +157,6 @@ namespace ChapterMerger
 
   public enum X264Profiles
   {
-    Default,
     baseline,
     main,
     high,

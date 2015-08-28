@@ -55,7 +55,7 @@ namespace ChapterMerger
       this.fileListLabel = new System.Windows.Forms.Label();
       this.optionsButton = new System.Windows.Forms.Button();
       this.openProjectButton = new System.Windows.Forms.Button();
-      this.convertScriptButton = new System.Windows.Forms.Button();
+      this.convertButton = new System.Windows.Forms.Button();
       this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
       this.addFolderButton = new System.Windows.Forms.Button();
       this.clearListButton = new System.Windows.Forms.Button();
@@ -128,15 +128,16 @@ namespace ChapterMerger
       this.openProjectButton.UseVisualStyleBackColor = true;
       this.openProjectButton.Click += new System.EventHandler(this.openProjectButton_Click);
       // 
-      // convertScriptButton
+      // convertButton
       // 
-      this.convertScriptButton.Enabled = false;
-      this.convertScriptButton.Location = new System.Drawing.Point(347, 162);
-      this.convertScriptButton.Name = "convertScriptButton";
-      this.convertScriptButton.Size = new System.Drawing.Size(133, 23);
-      this.convertScriptButton.TabIndex = 9;
-      this.convertScriptButton.Text = "Convert";
-      this.convertScriptButton.UseVisualStyleBackColor = true;
+      this.convertButton.Enabled = false;
+      this.convertButton.Location = new System.Drawing.Point(347, 162);
+      this.convertButton.Name = "convertButton";
+      this.convertButton.Size = new System.Drawing.Size(133, 23);
+      this.convertButton.TabIndex = 9;
+      this.convertButton.Text = "Convert";
+      this.convertButton.UseVisualStyleBackColor = true;
+      this.convertButton.Click += new System.EventHandler(this.convertButton_Click);
       // 
       // folderBrowserDialog1
       // 
@@ -262,7 +263,7 @@ namespace ChapterMerger
       this.Controls.Add(this.analyzeButton);
       this.Controls.Add(this.clearListButton);
       this.Controls.Add(this.addFolderButton);
-      this.Controls.Add(this.convertScriptButton);
+      this.Controls.Add(this.convertButton);
       this.Controls.Add(this.openProjectButton);
       this.Controls.Add(this.optionsButton);
       this.Controls.Add(this.fileListLabel);
@@ -288,7 +289,7 @@ namespace ChapterMerger
     private System.Windows.Forms.Label fileListLabel;
     private System.Windows.Forms.Button optionsButton;
     private System.Windows.Forms.Button openProjectButton;
-    private System.Windows.Forms.Button convertScriptButton;
+    private System.Windows.Forms.Button convertButton;
     private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     private System.Windows.Forms.Button addFolderButton;
     private System.Windows.Forms.Button clearListButton;

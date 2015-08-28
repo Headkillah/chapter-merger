@@ -37,7 +37,8 @@ namespace ChapterMerger
     ConvertConfigure defaultConf = new ConvertConfigure();
     ConvertConfigure thisConf;
     //string vkbitTextBoxOldText = "";
-    private bool nonNumberEntered = false;
+    private bool nonValidEntered = false;
+    string originalText;
 
     public OptionsConvertWindow()
     {
@@ -89,6 +90,22 @@ namespace ChapterMerger
         this.vidScalerComboBox.Items.Add(scale.ToString());
       }
 
+      foreach (LanguageCodes lang in Enum.GetValues(typeof(LanguageCodes)))
+      {
+        this.langCodeComboBox.Items.Add(lang);
+      }
+
+      string[] h264level = {
+                             "3.0",
+                             "3.1",
+                             "4.0",
+                             "4.1",
+                             "4.2"
+                           };
+
+      foreach (string level in h264level)
+        this.x264levelComboBox.Items.Add(level);
+
     }
 
   //OptionsWindow OnLoad
@@ -109,6 +126,18 @@ namespace ChapterMerger
       if (match.Success | match2.Success)
       {
         MessageBox.Show("Invalid characters found in Output File Naming.", "Error");
+        return;
+      }
+
+      if (custVFilterTextBox.Text.Contains('-'))
+      {
+        MessageBox.Show("Custom VFilter must not contain dashes.", "Error");
+        return;
+      }
+
+      if (custMapTextBox.Text.Contains(' '))
+      {
+        MessageBox.Show("Custom Mapping must not contain spaces.", "Error");
         return;
       }
       
@@ -133,9 +162,31 @@ namespace ChapterMerger
       thisConf.shutdownDevice = this.shutdownCheckBox.Checked;
 
       thisConf.vscaler = this.vidScalerComboBox.Text;
-      thisConf.custommapping = this.custMapOptionsTextBox.Text;
-      thisConf.customvfilter = this.custVidFilterTextBox.Text;
-      thisConf.ffmpegarg = this.custFFmpegTextBox.Text;
+      thisConf.customffmpegarg = this.custFFmpegTextBox.Text;
+
+      thisConf.x264faststart = this.x264fastStartCheckBox.Checked;
+      thisConf.x264level = this.x264levelComboBox.Text;
+      thisConf.x264pretest = this.x264pretestCheckBox.Checked;
+      thisConf.x264offsettime = int.Parse(this.x264offsetTextBox.Text);
+      thisConf.x264outduration = int.Parse(this.x264durationTextBox.Text);
+      thisConf.usex264opts = this.x264optsCheckBox.Checked;
+      thisConf.x264optsarg = this.x264optsTextBox.Text;
+      thisConf.x264fps = this.x264fpsTextBox.Text;
+      thisConf.x264profile = this.h264profileComboBox.Text;
+      thisConf.customx264arg = this.customx264TextBox.Text;
+      thisConf.custommapping = this.custMapTextBox.Text;
+      thisConf.customvfilter = this.custVFilterTextBox.Text;
+      thisConf.audiochannel = int.Parse(this.audchannelTextBox.Text);
+      thisConf.audlangswitch = this.audLangSwitchCheckBox.Checked;
+      thisConf.alanguage = this.langCodeComboBox.Text;
+
+      thisConf.vresize = this.resizeVidCheckBox.Checked;
+      thisConf.maintainAspectRatio = this.maintainAspectCheckBox.Checked;
+
+      thisConf.includeVidStreams = this.incVidSCheckBox.Checked;
+      thisConf.includeAudStreams = this.incAudSCheckBox.Checked;
+      thisConf.includeSubStreams = this.incSubSCheckBox.Checked;
+      thisConf.includeAttStreams = this.incAttSCheckBox.Checked;
 
       Config.writeConfiguration();
 
@@ -176,15 +227,54 @@ namespace ChapterMerger
       this.shutdownCheckBox.Checked = ConvertConfigure.shutdownDevice;
 
       this.vidScalerComboBox.Text = ConvertConfigure.vscaler;
-      this.custMapOptionsTextBox.Text = ConvertConfigure.custommapping;
-      this.custVidFilterTextBox.Text = ConvertConfigure.customvfilter;
-      this.custFFmpegTextBox.Text = ConvertConfigure.ffmpegarg;
+      this.custFFmpegTextBox.Text = ConvertConfigure.customffmpegarg;
+
+      this.x264fastStartCheckBox.Checked = ConvertConfigure.x264faststart;
+      this.x264levelComboBox.Text = ConvertConfigure.x264level;
+      this.x264pretestCheckBox.Checked = ConvertConfigure.x264pretest;
+      this.x264offsetTextBox.Text = ConvertConfigure.x264offsettime.ToString();
+      this.x264durationTextBox.Text = ConvertConfigure.x264outduration.ToString();
+      this.x264optsCheckBox.Checked = ConvertConfigure.usex264opts;
+      this.x264optsTextBox.Text = ConvertConfigure.x264optsarg;
+      this.x264fpsTextBox.Text = ConvertConfigure.x264fps.ToString();
+      this.h264profileComboBox.Text = ConvertConfigure.x264profile;
+      this.customx264TextBox.Text = ConvertConfigure.customx264arg;
+      this.custMapTextBox.Text = ConvertConfigure.custommapping;
+      this.custVFilterTextBox.Text = ConvertConfigure.customvfilter;
+      this.audchannelTextBox.Text = ConvertConfigure.audiochannel.ToString();
+      this.audLangSwitchCheckBox.Checked = ConvertConfigure.audlangswitch;
+      this.langCodeComboBox.Text = ConvertConfigure.alanguage;
+
+      this.maintainAspectCheckBox.Checked = ConvertConfigure.maintainAspectRatio;
+
+      this.incVidSCheckBox.Checked = ConvertConfigure.includeVidStreams;
+      this.incAudSCheckBox.Checked = ConvertConfigure.includeAudStreams;
+      this.incSubSCheckBox.Checked = ConvertConfigure.includeSubStreams;
+      this.incAttSCheckBox.Checked = ConvertConfigure.includeAttStreams;
 
       this.vheightTextBox.Enabled = resizeVidCheckBox.Checked;
       this.vwidthTextBox.Enabled = resizeVidCheckBox.Checked;
       this.subIndexTextBox.Enabled = subsFilterCheckBox.Checked;
       this.extSubFormatComboBox.Enabled = extSubCheckBox.Checked;
 
+      if (ConvertConfigure.useSubFilter)
+      {
+        this.incSubSCheckBox.Checked = false;
+        this.incAttSCheckBox.Checked = false;
+      }
+
+      this.resizeVidCheckBox.Checked = ConvertConfigure.vresize;
+      this.maintainAspectCheckBox.Enabled = resizeVidCheckBox.Checked;
+
+      if (ConvertConfigure.maintainAspectRatio)
+        this.vwidthTextBox.Enabled = false;
+      else
+        this.vwidthTextBox.Enabled = true;
+
+      this.x264optsTextBox.Enabled = x264optsCheckBox.Checked;
+      this.x264offsetTextBox.Enabled = x264pretestCheckBox.Checked;
+      this.x264durationTextBox.Enabled = x264pretestCheckBox.Checked;
+      this.langCodeComboBox.Enabled = audLangSwitchCheckBox.Checked;
     }
 
     /*
@@ -215,7 +305,7 @@ namespace ChapterMerger
    * or not.
    * In this case, only numbers are valid.
    * 
-   * Exactly the same as: https://msdn.microsoft.com/en-us/library/system.windows.forms.control.keydown(v=vs.110).aspx
+   * Exactly the same as the example in https://msdn.microsoft.com/en-us/library/system.windows.forms.control.keydown(v=vs.110).aspx
    * NOTE: Lame.
    * 
    * This will be used on other text box that require only numbers as input.
@@ -223,7 +313,7 @@ namespace ChapterMerger
     private void numberTextBox_KeyDown(object sender, KeyEventArgs e)
     {
       // Initialize the flag to false.
-      nonNumberEntered = false;
+      nonValidEntered = false;
 
       // Determine whether the keystroke is a number from the top of the keyboard. 
       if (e.KeyCode < Keys.D0 || e.KeyCode > Keys.D9)
@@ -236,21 +326,21 @@ namespace ChapterMerger
           {
             // A non-numerical keystroke was pressed. 
             // Set the flag to true and evaluate in KeyPress event.
-            nonNumberEntered = true;
+            nonValidEntered = true;
           }
         }
       }
       //If shift key was pressed, it's not a number. 
       if (Control.ModifierKeys == Keys.Shift)
       {
-        nonNumberEntered = true;
+        nonValidEntered = true;
       }
     }
 
     private void numberTextBox_KeyPress(object sender, KeyPressEventArgs e)
     {
       // Check for the flag being set in the KeyDown event. 
-      if (nonNumberEntered == true)
+      if (nonValidEntered == true)
       {
         // Stop the character from being entered into the control since it is non-numerical.
         e.Handled = true;
@@ -264,7 +354,11 @@ namespace ChapterMerger
     private void resizeVidCheckBox_CheckedChanged(object sender, EventArgs e)
     {
       this.vheightTextBox.Enabled = resizeVidCheckBox.Checked;
-      this.vwidthTextBox.Enabled = resizeVidCheckBox.Checked;
+      this.maintainAspectCheckBox.Enabled = resizeVidCheckBox.Checked;
+      if (this.maintainAspectCheckBox.Checked)
+        this.vwidthTextBox.Enabled = false;
+      else
+        this.vwidthTextBox.Enabled = true;
     }
 
     private void extSubCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -275,7 +369,122 @@ namespace ChapterMerger
     private void subsFilterCheckBox_CheckedChanged(object sender, EventArgs e)
     {
       this.subIndexTextBox.Enabled = subsFilterCheckBox.Checked;
+      bool invertCheck;
+      if (!subsFilterCheckBox.Checked)
+        invertCheck = true;
+      else
+        invertCheck = false;
+
+      this.incAttSCheckBox.Enabled = invertCheck;
+      this.incSubSCheckBox.Enabled = invertCheck;
     }
+
+    private void audLangSwitchCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+      this.langCodeComboBox.Enabled = audLangSwitchCheckBox.Checked;
+    }
+
+  /*
+   * Legacy Code
+   * 
+   * The same as the above KeyDown and KeyPress Event, with only
+   * decimal key added as valid input
+   * */
+    private void x264fpsTextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+      nonValidEntered = false;
+
+      /*
+      if (e.KeyCode < Keys.D0 || e.KeyCode > Keys.D9)
+      {
+        if (e.KeyCode < Keys.NumPad0 || e.KeyCode > Keys.Decimal)
+        {
+          if (e.KeyCode != Keys.Back || e.KeyCode != Keys.OemPeriod)
+          {
+            nonValidEntered = true;
+          }
+        }
+      }
+      if (Control.ModifierKeys == Keys.Shift)
+      {
+        nonValidEntered = true;
+      }
+       * */
+    }
+
+    private void x264fpsTextBox_KeyPress(object sender, KeyPressEventArgs e)
+    {
+      e.Handled = this.ValidateKeyPress(sender, e, 3).Handled;
+    }
+
+    private KeyPressEventArgs ValidateKeyPress(object sender, KeyPressEventArgs e, int mode = 0)
+    {
+
+      if (e.KeyChar != (Char)Keys.Back)
+      {
+        switch (mode)
+        {
+          case 0:
+            if (!Char.IsDigit(e.KeyChar))
+              e.Handled = true;
+            break;
+          case 1:
+            if (!Char.IsLetter(e.KeyChar))
+              e.Handled = true;
+            break;
+          case 2:
+            if (Char.IsSymbol(e.KeyChar))
+              e.Handled = true;
+            break;
+          case 3:
+            if (!Char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+              e.Handled = true;
+            break;
+          default:
+            if (!Char.IsLetterOrDigit(e.KeyChar))
+              e.Handled = true;
+            break;
+        }
+      }
+      
+      return e;
+
+    }
+
+    private void maintainAspectCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+      if (maintainAspectCheckBox.Checked)
+      {
+        originalText = this.vwidthTextBox.Text;
+        this.vwidthTextBox.Enabled = false;
+        this.vwidthTextBox.Text = "-2";
+      }
+      else
+      {
+        if (this.resizeVidCheckBox.Checked)
+          this.vwidthTextBox.Enabled = true;
+        this.vwidthTextBox.Text = originalText;
+      }
+    }
+
+    private void x264pretestCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+      this.x264offsetTextBox.Enabled = x264pretestCheckBox.Checked;
+      this.x264durationTextBox.Enabled = x264pretestCheckBox.Checked;
+    }
+
+    private void custVFilterTextBox_KeyPress(object sender, KeyPressEventArgs e)
+    {
+      if (e.KeyChar == '-')
+        e.Handled = true;
+    }
+
+    private void custMapTextBox_KeyPress(object sender, KeyPressEventArgs e)
+    {
+      if (e.KeyChar == (Char)Keys.Space)
+        e.Handled = true;
+    }
+
 
   }
 }

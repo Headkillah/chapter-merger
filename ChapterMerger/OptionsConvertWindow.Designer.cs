@@ -49,6 +49,7 @@ namespace ChapterMerger
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OptionsConvertWindow));
       this.panel1 = new System.Windows.Forms.Panel();
       this.tabControl1 = new System.Windows.Forms.TabControl();
       this.generalTabPage = new System.Windows.Forms.TabPage();
@@ -58,6 +59,12 @@ namespace ChapterMerger
       this.incAudSCheckBox = new System.Windows.Forms.CheckBox();
       this.incVidSCheckBox = new System.Windows.Forms.CheckBox();
       this.generalGroupBox = new System.Windows.Forms.GroupBox();
+      this.maintainAspectCheckBox = new System.Windows.Forms.CheckBox();
+      this.audchannelTextBox = new System.Windows.Forms.TextBox();
+      this.label23 = new System.Windows.Forms.Label();
+      this.formatComboBox = new System.Windows.Forms.ComboBox();
+      this.formatLabel = new System.Windows.Forms.Label();
+      this.label15 = new System.Windows.Forms.Label();
       this.akbitTextBox = new System.Windows.Forms.TextBox();
       this.vkbitTextBox = new System.Windows.Forms.TextBox();
       this.vwidthTextBox = new System.Windows.Forms.TextBox();
@@ -78,9 +85,29 @@ namespace ChapterMerger
       this.label3 = new System.Windows.Forms.Label();
       this.specTabPage = new System.Windows.Forms.TabPage();
       this.x264GroupBox = new System.Windows.Forms.GroupBox();
+      this.x264advancedGroupBox = new System.Windows.Forms.GroupBox();
+      this.label25 = new System.Windows.Forms.Label();
+      this.x264fpsTextBox = new System.Windows.Forms.TextBox();
+      this.label24 = new System.Windows.Forms.Label();
+      this.x264durationTextBox = new System.Windows.Forms.TextBox();
+      this.label22 = new System.Windows.Forms.Label();
+      this.x264offsetTextBox = new System.Windows.Forms.TextBox();
+      this.label21 = new System.Windows.Forms.Label();
+      this.x264pretestCheckBox = new System.Windows.Forms.CheckBox();
+      this.x264fastStartCheckBox = new System.Windows.Forms.CheckBox();
+      this.customx264TextBox = new System.Windows.Forms.TextBox();
+      this.x264optsLabel = new System.Windows.Forms.Label();
+      this.x264optsTextBox = new System.Windows.Forms.TextBox();
+      this.x264optsCheckBox = new System.Windows.Forms.CheckBox();
+      this.label20 = new System.Windows.Forms.Label();
+      this.x264levelComboBox = new System.Windows.Forms.ComboBox();
+      this.label19 = new System.Windows.Forms.Label();
+      this.label17 = new System.Windows.Forms.Label();
+      this.h264profileComboBox = new System.Windows.Forms.ComboBox();
+      this.x264hi10CheckBox = new System.Windows.Forms.CheckBox();
+      this.label18 = new System.Windows.Forms.Label();
       this.x264crfTextBox = new System.Windows.Forms.TextBox();
       this.label11 = new System.Windows.Forms.Label();
-      this.x264hi10CheckBox = new System.Windows.Forms.CheckBox();
       this.x264presetComboBox = new System.Windows.Forms.ComboBox();
       this.x264tuneComboBox = new System.Windows.Forms.ComboBox();
       this.label10 = new System.Windows.Forms.Label();
@@ -94,30 +121,26 @@ namespace ChapterMerger
       this.subsFilterCheckBox = new System.Windows.Forms.CheckBox();
       this.extSubCheckBox = new System.Windows.Forms.CheckBox();
       this.advancedTabPage = new System.Windows.Forms.TabPage();
+      this.groupBox3 = new System.Windows.Forms.GroupBox();
+      this.experAudCodecCheckBox = new System.Windows.Forms.CheckBox();
       this.groupBox2 = new System.Windows.Forms.GroupBox();
+      this.langCodeComboBox = new System.Windows.Forms.ComboBox();
+      this.audLangSwitchCheckBox = new System.Windows.Forms.CheckBox();
       this.label5 = new System.Windows.Forms.Label();
       this.shutdownCheckBox = new System.Windows.Forms.CheckBox();
       this.vidScalerComboBox = new System.Windows.Forms.ComboBox();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
+      this.label27 = new System.Windows.Forms.Label();
+      this.custMapTextBox = new System.Windows.Forms.TextBox();
+      this.label12 = new System.Windows.Forms.Label();
+      this.custVFilterTextBox = new System.Windows.Forms.TextBox();
+      this.label7 = new System.Windows.Forms.Label();
       this.label13 = new System.Windows.Forms.Label();
       this.label6 = new System.Windows.Forms.Label();
       this.custFFmpegTextBox = new System.Windows.Forms.TextBox();
-      this.custMapOptionsTextBox = new System.Windows.Forms.TextBox();
-      this.label7 = new System.Windows.Forms.Label();
-      this.label12 = new System.Windows.Forms.Label();
-      this.custVidFilterTextBox = new System.Windows.Forms.TextBox();
       this.okButton = new System.Windows.Forms.Button();
       this.cancelButton = new System.Windows.Forms.Button();
       this.defaultButton = new System.Windows.Forms.Button();
-      this.label15 = new System.Windows.Forms.Label();
-      this.formatLabel = new System.Windows.Forms.Label();
-      this.formatComboBox = new System.Windows.Forms.ComboBox();
-      this.h264profileComboBox = new System.Windows.Forms.ComboBox();
-      this.label17 = new System.Windows.Forms.Label();
-      this.groupBox3 = new System.Windows.Forms.GroupBox();
-      this.experAudCodecCheckBox = new System.Windows.Forms.CheckBox();
-      this.label18 = new System.Windows.Forms.Label();
-      this.x264advancedGroupBox = new System.Windows.Forms.GroupBox();
       this.panel1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.generalTabPage.SuspendLayout();
@@ -126,12 +149,12 @@ namespace ChapterMerger
       this.fileOptionsGroupBox.SuspendLayout();
       this.specTabPage.SuspendLayout();
       this.x264GroupBox.SuspendLayout();
+      this.x264advancedGroupBox.SuspendLayout();
       this.subsTabPage.SuspendLayout();
       this.advancedTabPage.SuspendLayout();
+      this.groupBox3.SuspendLayout();
       this.groupBox2.SuspendLayout();
       this.groupBox1.SuspendLayout();
-      this.groupBox3.SuspendLayout();
-      this.x264advancedGroupBox.SuspendLayout();
       this.SuspendLayout();
       // 
       // panel1
@@ -174,7 +197,7 @@ namespace ChapterMerger
       this.mappingGroupBox.Controls.Add(this.incSubSCheckBox);
       this.mappingGroupBox.Controls.Add(this.incAudSCheckBox);
       this.mappingGroupBox.Controls.Add(this.incVidSCheckBox);
-      this.mappingGroupBox.Location = new System.Drawing.Point(6, 315);
+      this.mappingGroupBox.Location = new System.Drawing.Point(6, 359);
       this.mappingGroupBox.Name = "mappingGroupBox";
       this.mappingGroupBox.Size = new System.Drawing.Size(311, 115);
       this.mappingGroupBox.TabIndex = 14;
@@ -186,9 +209,9 @@ namespace ChapterMerger
       this.incAttSCheckBox.AutoSize = true;
       this.incAttSCheckBox.Location = new System.Drawing.Point(8, 88);
       this.incAttSCheckBox.Name = "incAttSCheckBox";
-      this.incAttSCheckBox.Size = new System.Drawing.Size(156, 17);
+      this.incAttSCheckBox.Size = new System.Drawing.Size(179, 17);
       this.incAttSCheckBox.TabIndex = 3;
-      this.incAttSCheckBox.Text = "Include attachment streams";
+      this.incAttSCheckBox.Text = "Include font/attachment streams";
       this.incAttSCheckBox.UseVisualStyleBackColor = true;
       // 
       // incSubSCheckBox
@@ -223,6 +246,9 @@ namespace ChapterMerger
       // 
       // generalGroupBox
       // 
+      this.generalGroupBox.Controls.Add(this.maintainAspectCheckBox);
+      this.generalGroupBox.Controls.Add(this.audchannelTextBox);
+      this.generalGroupBox.Controls.Add(this.label23);
       this.generalGroupBox.Controls.Add(this.formatComboBox);
       this.generalGroupBox.Controls.Add(this.formatLabel);
       this.generalGroupBox.Controls.Add(this.label15);
@@ -241,14 +267,70 @@ namespace ChapterMerger
       this.generalGroupBox.Controls.Add(this.vcodecLabel);
       this.generalGroupBox.Location = new System.Drawing.Point(6, 7);
       this.generalGroupBox.Name = "generalGroupBox";
-      this.generalGroupBox.Size = new System.Drawing.Size(311, 302);
+      this.generalGroupBox.Size = new System.Drawing.Size(311, 346);
       this.generalGroupBox.TabIndex = 2;
       this.generalGroupBox.TabStop = false;
       this.generalGroupBox.Text = "General";
       // 
+      // maintainAspectCheckBox
+      // 
+      this.maintainAspectCheckBox.AutoSize = true;
+      this.maintainAspectCheckBox.Location = new System.Drawing.Point(9, 124);
+      this.maintainAspectCheckBox.Name = "maintainAspectCheckBox";
+      this.maintainAspectCheckBox.Size = new System.Drawing.Size(130, 17);
+      this.maintainAspectCheckBox.TabIndex = 29;
+      this.maintainAspectCheckBox.Text = "Maintain Aspect Ratio";
+      this.maintainAspectCheckBox.UseVisualStyleBackColor = true;
+      this.maintainAspectCheckBox.CheckedChanged += new System.EventHandler(this.maintainAspectCheckBox_CheckedChanged);
+      // 
+      // audchannelTextBox
+      // 
+      this.audchannelTextBox.Location = new System.Drawing.Point(91, 270);
+      this.audchannelTextBox.MaxLength = 1;
+      this.audchannelTextBox.Name = "audchannelTextBox";
+      this.audchannelTextBox.Size = new System.Drawing.Size(45, 20);
+      this.audchannelTextBox.TabIndex = 28;
+      this.audchannelTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numberTextBox_KeyDown);
+      this.audchannelTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numberTextBox_KeyPress);
+      // 
+      // label23
+      // 
+      this.label23.AutoSize = true;
+      this.label23.Location = new System.Drawing.Point(6, 273);
+      this.label23.Name = "label23";
+      this.label23.Size = new System.Drawing.Size(84, 13);
+      this.label23.TabIndex = 27;
+      this.label23.Text = "Audio Channels:";
+      // 
+      // formatComboBox
+      // 
+      this.formatComboBox.FormattingEnabled = true;
+      this.formatComboBox.Location = new System.Drawing.Point(54, 18);
+      this.formatComboBox.Name = "formatComboBox";
+      this.formatComboBox.Size = new System.Drawing.Size(73, 21);
+      this.formatComboBox.TabIndex = 26;
+      // 
+      // formatLabel
+      // 
+      this.formatLabel.AutoSize = true;
+      this.formatLabel.Location = new System.Drawing.Point(6, 21);
+      this.formatLabel.Name = "formatLabel";
+      this.formatLabel.Size = new System.Drawing.Size(42, 13);
+      this.formatLabel.TabIndex = 25;
+      this.formatLabel.Text = "Format:";
+      // 
+      // label15
+      // 
+      this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label15.Location = new System.Drawing.Point(26, 311);
+      this.label15.Name = "label15";
+      this.label15.Size = new System.Drawing.Size(243, 32);
+      this.label15.TabIndex = 4;
+      this.label15.Text = "*: Must not be empty\r\n**: Empty means use default value for the option";
+      // 
       // akbitTextBox
       // 
-      this.akbitTextBox.Location = new System.Drawing.Point(121, 217);
+      this.akbitTextBox.Location = new System.Drawing.Point(121, 244);
       this.akbitTextBox.MaxLength = 10;
       this.akbitTextBox.Name = "akbitTextBox";
       this.akbitTextBox.Size = new System.Drawing.Size(82, 20);
@@ -268,20 +350,20 @@ namespace ChapterMerger
       // 
       // vwidthTextBox
       // 
-      this.vwidthTextBox.Location = new System.Drawing.Point(84, 149);
+      this.vwidthTextBox.Location = new System.Drawing.Point(92, 176);
       this.vwidthTextBox.MaxLength = 6;
       this.vwidthTextBox.Name = "vwidthTextBox";
-      this.vwidthTextBox.Size = new System.Drawing.Size(119, 20);
+      this.vwidthTextBox.Size = new System.Drawing.Size(111, 20);
       this.vwidthTextBox.TabIndex = 22;
       this.vwidthTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numberTextBox_KeyDown);
       this.vwidthTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numberTextBox_KeyPress);
       // 
       // vheightTextBox
       // 
-      this.vheightTextBox.Location = new System.Drawing.Point(84, 123);
+      this.vheightTextBox.Location = new System.Drawing.Point(92, 150);
       this.vheightTextBox.MaxLength = 6;
       this.vheightTextBox.Name = "vheightTextBox";
-      this.vheightTextBox.Size = new System.Drawing.Size(119, 20);
+      this.vheightTextBox.Size = new System.Drawing.Size(111, 20);
       this.vheightTextBox.TabIndex = 21;
       this.vheightTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numberTextBox_KeyDown);
       this.vheightTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numberTextBox_KeyPress);
@@ -289,7 +371,7 @@ namespace ChapterMerger
       // acodecComboBox
       // 
       this.acodecComboBox.FormattingEnabled = true;
-      this.acodecComboBox.Location = new System.Drawing.Point(91, 190);
+      this.acodecComboBox.Location = new System.Drawing.Point(91, 217);
       this.acodecComboBox.Name = "acodecComboBox";
       this.acodecComboBox.Size = new System.Drawing.Size(112, 21);
       this.acodecComboBox.TabIndex = 20;
@@ -316,25 +398,25 @@ namespace ChapterMerger
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(6, 152);
+      this.label2.Location = new System.Drawing.Point(6, 179);
       this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(72, 13);
+      this.label2.Size = new System.Drawing.Size(77, 13);
       this.label2.TabIndex = 10;
-      this.label2.Text = "Video Width*:";
+      this.label2.Text = "Output Width*:";
       // 
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(6, 126);
+      this.label1.Location = new System.Drawing.Point(6, 153);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(75, 13);
+      this.label1.Size = new System.Drawing.Size(80, 13);
       this.label1.TabIndex = 9;
-      this.label1.Text = "Video Height*:";
+      this.label1.Text = "Output Height*:";
       // 
       // akbitLabel
       // 
       this.akbitLabel.AutoSize = true;
-      this.akbitLabel.Location = new System.Drawing.Point(6, 220);
+      this.akbitLabel.Location = new System.Drawing.Point(6, 247);
       this.akbitLabel.Name = "akbitLabel";
       this.akbitLabel.Size = new System.Drawing.Size(109, 13);
       this.akbitLabel.TabIndex = 6;
@@ -352,7 +434,7 @@ namespace ChapterMerger
       // acodecLabel
       // 
       this.acodecLabel.AutoSize = true;
-      this.acodecLabel.Location = new System.Drawing.Point(6, 194);
+      this.acodecLabel.Location = new System.Drawing.Point(6, 221);
       this.acodecLabel.Name = "acodecLabel";
       this.acodecLabel.Size = new System.Drawing.Size(79, 13);
       this.acodecLabel.TabIndex = 2;
@@ -373,7 +455,7 @@ namespace ChapterMerger
       this.fileOptionsGroupBox.Controls.Add(this.newFilePrefixTextBox);
       this.fileOptionsGroupBox.Controls.Add(this.label4);
       this.fileOptionsGroupBox.Controls.Add(this.label3);
-      this.fileOptionsGroupBox.Location = new System.Drawing.Point(6, 436);
+      this.fileOptionsGroupBox.Location = new System.Drawing.Point(6, 480);
       this.fileOptionsGroupBox.Name = "fileOptionsGroupBox";
       this.fileOptionsGroupBox.Size = new System.Drawing.Size(311, 81);
       this.fileOptionsGroupBox.TabIndex = 13;
@@ -437,14 +519,218 @@ namespace ChapterMerger
       this.x264GroupBox.Controls.Add(this.label8);
       this.x264GroupBox.Location = new System.Drawing.Point(6, 7);
       this.x264GroupBox.Name = "x264GroupBox";
-      this.x264GroupBox.Size = new System.Drawing.Size(328, 234);
+      this.x264GroupBox.Size = new System.Drawing.Size(311, 677);
       this.x264GroupBox.TabIndex = 14;
       this.x264GroupBox.TabStop = false;
       this.x264GroupBox.Text = "x264 Options";
       // 
+      // x264advancedGroupBox
+      // 
+      this.x264advancedGroupBox.Controls.Add(this.label25);
+      this.x264advancedGroupBox.Controls.Add(this.x264fpsTextBox);
+      this.x264advancedGroupBox.Controls.Add(this.label24);
+      this.x264advancedGroupBox.Controls.Add(this.x264durationTextBox);
+      this.x264advancedGroupBox.Controls.Add(this.label22);
+      this.x264advancedGroupBox.Controls.Add(this.x264offsetTextBox);
+      this.x264advancedGroupBox.Controls.Add(this.label21);
+      this.x264advancedGroupBox.Controls.Add(this.x264pretestCheckBox);
+      this.x264advancedGroupBox.Controls.Add(this.x264fastStartCheckBox);
+      this.x264advancedGroupBox.Controls.Add(this.customx264TextBox);
+      this.x264advancedGroupBox.Controls.Add(this.x264optsLabel);
+      this.x264advancedGroupBox.Controls.Add(this.x264optsTextBox);
+      this.x264advancedGroupBox.Controls.Add(this.x264optsCheckBox);
+      this.x264advancedGroupBox.Controls.Add(this.label20);
+      this.x264advancedGroupBox.Controls.Add(this.x264levelComboBox);
+      this.x264advancedGroupBox.Controls.Add(this.label19);
+      this.x264advancedGroupBox.Controls.Add(this.label17);
+      this.x264advancedGroupBox.Controls.Add(this.h264profileComboBox);
+      this.x264advancedGroupBox.Controls.Add(this.x264hi10CheckBox);
+      this.x264advancedGroupBox.Location = new System.Drawing.Point(6, 150);
+      this.x264advancedGroupBox.Name = "x264advancedGroupBox";
+      this.x264advancedGroupBox.Size = new System.Drawing.Size(299, 482);
+      this.x264advancedGroupBox.TabIndex = 13;
+      this.x264advancedGroupBox.TabStop = false;
+      this.x264advancedGroupBox.Text = "Advanced";
+      // 
+      // label25
+      // 
+      this.label25.Location = new System.Drawing.Point(6, 369);
+      this.label25.Name = "label25";
+      this.label25.Size = new System.Drawing.Size(254, 31);
+      this.label25.TabIndex = 26;
+      this.label25.Text = "Note: Providing data here will immediately nullify all options above. ";
+      // 
+      // x264fpsTextBox
+      // 
+      this.x264fpsTextBox.Location = new System.Drawing.Point(72, 71);
+      this.x264fpsTextBox.MaxLength = 9;
+      this.x264fpsTextBox.Name = "x264fpsTextBox";
+      this.x264fpsTextBox.Size = new System.Drawing.Size(65, 20);
+      this.x264fpsTextBox.TabIndex = 25;
+      this.x264fpsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.x264fpsTextBox_KeyPress);
+      // 
+      // label24
+      // 
+      this.label24.AutoSize = true;
+      this.label24.Location = new System.Drawing.Point(6, 74);
+      this.label24.Name = "label24";
+      this.label24.Size = new System.Drawing.Size(33, 13);
+      this.label24.TabIndex = 24;
+      this.label24.Text = "FPS: ";
+      // 
+      // x264durationTextBox
+      // 
+      this.x264durationTextBox.Location = new System.Drawing.Point(106, 188);
+      this.x264durationTextBox.Name = "x264durationTextBox";
+      this.x264durationTextBox.Size = new System.Drawing.Size(79, 20);
+      this.x264durationTextBox.TabIndex = 23;
+      // 
+      // label22
+      // 
+      this.label22.AutoSize = true;
+      this.label22.Location = new System.Drawing.Point(24, 191);
+      this.label22.Name = "label22";
+      this.label22.Size = new System.Drawing.Size(76, 13);
+      this.label22.TabIndex = 22;
+      this.label22.Text = "Duration (sec):";
+      // 
+      // x264offsetTextBox
+      // 
+      this.x264offsetTextBox.Location = new System.Drawing.Point(140, 162);
+      this.x264offsetTextBox.Name = "x264offsetTextBox";
+      this.x264offsetTextBox.Size = new System.Drawing.Size(45, 20);
+      this.x264offsetTextBox.TabIndex = 21;
+      // 
+      // label21
+      // 
+      this.label21.AutoSize = true;
+      this.label21.Location = new System.Drawing.Point(24, 165);
+      this.label21.Name = "label21";
+      this.label21.Size = new System.Drawing.Size(110, 13);
+      this.label21.TabIndex = 20;
+      this.label21.Text = "Offset from start (sec):";
+      // 
+      // x264pretestCheckBox
+      // 
+      this.x264pretestCheckBox.AutoSize = true;
+      this.x264pretestCheckBox.Location = new System.Drawing.Point(9, 145);
+      this.x264pretestCheckBox.Name = "x264pretestCheckBox";
+      this.x264pretestCheckBox.Size = new System.Drawing.Size(76, 17);
+      this.x264pretestCheckBox.TabIndex = 19;
+      this.x264pretestCheckBox.Text = "Pre-testing";
+      this.x264pretestCheckBox.UseVisualStyleBackColor = true;
+      this.x264pretestCheckBox.CheckedChanged += new System.EventHandler(this.x264pretestCheckBox_CheckedChanged);
+      // 
+      // x264fastStartCheckBox
+      // 
+      this.x264fastStartCheckBox.AutoSize = true;
+      this.x264fastStartCheckBox.Location = new System.Drawing.Point(9, 121);
+      this.x264fastStartCheckBox.Name = "x264fastStartCheckBox";
+      this.x264fastStartCheckBox.Size = new System.Drawing.Size(107, 17);
+      this.x264fastStartCheckBox.TabIndex = 18;
+      this.x264fastStartCheckBox.Text = "Enable Fast Start";
+      this.x264fastStartCheckBox.UseVisualStyleBackColor = true;
+      // 
+      // customx264TextBox
+      // 
+      this.customx264TextBox.Location = new System.Drawing.Point(6, 403);
+      this.customx264TextBox.Multiline = true;
+      this.customx264TextBox.Name = "customx264TextBox";
+      this.customx264TextBox.Size = new System.Drawing.Size(287, 59);
+      this.customx264TextBox.TabIndex = 17;
+      // 
+      // x264optsLabel
+      // 
+      this.x264optsLabel.AutoSize = true;
+      this.x264optsLabel.Location = new System.Drawing.Point(9, 275);
+      this.x264optsLabel.Name = "x264optsLabel";
+      this.x264optsLabel.Size = new System.Drawing.Size(105, 13);
+      this.x264optsLabel.TabIndex = 16;
+      this.x264optsLabel.Text = "x264opts arguments:";
+      // 
+      // x264optsTextBox
+      // 
+      this.x264optsTextBox.Location = new System.Drawing.Point(6, 291);
+      this.x264optsTextBox.Multiline = true;
+      this.x264optsTextBox.Name = "x264optsTextBox";
+      this.x264optsTextBox.Size = new System.Drawing.Size(287, 36);
+      this.x264optsTextBox.TabIndex = 15;
+      // 
+      // x264optsCheckBox
+      // 
+      this.x264optsCheckBox.AutoSize = true;
+      this.x264optsCheckBox.Location = new System.Drawing.Point(9, 251);
+      this.x264optsCheckBox.Name = "x264optsCheckBox";
+      this.x264optsCheckBox.Size = new System.Drawing.Size(105, 17);
+      this.x264optsCheckBox.TabIndex = 14;
+      this.x264optsCheckBox.Text = "Enable x264opts";
+      this.x264optsCheckBox.UseVisualStyleBackColor = true;
+      // 
+      // label20
+      // 
+      this.label20.AutoSize = true;
+      this.label20.Location = new System.Drawing.Point(6, 348);
+      this.label20.Name = "label20";
+      this.label20.Size = new System.Drawing.Size(108, 13);
+      this.label20.TabIndex = 13;
+      this.label20.Text = "Custom x264 options:";
+      // 
+      // x264levelComboBox
+      // 
+      this.x264levelComboBox.FormattingEnabled = true;
+      this.x264levelComboBox.Location = new System.Drawing.Point(72, 44);
+      this.x264levelComboBox.Name = "x264levelComboBox";
+      this.x264levelComboBox.Size = new System.Drawing.Size(65, 21);
+      this.x264levelComboBox.TabIndex = 12;
+      // 
+      // label19
+      // 
+      this.label19.AutoSize = true;
+      this.label19.Location = new System.Drawing.Point(6, 47);
+      this.label19.Name = "label19";
+      this.label19.Size = new System.Drawing.Size(59, 13);
+      this.label19.TabIndex = 11;
+      this.label19.Text = "h264 level:";
+      // 
+      // label17
+      // 
+      this.label17.AutoSize = true;
+      this.label17.Location = new System.Drawing.Point(6, 20);
+      this.label17.Name = "label17";
+      this.label17.Size = new System.Drawing.Size(65, 13);
+      this.label17.TabIndex = 9;
+      this.label17.Text = "h264 profile:";
+      // 
+      // h264profileComboBox
+      // 
+      this.h264profileComboBox.FormattingEnabled = true;
+      this.h264profileComboBox.Location = new System.Drawing.Point(72, 17);
+      this.h264profileComboBox.Name = "h264profileComboBox";
+      this.h264profileComboBox.Size = new System.Drawing.Size(95, 21);
+      this.h264profileComboBox.TabIndex = 10;
+      // 
+      // x264hi10CheckBox
+      // 
+      this.x264hi10CheckBox.AutoSize = true;
+      this.x264hi10CheckBox.Enabled = false;
+      this.x264hi10CheckBox.Location = new System.Drawing.Point(9, 97);
+      this.x264hi10CheckBox.Name = "x264hi10CheckBox";
+      this.x264hi10CheckBox.Size = new System.Drawing.Size(111, 17);
+      this.x264hi10CheckBox.TabIndex = 6;
+      this.x264hi10CheckBox.Text = "Enable Hi10 h264";
+      this.x264hi10CheckBox.UseVisualStyleBackColor = true;
+      // 
+      // label18
+      // 
+      this.label18.Location = new System.Drawing.Point(15, 42);
+      this.label18.Name = "label18";
+      this.label18.Size = new System.Drawing.Size(176, 30);
+      this.label18.TabIndex = 11;
+      this.label18.Text = "- Note: If set, CRF will be used instead of video bitrate option";
+      // 
       // x264crfTextBox
       // 
-      this.x264crfTextBox.Location = new System.Drawing.Point(78, 19);
+      this.x264crfTextBox.Location = new System.Drawing.Point(43, 19);
       this.x264crfTextBox.MaxLength = 2;
       this.x264crfTextBox.Name = "x264crfTextBox";
       this.x264crfTextBox.Size = new System.Drawing.Size(42, 20);
@@ -456,43 +742,32 @@ namespace ChapterMerger
       // 
       this.label11.AutoSize = true;
       this.label11.Enabled = false;
-      this.label11.Location = new System.Drawing.Point(3, 214);
+      this.label11.Location = new System.Drawing.Point(3, 635);
       this.label11.Name = "label11";
       this.label11.Size = new System.Drawing.Size(140, 13);
       this.label11.TabIndex = 7;
       this.label11.Text = "More options coming soon...";
       // 
-      // x264hi10CheckBox
-      // 
-      this.x264hi10CheckBox.AutoSize = true;
-      this.x264hi10CheckBox.Enabled = false;
-      this.x264hi10CheckBox.Location = new System.Drawing.Point(9, 44);
-      this.x264hi10CheckBox.Name = "x264hi10CheckBox";
-      this.x264hi10CheckBox.Size = new System.Drawing.Size(111, 17);
-      this.x264hi10CheckBox.TabIndex = 6;
-      this.x264hi10CheckBox.Text = "Enable Hi10 h264";
-      this.x264hi10CheckBox.UseVisualStyleBackColor = true;
-      // 
       // x264presetComboBox
       // 
       this.x264presetComboBox.FormattingEnabled = true;
-      this.x264presetComboBox.Location = new System.Drawing.Point(78, 45);
+      this.x264presetComboBox.Location = new System.Drawing.Point(78, 88);
       this.x264presetComboBox.Name = "x264presetComboBox";
-      this.x264presetComboBox.Size = new System.Drawing.Size(121, 21);
+      this.x264presetComboBox.Size = new System.Drawing.Size(95, 21);
       this.x264presetComboBox.TabIndex = 4;
       // 
       // x264tuneComboBox
       // 
       this.x264tuneComboBox.FormattingEnabled = true;
-      this.x264tuneComboBox.Location = new System.Drawing.Point(78, 72);
+      this.x264tuneComboBox.Location = new System.Drawing.Point(78, 115);
       this.x264tuneComboBox.Name = "x264tuneComboBox";
-      this.x264tuneComboBox.Size = new System.Drawing.Size(121, 21);
+      this.x264tuneComboBox.Size = new System.Drawing.Size(95, 21);
       this.x264tuneComboBox.TabIndex = 3;
       // 
       // label10
       // 
       this.label10.AutoSize = true;
-      this.label10.Location = new System.Drawing.Point(6, 75);
+      this.label10.Location = new System.Drawing.Point(6, 118);
       this.label10.Name = "label10";
       this.label10.Size = new System.Drawing.Size(35, 13);
       this.label10.TabIndex = 2;
@@ -501,7 +776,7 @@ namespace ChapterMerger
       // label9
       // 
       this.label9.AutoSize = true;
-      this.label9.Location = new System.Drawing.Point(6, 48);
+      this.label9.Location = new System.Drawing.Point(6, 91);
       this.label9.Name = "label9";
       this.label9.Size = new System.Drawing.Size(65, 13);
       this.label9.TabIndex = 1;
@@ -533,7 +808,7 @@ namespace ChapterMerger
       // 
       // subIndexTextBox
       // 
-      this.subIndexTextBox.Location = new System.Drawing.Point(102, 85);
+      this.subIndexTextBox.Location = new System.Drawing.Point(158, 85);
       this.subIndexTextBox.MaxLength = 2;
       this.subIndexTextBox.Name = "subIndexTextBox";
       this.subIndexTextBox.Size = new System.Drawing.Size(49, 20);
@@ -563,9 +838,9 @@ namespace ChapterMerger
       this.label14.AutoSize = true;
       this.label14.Location = new System.Drawing.Point(21, 88);
       this.label14.Name = "label14";
-      this.label14.Size = new System.Drawing.Size(74, 13);
+      this.label14.Size = new System.Drawing.Size(131, 13);
       this.label14.TabIndex = 2;
-      this.label14.Text = "Subtitle Index:";
+      this.label14.Text = "Zero-based Subtitle Index:";
       // 
       // subsFilterCheckBox
       // 
@@ -602,17 +877,59 @@ namespace ChapterMerger
       this.advancedTabPage.Text = "Advanced";
       this.advancedTabPage.UseVisualStyleBackColor = true;
       // 
+      // groupBox3
+      // 
+      this.groupBox3.Controls.Add(this.experAudCodecCheckBox);
+      this.groupBox3.Location = new System.Drawing.Point(6, 782);
+      this.groupBox3.Name = "groupBox3";
+      this.groupBox3.Size = new System.Drawing.Size(311, 100);
+      this.groupBox3.TabIndex = 12;
+      this.groupBox3.TabStop = false;
+      this.groupBox3.Text = "Experimental";
+      // 
+      // experAudCodecCheckBox
+      // 
+      this.experAudCodecCheckBox.AutoSize = true;
+      this.experAudCodecCheckBox.Enabled = false;
+      this.experAudCodecCheckBox.Location = new System.Drawing.Point(9, 19);
+      this.experAudCodecCheckBox.Name = "experAudCodecCheckBox";
+      this.experAudCodecCheckBox.Size = new System.Drawing.Size(177, 17);
+      this.experAudCodecCheckBox.TabIndex = 1;
+      this.experAudCodecCheckBox.Text = "Use Experimental Audio Codecs";
+      this.experAudCodecCheckBox.UseVisualStyleBackColor = true;
+      // 
       // groupBox2
       // 
+      this.groupBox2.Controls.Add(this.langCodeComboBox);
+      this.groupBox2.Controls.Add(this.audLangSwitchCheckBox);
       this.groupBox2.Controls.Add(this.label5);
       this.groupBox2.Controls.Add(this.shutdownCheckBox);
       this.groupBox2.Controls.Add(this.vidScalerComboBox);
       this.groupBox2.Location = new System.Drawing.Point(6, 7);
       this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Size = new System.Drawing.Size(311, 100);
+      this.groupBox2.Size = new System.Drawing.Size(311, 168);
       this.groupBox2.TabIndex = 11;
       this.groupBox2.TabStop = false;
       this.groupBox2.Text = "Advanced General";
+      // 
+      // langCodeComboBox
+      // 
+      this.langCodeComboBox.FormattingEnabled = true;
+      this.langCodeComboBox.Location = new System.Drawing.Point(237, 58);
+      this.langCodeComboBox.Name = "langCodeComboBox";
+      this.langCodeComboBox.Size = new System.Drawing.Size(67, 21);
+      this.langCodeComboBox.TabIndex = 11;
+      // 
+      // audLangSwitchCheckBox
+      // 
+      this.audLangSwitchCheckBox.AutoSize = true;
+      this.audLangSwitchCheckBox.Location = new System.Drawing.Point(9, 60);
+      this.audLangSwitchCheckBox.Name = "audLangSwitchCheckBox";
+      this.audLangSwitchCheckBox.Size = new System.Drawing.Size(222, 17);
+      this.audLangSwitchCheckBox.TabIndex = 10;
+      this.audLangSwitchCheckBox.Text = "Map streams only with specified language";
+      this.audLangSwitchCheckBox.UseVisualStyleBackColor = true;
+      this.audLangSwitchCheckBox.CheckedChanged += new System.EventHandler(this.audLangSwitchCheckBox_CheckedChanged);
       // 
       // label5
       // 
@@ -626,11 +943,11 @@ namespace ChapterMerger
       // shutdownCheckBox
       // 
       this.shutdownCheckBox.AutoSize = true;
-      this.shutdownCheckBox.Location = new System.Drawing.Point(9, 52);
+      this.shutdownCheckBox.Location = new System.Drawing.Point(9, 85);
       this.shutdownCheckBox.Name = "shutdownCheckBox";
-      this.shutdownCheckBox.Size = new System.Drawing.Size(251, 17);
+      this.shutdownCheckBox.Size = new System.Drawing.Size(286, 17);
       this.shutdownCheckBox.TabIndex = 0;
-      this.shutdownCheckBox.Text = "Shutdown after conversion tasks are completed";
+      this.shutdownCheckBox.Text = "Shutdown device after conversion tasks are completed";
       this.shutdownCheckBox.UseVisualStyleBackColor = true;
       // 
       // vidScalerComboBox
@@ -643,33 +960,77 @@ namespace ChapterMerger
       // 
       // groupBox1
       // 
+      this.groupBox1.Controls.Add(this.label27);
+      this.groupBox1.Controls.Add(this.custMapTextBox);
+      this.groupBox1.Controls.Add(this.label12);
+      this.groupBox1.Controls.Add(this.custVFilterTextBox);
+      this.groupBox1.Controls.Add(this.label7);
       this.groupBox1.Controls.Add(this.label13);
       this.groupBox1.Controls.Add(this.label6);
       this.groupBox1.Controls.Add(this.custFFmpegTextBox);
-      this.groupBox1.Controls.Add(this.custMapOptionsTextBox);
-      this.groupBox1.Controls.Add(this.label7);
-      this.groupBox1.Controls.Add(this.label12);
-      this.groupBox1.Controls.Add(this.custVidFilterTextBox);
-      this.groupBox1.Location = new System.Drawing.Point(6, 113);
+      this.groupBox1.Location = new System.Drawing.Point(6, 181);
       this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(311, 309);
+      this.groupBox1.Size = new System.Drawing.Size(311, 595);
       this.groupBox1.TabIndex = 10;
       this.groupBox1.TabStop = false;
       this.groupBox1.Text = "Manual Options";
+      // 
+      // label27
+      // 
+      this.label27.Location = new System.Drawing.Point(18, 233);
+      this.label27.Name = "label27";
+      this.label27.Size = new System.Drawing.Size(274, 190);
+      this.label27.TabIndex = 15;
+      this.label27.Text = resources.GetString("label27.Text");
+      // 
+      // custMapTextBox
+      // 
+      this.custMapTextBox.Location = new System.Drawing.Point(9, 532);
+      this.custMapTextBox.Multiline = true;
+      this.custMapTextBox.Name = "custMapTextBox";
+      this.custMapTextBox.Size = new System.Drawing.Size(283, 50);
+      this.custMapTextBox.TabIndex = 14;
+      this.custMapTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.custMapTextBox_KeyPress);
+      // 
+      // label12
+      // 
+      this.label12.AutoSize = true;
+      this.label12.Location = new System.Drawing.Point(6, 515);
+      this.label12.Name = "label12";
+      this.label12.Size = new System.Drawing.Size(125, 13);
+      this.label12.TabIndex = 12;
+      this.label12.Text = "Custom mapping options:";
+      // 
+      // custVFilterTextBox
+      // 
+      this.custVFilterTextBox.Location = new System.Drawing.Point(9, 453);
+      this.custVFilterTextBox.Multiline = true;
+      this.custVFilterTextBox.Name = "custVFilterTextBox";
+      this.custVFilterTextBox.Size = new System.Drawing.Size(283, 50);
+      this.custVFilterTextBox.TabIndex = 11;
+      this.custVFilterTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.custVFilterTextBox_KeyPress);
+      // 
+      // label7
+      // 
+      this.label7.AutoSize = true;
+      this.label7.Location = new System.Drawing.Point(6, 437);
+      this.label7.Name = "label7";
+      this.label7.Size = new System.Drawing.Size(114, 13);
+      this.label7.TabIndex = 10;
+      this.label7.Text = "Custom VFilter options:";
       // 
       // label13
       // 
       this.label13.Location = new System.Drawing.Point(18, 20);
       this.label13.Name = "label13";
-      this.label13.Size = new System.Drawing.Size(254, 31);
+      this.label13.Size = new System.Drawing.Size(254, 127);
       this.label13.TabIndex = 9;
-      this.label13.Text = "Note: Providing manual options here will override all respective options in previ" +
-    "ous pages.";
+      this.label13.Text = resources.GetString("label13.Text");
       // 
       // label6
       // 
       this.label6.AutoSize = true;
-      this.label6.Location = new System.Drawing.Point(6, 60);
+      this.label6.Location = new System.Drawing.Point(6, 147);
       this.label6.Name = "label6";
       this.label6.Size = new System.Drawing.Size(123, 13);
       this.label6.TabIndex = 2;
@@ -677,45 +1038,11 @@ namespace ChapterMerger
       // 
       // custFFmpegTextBox
       // 
-      this.custFFmpegTextBox.Location = new System.Drawing.Point(9, 76);
+      this.custFFmpegTextBox.Location = new System.Drawing.Point(9, 163);
       this.custFFmpegTextBox.Multiline = true;
       this.custFFmpegTextBox.Name = "custFFmpegTextBox";
       this.custFFmpegTextBox.Size = new System.Drawing.Size(283, 50);
       this.custFFmpegTextBox.TabIndex = 3;
-      // 
-      // custMapOptionsTextBox
-      // 
-      this.custMapOptionsTextBox.Location = new System.Drawing.Point(9, 237);
-      this.custMapOptionsTextBox.Multiline = true;
-      this.custMapOptionsTextBox.Name = "custMapOptionsTextBox";
-      this.custMapOptionsTextBox.Size = new System.Drawing.Size(283, 50);
-      this.custMapOptionsTextBox.TabIndex = 8;
-      // 
-      // label7
-      // 
-      this.label7.AutoSize = true;
-      this.label7.Location = new System.Drawing.Point(6, 138);
-      this.label7.Name = "label7";
-      this.label7.Size = new System.Drawing.Size(137, 13);
-      this.label7.TabIndex = 4;
-      this.label7.Text = "Custom Video Filter options:";
-      // 
-      // label12
-      // 
-      this.label12.AutoSize = true;
-      this.label12.Location = new System.Drawing.Point(6, 221);
-      this.label12.Name = "label12";
-      this.label12.Size = new System.Drawing.Size(126, 13);
-      this.label12.TabIndex = 7;
-      this.label12.Text = "Custom Mapping options:";
-      // 
-      // custVidFilterTextBox
-      // 
-      this.custVidFilterTextBox.Location = new System.Drawing.Point(9, 154);
-      this.custVidFilterTextBox.Multiline = true;
-      this.custVidFilterTextBox.Name = "custVidFilterTextBox";
-      this.custVidFilterTextBox.Size = new System.Drawing.Size(283, 50);
-      this.custVidFilterTextBox.TabIndex = 5;
       // 
       // okButton
       // 
@@ -747,91 +1074,6 @@ namespace ChapterMerger
       this.defaultButton.UseVisualStyleBackColor = true;
       this.defaultButton.Click += new System.EventHandler(this.defaultButton_Click);
       // 
-      // label15
-      // 
-      this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label15.Location = new System.Drawing.Point(21, 268);
-      this.label15.Name = "label15";
-      this.label15.Size = new System.Drawing.Size(243, 32);
-      this.label15.TabIndex = 4;
-      this.label15.Text = "*: Must not be empty\r\n**: Empty means use default value for the option";
-      // 
-      // formatLabel
-      // 
-      this.formatLabel.AutoSize = true;
-      this.formatLabel.Location = new System.Drawing.Point(6, 21);
-      this.formatLabel.Name = "formatLabel";
-      this.formatLabel.Size = new System.Drawing.Size(42, 13);
-      this.formatLabel.TabIndex = 25;
-      this.formatLabel.Text = "Format:";
-      // 
-      // formatComboBox
-      // 
-      this.formatComboBox.FormattingEnabled = true;
-      this.formatComboBox.Location = new System.Drawing.Point(54, 18);
-      this.formatComboBox.Name = "formatComboBox";
-      this.formatComboBox.Size = new System.Drawing.Size(73, 21);
-      this.formatComboBox.TabIndex = 26;
-      // 
-      // h264profileComboBox
-      // 
-      this.h264profileComboBox.FormattingEnabled = true;
-      this.h264profileComboBox.Location = new System.Drawing.Point(78, 17);
-      this.h264profileComboBox.Name = "h264profileComboBox";
-      this.h264profileComboBox.Size = new System.Drawing.Size(121, 21);
-      this.h264profileComboBox.TabIndex = 10;
-      // 
-      // label17
-      // 
-      this.label17.AutoSize = true;
-      this.label17.Location = new System.Drawing.Point(6, 20);
-      this.label17.Name = "label17";
-      this.label17.Size = new System.Drawing.Size(65, 13);
-      this.label17.TabIndex = 9;
-      this.label17.Text = "h264 profile:";
-      // 
-      // groupBox3
-      // 
-      this.groupBox3.Controls.Add(this.experAudCodecCheckBox);
-      this.groupBox3.Location = new System.Drawing.Point(6, 428);
-      this.groupBox3.Name = "groupBox3";
-      this.groupBox3.Size = new System.Drawing.Size(311, 100);
-      this.groupBox3.TabIndex = 12;
-      this.groupBox3.TabStop = false;
-      this.groupBox3.Text = "Experimental";
-      // 
-      // experAudCodecCheckBox
-      // 
-      this.experAudCodecCheckBox.AutoSize = true;
-      this.experAudCodecCheckBox.Enabled = false;
-      this.experAudCodecCheckBox.Location = new System.Drawing.Point(9, 19);
-      this.experAudCodecCheckBox.Name = "experAudCodecCheckBox";
-      this.experAudCodecCheckBox.Size = new System.Drawing.Size(177, 17);
-      this.experAudCodecCheckBox.TabIndex = 1;
-      this.experAudCodecCheckBox.Text = "Use Experimental Audio Codecs";
-      this.experAudCodecCheckBox.UseVisualStyleBackColor = true;
-      // 
-      // label18
-      // 
-      this.label18.AutoSize = true;
-      this.label18.Location = new System.Drawing.Point(124, 22);
-      this.label18.Name = "label18";
-      this.label18.Size = new System.Drawing.Size(204, 13);
-      this.label18.TabIndex = 11;
-      this.label18.Text = "- Note: This will ignore video bitrate option";
-      // 
-      // x264advancedGroupBox
-      // 
-      this.x264advancedGroupBox.Controls.Add(this.label17);
-      this.x264advancedGroupBox.Controls.Add(this.h264profileComboBox);
-      this.x264advancedGroupBox.Controls.Add(this.x264hi10CheckBox);
-      this.x264advancedGroupBox.Location = new System.Drawing.Point(6, 99);
-      this.x264advancedGroupBox.Name = "x264advancedGroupBox";
-      this.x264advancedGroupBox.Size = new System.Drawing.Size(316, 100);
-      this.x264advancedGroupBox.TabIndex = 13;
-      this.x264advancedGroupBox.TabStop = false;
-      this.x264advancedGroupBox.Text = "Advanced";
-      // 
       // OptionsConvertWindow
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -859,17 +1101,17 @@ namespace ChapterMerger
       this.specTabPage.ResumeLayout(false);
       this.x264GroupBox.ResumeLayout(false);
       this.x264GroupBox.PerformLayout();
+      this.x264advancedGroupBox.ResumeLayout(false);
+      this.x264advancedGroupBox.PerformLayout();
       this.subsTabPage.ResumeLayout(false);
       this.subsTabPage.PerformLayout();
       this.advancedTabPage.ResumeLayout(false);
+      this.groupBox3.ResumeLayout(false);
+      this.groupBox3.PerformLayout();
       this.groupBox2.ResumeLayout(false);
       this.groupBox2.PerformLayout();
       this.groupBox1.ResumeLayout(false);
       this.groupBox1.PerformLayout();
-      this.groupBox3.ResumeLayout(false);
-      this.groupBox3.PerformLayout();
-      this.x264advancedGroupBox.ResumeLayout(false);
-      this.x264advancedGroupBox.PerformLayout();
       this.ResumeLayout(false);
 
     }
@@ -903,13 +1145,11 @@ namespace ChapterMerger
     private System.Windows.Forms.CheckBox extSubCheckBox;
     private System.Windows.Forms.CheckBox shutdownCheckBox;
     private System.Windows.Forms.Label label5;
-    private System.Windows.Forms.Label label7;
     private System.Windows.Forms.TextBox custFFmpegTextBox;
     private System.Windows.Forms.Label label6;
     private System.Windows.Forms.Label label10;
     private System.Windows.Forms.Label label9;
     private System.Windows.Forms.Label label8;
-    private System.Windows.Forms.TextBox custVidFilterTextBox;
     private System.Windows.Forms.ComboBox x264presetComboBox;
     private System.Windows.Forms.ComboBox x264tuneComboBox;
     private System.Windows.Forms.GroupBox mappingGroupBox;
@@ -920,8 +1160,6 @@ namespace ChapterMerger
     private System.Windows.Forms.ComboBox vcodecComboBox;
     private System.Windows.Forms.Label label11;
     private System.Windows.Forms.CheckBox x264hi10CheckBox;
-    private System.Windows.Forms.TextBox custMapOptionsTextBox;
-    private System.Windows.Forms.Label label12;
     private System.Windows.Forms.ComboBox acodecComboBox;
     private System.Windows.Forms.ComboBox vidScalerComboBox;
     private System.Windows.Forms.GroupBox groupBox2;
@@ -945,5 +1183,31 @@ namespace ChapterMerger
     private System.Windows.Forms.GroupBox groupBox3;
     private System.Windows.Forms.CheckBox experAudCodecCheckBox;
     private System.Windows.Forms.GroupBox x264advancedGroupBox;
+    private System.Windows.Forms.Label label19;
+    private System.Windows.Forms.ComboBox x264levelComboBox;
+    private System.Windows.Forms.TextBox audchannelTextBox;
+    private System.Windows.Forms.Label label23;
+    private System.Windows.Forms.TextBox x264durationTextBox;
+    private System.Windows.Forms.Label label22;
+    private System.Windows.Forms.TextBox x264offsetTextBox;
+    private System.Windows.Forms.Label label21;
+    private System.Windows.Forms.CheckBox x264pretestCheckBox;
+    private System.Windows.Forms.CheckBox x264fastStartCheckBox;
+    private System.Windows.Forms.TextBox customx264TextBox;
+    private System.Windows.Forms.Label x264optsLabel;
+    private System.Windows.Forms.TextBox x264optsTextBox;
+    private System.Windows.Forms.CheckBox x264optsCheckBox;
+    private System.Windows.Forms.Label label20;
+    private System.Windows.Forms.ComboBox langCodeComboBox;
+    private System.Windows.Forms.CheckBox audLangSwitchCheckBox;
+    private System.Windows.Forms.TextBox x264fpsTextBox;
+    private System.Windows.Forms.Label label24;
+    private System.Windows.Forms.Label label25;
+    private System.Windows.Forms.Label label12;
+    private System.Windows.Forms.TextBox custVFilterTextBox;
+    private System.Windows.Forms.Label label7;
+    private System.Windows.Forms.TextBox custMapTextBox;
+    private System.Windows.Forms.CheckBox maintainAspectCheckBox;
+    private System.Windows.Forms.Label label27;
   }
 }

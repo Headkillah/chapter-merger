@@ -68,10 +68,15 @@ namespace ChapterMerger
       progress = 1;
       processPercent = 0;
 
+      /*
+       * Legacy code - since the command was just repeated twice below!
+       * 
       if (fileList.hasOrdered)
       {
         Directory.CreateDirectory(Path.Combine(fileList.folderPath, "output"));
       }
+       * 
+       * */
 
       if (Config.Configure.sourceOutputFolder)
       {

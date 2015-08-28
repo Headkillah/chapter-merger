@@ -32,7 +32,7 @@ namespace ChapterMerger
     public int diagnose = 0;
     public bool shutdownDevice = false;
 
-    public bool launchGui = true;
+    public bool launchGui = true; //deprecated; We have a full GUI program now.
     //public bool doAnalyze = false;
     public bool doMakeXml = false;
     public bool doMakeScript = false;
@@ -47,6 +47,7 @@ namespace ChapterMerger
     public bool sourceOutputFolder = true;
     public bool alwaysExecuteScript = false;
     public bool alwaysMerge = false;
+    public bool convertAfterMerge = false;
     public bool noChapterOutput = true;
     public bool executeScriptAfter = false;
     public bool projectIncludeFileList = false;

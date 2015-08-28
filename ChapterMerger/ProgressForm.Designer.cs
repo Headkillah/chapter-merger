@@ -58,6 +58,7 @@ namespace ChapterMerger
       this.backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
       this.stopButton = new System.Windows.Forms.Button();
       this.detailLabel = new System.Windows.Forms.Label();
+      this.backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
       this.SuspendLayout();
       // 
       // progressBar1
@@ -131,6 +132,14 @@ namespace ChapterMerger
       this.detailLabel.TabIndex = 6;
       this.detailLabel.Text = "               ";
       // 
+      // backgroundWorker4
+      // 
+      this.backgroundWorker4.WorkerReportsProgress = true;
+      this.backgroundWorker4.WorkerSupportsCancellation = true;
+      this.backgroundWorker4.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker4_DoWork);
+      this.backgroundWorker4.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_ProgressChanged);
+      this.backgroundWorker4.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker4_RunWorkerCompleted);
+      // 
       // ProgressForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -165,5 +174,6 @@ namespace ChapterMerger
     private System.ComponentModel.BackgroundWorker backgroundWorker3;
     private System.Windows.Forms.Button stopButton;
     private System.Windows.Forms.Label detailLabel;
+    private System.ComponentModel.BackgroundWorker backgroundWorker4;
   }
 }

@@ -36,6 +36,7 @@ namespace ChapterMerger
     private string[] args;
     private bool doMakeXml = false;
     private bool doMerge = false;
+    private bool doConvert = false;
 
     private int progress;
     private int processPercent;
@@ -68,6 +69,26 @@ namespace ChapterMerger
       InitializeComponent();
     }
 
+    public ProgressForm(int mode)
+    {
+      switch (mode)
+      {
+        case 0:
+          this.doMakeXml = true;
+          break;
+        case 1:
+          this.doMerge = true;
+          break;
+        case 2:
+          this.doConvert = true;
+          break;
+        default:
+          break;
+      }
+
+      InitializeComponent();
+    }
+
   //Custom constructors - gets file lists to process
     public ProgressForm(string[] args, bool doMakeXml)
     {
@@ -84,7 +105,10 @@ namespace ChapterMerger
       if (doMerge)
       {
         backgroundWorker3.RunWorkerAsync();
-      } else
+      }
+      else if (doConvert)
+        backgroundWorker4.RunWorkerAsync();
+      else
         backgroundWorker1.RunWorkerAsync();
     }
 
@@ -255,6 +279,77 @@ namespace ChapterMerger
       else
         backgroundWorker1.CancelAsync();
       stopButton.Enabled = false;
+    }
+
+  //BackgroundWorker - Execute Conversion
+    private void backgroundWorker4_DoWork(object sender, DoWorkEventArgs e)
+    {
+      ProjectManager project = MainWindow.projectManager;
+
+      e.Result = project.analyze;
+
+      Converter converter = new Converter(Config.Configure.ConvertConfigure, backgroundWorker4);
+
+      progress = 1;
+      processPercent = 0;
+
+      foreach (FileObjectCollection fileList in project.analyze.fileLists)
+      {
+
+        if (backgroundWorker4.CancellationPending)
+        {
+
+          // Set the e.Cancel flag so that the WorkerCompleted event
+          // knows that the process was cancelled.
+          e.Cancel = true;
+          return;
+        }
+
+        processPercent = progress.ToPercentage(project.analyze.fileLists.Count);
+
+        progress++;
+
+        converter.Convert(fileList, processPercent);
+      }
+
+      if (backgroundWorker4.CancellationPending)
+      {
+        e.Cancel = true;
+        return;
+      }
+    }
+
+    private void backgroundWorker4_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+    {
+      DialogResult result = new DialogResult();
+
+      // Check to see if an error occurred in the
+      // background process.
+      if (e.Error != null)
+      {
+        MessageBox.Show(e.Error.Message);
+      }
+      else
+
+        // Check to see if the background process was cancelled.
+        if (e.Cancelled)
+        {
+          MessageBox.Show("Processing cancelled.");
+        }
+        else
+        {
+          // Everything completed normally.
+          // process the response using e.Result
+          Analyze processor = e.Result as Analyze;
+          result = MessageBox.Show("Conversion complete! View output files?", "Confirm", MessageBoxButtons.YesNo);
+
+          if (result == DialogResult.Yes)
+          {
+            processor.LaunchInExplorer();
+          }
+        }
+
+      this.Close();
     }
   }
 }

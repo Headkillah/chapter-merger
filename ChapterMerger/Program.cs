@@ -38,6 +38,11 @@ namespace ChapterMerger
     public static string ffmpegExe;
     public static string ffprobeExe;
 
+    public static bool hasMkvMerge = false;
+    public static bool hasMkvInfo = false;
+    public static bool hasFFmpeg = false;
+    public static bool hasFFprobe = false;
+
     /// <summary>
     /// The main entry point for the application.
     /// </summary>
@@ -52,6 +57,21 @@ namespace ChapterMerger
       ffmpegExe = Program.getExe("ffmpeg.exe");   //added for convert function
       ffprobeExe = Program.getExe("ffprobe.exe"); //added for convert function
 
+      if (!String.IsNullOrWhiteSpace(mergeExe))
+        hasMkvMerge = true;
+      if (!String.IsNullOrWhiteSpace(infoExe))
+        hasMkvInfo = true;
+      if (!String.IsNullOrWhiteSpace(ffmpegExe))
+        hasFFmpeg = true;
+      if (!String.IsNullOrWhiteSpace(ffprobeExe))
+        hasFFprobe = true;
+
+      if (!hasMkvMerge || !hasMkvInfo)
+      {
+        MessageBox.Show("Error: mkvtoolnix not found.\r\n\r\nEither this program must exist inside mkvtoolnix or mkvtoolnix must be included in the PATH Variable.", "Error");
+        Environment.Exit(1);
+      }
+
       try
       {
         Config.getConfiguration();
@@ -61,12 +81,6 @@ namespace ChapterMerger
         MessageBox.Show("Configuration file corrupted! Default settings will be loaded.");
         Config.Initialize();
         Config.writeConfiguration();
-      }
-
-      if (mergeExe == null | infoExe == null)
-      {
-        MessageBox.Show("Error: mkvtoolnix not found.\r\n\r\nEither this program must exist inside mkvtoolnix or mkvtoolnix must be included in the PATH Variable.", "Error");
-        Environment.Exit(1);
       }
 
       List<string> programArgs = new List<string>();
@@ -84,8 +98,7 @@ namespace ChapterMerger
         }
       }
 
-      if (Config.Configure.launchGui)
-        Program.launchGUI(programArgs.ToArray());
+      Program.launchGUI(programArgs.ToArray());
 
     }
 
