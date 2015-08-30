@@ -8,6 +8,10 @@ using System.Text.RegularExpressions;
 
 namespace ChapterMerger
 {
+
+  /// <summary>
+  /// Instance that converts media files using FFmpeg, with configuration based from ConvertConfiguration.
+  /// </summary>
   class Converter
   {
 

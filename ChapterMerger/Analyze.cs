@@ -31,11 +31,13 @@ using System.Text.RegularExpressions;
 
 namespace ChapterMerger
 {
-  public class Analyze
+  public partial class Analyze
   {
 
     public int progressArg { get; set;}
     public int progressList { get; set; }
+
+    private ProgressState progressState = new ProgressState();
 
     private int progress = 1;
     private int processPercent = 0;
@@ -45,7 +47,6 @@ namespace ChapterMerger
 
     public List<string> orderedGroups = new List<string>();
     public List<FileObjectCollection> fileLists = new List<FileObjectCollection>();
-
 
     public Analyze()
     {
@@ -75,6 +76,10 @@ namespace ChapterMerger
 
       ListProcessor processList = new ListProcessor();
       List<string> argList = new List<string>();
+
+      List<string> filteredArgs = new List<string>();
+
+      progressState.progressPercent = 0;
       
 
       foreach (string arg in argument)
@@ -103,6 +108,7 @@ namespace ChapterMerger
           if (bIsDirectory == false)
           {
             argList.Add(arg);
+            filteredArgs.Add(arg);
           }
           else
           {
@@ -111,15 +117,15 @@ namespace ChapterMerger
 
             processPercent = progress.ToPercentage(argument.Length);
 
-            this.progressArg = processPercent;
-
-            ProgressState progressState = new ProgressState();
-
-            progressState.progressPercent = 0;
+            progressArg = processPercent;
 
             Analyze.backgroundWorker.ReportProgress(progressArg, progressState);
 
             string[] s = Directory.GetFiles(fullpath, "*.mkv");
+
+            foreach (string argitem in s)
+              filteredArgs.Add(argitem);
+
             processList.processList(s.ToList(), Path.GetFileNameWithoutExtension(arg), this, fullpath, argument.Length);
 
             progress++;
@@ -138,14 +144,16 @@ namespace ChapterMerger
 
         progressArg = processPercent;
 
-        ProgressState progressState = new ProgressState();
-
-        progressState.progressPercent = 0;
-
         Analyze.backgroundWorker.ReportProgress(progressArg, progressState);
 
         processList.processList(argList, "various files", this, Program.defaultPath);
+        
+      }
 
+
+      if (filteredArgs.Count > 0)
+      {
+        //AnalyzeList(filteredArgs); 
       }
 
     }

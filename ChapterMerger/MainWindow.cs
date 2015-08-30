@@ -84,7 +84,7 @@ namespace ChapterMerger
       this.saveProjectButton.Enabled = state;
       this.clearListButton.Enabled = state;
 
-      if (projectManager.analyze.fileLists.Count > 0)
+      if (projectManager.analyze != null && projectManager.analyze.fileLists.Count > 0)
       {
         if (projectManager.analyze.hasOrdered)
         {
@@ -102,6 +102,7 @@ namespace ChapterMerger
       {
         this.Text = "ChapterMerger - New Project *";
         this.convertButton.Enabled = state;
+        this.executeButton.Enabled = state;
       }
         
       //if (!state | mode == 1)
@@ -152,11 +153,11 @@ namespace ChapterMerger
   //Button - Clears List
     private void clearListButton_Click(object sender, EventArgs e)
     {
-      projectManager.ClearProject();
-      
       fileListViewInitialize();
 
       ToggleEnableStates(false);
+
+      projectManager.ClearProject();
     }
 
   /// <summary>

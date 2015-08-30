@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 namespace ChapterMerger
 {
   //SuidLister Object: object that stores suid information of every file object it receives
-  class SuidLister
+  public class SuidLister
   {
     public List<Suid> suidList = new List<Suid>();
 

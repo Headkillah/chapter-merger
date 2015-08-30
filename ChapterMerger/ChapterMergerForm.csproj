@@ -84,6 +84,7 @@
     <Compile Include="ConvertConfigObj.cs" />
     <Compile Include="Converter.cs" />
     <Compile Include="ExtensionClass.cs" />
+    <Compile Include="AnalyzeList.cs" />
     <Compile Include="MergeExecute.cs" />
     <Compile Include="Collection.cs" />
     <Compile Include="Config.cs" />
