@@ -113,6 +113,7 @@ namespace ChapterMerger
     {
       InitializeConfiguration(Config.Configure.ConvertConfigure);
 
+      //Removed checking of hasFFmpeg as it is no longer necessary.
     }
 
     private void okButton_Click(object sender, EventArgs e)
@@ -271,7 +272,7 @@ namespace ChapterMerger
       else
         this.vwidthTextBox.Enabled = true;
 
-      this.x264optsTextBox.Enabled = x264optsCheckBox.Checked;
+      //Removed x264optsTextBox toggling as it is no longer necessary
       this.x264offsetTextBox.Enabled = x264pretestCheckBox.Checked;
       this.x264durationTextBox.Enabled = x264pretestCheckBox.Checked;
       this.langCodeComboBox.Enabled = audLangSwitchCheckBox.Checked;
@@ -384,34 +385,6 @@ namespace ChapterMerger
       this.langCodeComboBox.Enabled = audLangSwitchCheckBox.Checked;
     }
 
-  /*
-   * Legacy Code
-   * 
-   * The same as the above KeyDown and KeyPress Event, with only
-   * decimal key added as valid input
-   * */
-    private void x264fpsTextBox_KeyDown(object sender, KeyEventArgs e)
-    {
-      nonValidEntered = false;
-
-      /*
-      if (e.KeyCode < Keys.D0 || e.KeyCode > Keys.D9)
-      {
-        if (e.KeyCode < Keys.NumPad0 || e.KeyCode > Keys.Decimal)
-        {
-          if (e.KeyCode != Keys.Back || e.KeyCode != Keys.OemPeriod)
-          {
-            nonValidEntered = true;
-          }
-        }
-      }
-      if (Control.ModifierKeys == Keys.Shift)
-      {
-        nonValidEntered = true;
-      }
-       * */
-    }
-
     private void x264fpsTextBox_KeyPress(object sender, KeyPressEventArgs e)
     {
       e.Handled = this.ValidateKeyPress(sender, e, 3).Handled;
@@ -485,6 +458,18 @@ namespace ChapterMerger
         e.Handled = true;
     }
 
+    //Removed x264optsCheckBox_CheckedChanged as it is no longer necessary
+
+    private void x264optsTextBox_KeyPress(object sender, KeyPressEventArgs e)
+    {
+      if (e.KeyChar == (Char)Keys.Space)
+        e.Handled = true;
+    }
+
+    private void framerateTextBox_KeyPress(object sender, KeyPressEventArgs e)
+    {
+      e.Handled = this.ValidateKeyPress(sender, e).Handled;
+    }
 
   }
 }

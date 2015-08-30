@@ -15,12 +15,29 @@ namespace ChapterMerger
   class Converter
   {
 
+    /// <summary>
+    /// The BackgroundWorker to send reports to.
+    /// </summary>
     private System.ComponentModel.BackgroundWorker backgroundWorker;
 
+    /// <summary>
+    /// Progress report in raw count.
+    /// </summary>
     private int progress;
+
+    /// <summary>
+    /// Progress report in percentage.
+    /// </summary>
     private int processPercent;
 
+    /// <summary>
+    /// The ConvertConfigure instance to get configurations from.
+    /// </summary>
     private ConvertConfigure ConvConfig;
+
+    /// <summary>
+    /// The string that contains the output path.
+    /// </summary>
     private string outputPath = "";
 
     /// <summary>
@@ -64,16 +81,12 @@ namespace ChapterMerger
       progress = 1;
       processPercent = 0;
 
-      if (Config.Configure.sourceOutputFolder)
-      {
-        outputPath = fileList.folderPath;
-      }
-      else
+      if (!Config.Configure.sourceOutputFolder)
       {
         outputPath = Program.defaultPath;
+        if (!Directory.Exists(Path.Combine(outputPath, "converted")))
+          Directory.CreateDirectory(Path.Combine(outputPath, "converted"));
       }
-
-      Directory.CreateDirectory(Path.Combine(outputPath, "converted"));
 
     //Main Loop
       foreach (FileObject file in fileList.fileList)
@@ -108,6 +121,14 @@ namespace ChapterMerger
 
         progressState.progressDetail = "Building conversion arguments...";
         this.backgroundWorker.ReportProgress(fileListPercent, progressState);
+
+        if (Config.Configure.sourceOutputFolder)
+        {
+          outputPath = file.directoryname;
+        }
+
+        if (!Directory.Exists(Path.Combine(outputPath, "converted")))
+          Directory.CreateDirectory(Path.Combine(outputPath, "converted"));
 
       //Output File Argument
         string outputFile = outputPath + "\\converted\\" + ConvConfig.newfileprefix + file.filenameNoExtension + ConvConfig.newfilesuffix;
@@ -197,22 +218,20 @@ namespace ChapterMerger
       //Main process
         ProcessStartInfo convertProcess = new ProcessStartInfo();
 
-        //convertProcess.FileName = "cmd.exe";
-        //convertProcess.Arguments = "/k ffmpeg_old.exe " + ffmpegArgs;
-          
         convertProcess.FileName = Program.ffmpegExe;
         convertProcess.Arguments = ffmpegArgs;
 
         convertProcess.UseShellExecute = false;
         convertProcess.CreateNoWindow = false;
-        convertProcess.WorkingDirectory = fileList.folderPath;
+        convertProcess.WorkingDirectory = file.directoryname;
         //convertProcess.WindowStyle = ProcessWindowStyle.Hidden;
+        //convertProcess.RedirectStandardInput = true;
 
         progressState.progressDetail = "Converting...";
         this.backgroundWorker.ReportProgress(fileListPercent, progressState);
 
+        //Diagnostics
         //System.Windows.Forms.MessageBox.Show("Converting.\r\n\r\nArguments: " + ffmpegArgs, "Diagnostics");
-
           
         using (Process process = Process.Start(convertProcess))
         {
@@ -233,17 +252,20 @@ namespace ChapterMerger
           //Diagnostics
           //System.Windows.Forms.MessageBox.Show("Creating external subs.\r\n\r\nArguments: " + ffmpegArgs, "Diagnostics");
 
-          
           using (Process process = Process.Start(convertProcess))
           {
             process.WaitForExit();
           }
           
-
         }
 
         progress++;
       //End of Main process
+      }
+
+      if (!Analyze.outputGroups.Contains(outputPath))
+      {
+        Analyze.outputGroups.Add(outputPath + "\\converted");
       }
 
     }
@@ -345,7 +367,7 @@ namespace ChapterMerger
         if (ConvConfig.usex264opts)
         {
           if (!String.IsNullOrWhiteSpace(ConvConfig.x264optsarg))
-            ffmpegOptions += @" -x264opts " + ConvConfig.x264optsarg;
+            ffmpegOptions += @" -x264opts """ + ConvConfig.x264optsarg + @"""";
         }
 
         //X264FPS
@@ -390,8 +412,34 @@ namespace ChapterMerger
         ffmpegOptions += @" -ac " + ConvConfig.audiochannel;
 
       //Misc. Options
-      if (ConvConfig.rframerate > 0)
+      if (!String.IsNullOrWhiteSpace(ConvConfig.rframerate))
         ffmpegOptions += @" -r " + ConvConfig.rframerate;
+    }
+
+    /// <summary>
+    /// Placeholder. Starts process associated with Convert Class.
+    /// </summary>
+    /// <param name="argument">The program arguments.</param>
+    /// <param name="workingDirectory">The working directory for the program.</param>
+    public static void StartProcess(string arguments, string workingDirectory)
+    {
+    //Main process
+      ProcessStartInfo convertProcess = new ProcessStartInfo();
+
+      convertProcess.FileName = Program.ffmpegExe;
+      convertProcess.Arguments = arguments;
+
+      convertProcess.UseShellExecute = false;
+      convertProcess.CreateNoWindow = false;
+      convertProcess.WorkingDirectory = workingDirectory;
+      convertProcess.WindowStyle = ProcessWindowStyle.Hidden;
+      convertProcess.RedirectStandardInput = true;
+
+      using (Process process = Process.Start(convertProcess))
+      {
+        process.WaitForExit();
+      }
+
     }
   }
 }

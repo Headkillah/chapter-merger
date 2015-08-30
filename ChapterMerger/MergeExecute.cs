@@ -29,20 +29,38 @@ using ChapterMerger;
 
 namespace ChapterMerger
 {
-  class MergeExecute
+
+  /// <summary>
+  /// Constructs merge argument and merges passed MKV filelists if it is ordered.
+  /// </summary>
+  class Merger
   {
 
+    /// <summary>
+    /// The BackgroundWorkter to send reports to.
+    /// </summary>
     private System.ComponentModel.BackgroundWorker backgroundWorker;
 
+    /// <summary>
+    /// Progress report in raw count.
+    /// </summary>
     private int progress;
+
+    /// <summary>
+    /// Progress report in percentage.
+    /// </summary>
     private int processPercent;
 
-    public MergeExecute()
+    public Merger()
     {
 
     }
 
-    public MergeExecute(System.ComponentModel.BackgroundWorker backgroundWorker)
+    /// <summary>
+    /// Custom Constructor - Include a BackgroundWorker
+    /// </summary>
+    /// <param name="backgroundWorker">The BackgroundWorkter to send reports to.</param>
+    public Merger(System.ComponentModel.BackgroundWorker backgroundWorker)
     {
       this.backgroundWorker = backgroundWorker;
     }
@@ -54,7 +72,7 @@ namespace ChapterMerger
     /// <param name="processor">The Analyze object for progress reporting.</param>
     /// <param name="useCmd">Deprecated - sets whether to use cmd or not for merge execution.</param>
     /// <param name="fileListPercent">The percentage of File Lists processed. Used for progress reporting.</param>
-    public void mergeExecute(FileObjectCollection fileList, Analyze processor, bool useCmd = false, int fileListPercent = 100)
+    public void Merge(FileObjectCollection fileList, Analyze processor, bool useCmd = false, int fileListPercent = 100)
     {
 
       List<string> cmdCommand = new List<string>();
@@ -78,16 +96,12 @@ namespace ChapterMerger
        * 
        * */
 
-      if (Config.Configure.sourceOutputFolder)
-      {
-        outputPath = fileList.folderPath;
-      }
-      else
+      if (!Config.Configure.sourceOutputFolder)
       {
         outputPath = Program.defaultPath;
+        if (!Directory.Exists(Path.Combine(outputPath, "merged")))
+          Directory.CreateDirectory(Path.Combine(outputPath, "merged"));
       }
-
-      Directory.CreateDirectory(Path.Combine(outputPath, "output"));
 
       foreach (FileObject file in fileList.fileList)
       {
@@ -99,6 +113,14 @@ namespace ChapterMerger
         {
           return;
         }
+
+        if (Config.Configure.sourceOutputFolder)
+        {
+          outputPath = file.directoryname;
+        }
+
+        if (!Directory.Exists(Path.Combine(outputPath, "merged")))
+          Directory.CreateDirectory(Path.Combine(outputPath, "merged"));
 
         List<string> timeCodeList = new List<string>();
         List<string> delArgumentList = new List<string>();
@@ -155,7 +177,7 @@ namespace ChapterMerger
           string[] chaptersInfo = chapterInfo.ToArray();
 
           string tempFileName = "\"" + Config.Configure.tempfileprefix + file.filenameNoExtension + Config.Configure.tempfilesuffix + ".mkv\"";
-          string newFileName = "\"output\\" + Config.Configure.newfileprefix + file.filenameNoExtension + Config.Configure.newfilesuffix + ".mkv\"";
+          string newFileName = "\"merged\\" + Config.Configure.newfileprefix + file.filenameNoExtension + Config.Configure.newfilesuffix + ".mkv\"";
           string originalFileName = "\"" + file.fullpath + "\"";
 
           if (file.shouldJoin)
@@ -194,7 +216,7 @@ namespace ChapterMerger
           mergeProcess.FileName = Program.mergeExe;
           mergeProcess.UseShellExecute = false;
           mergeProcess.CreateNoWindow = true;
-          mergeProcess.WorkingDirectory = fileList.folderPath;
+          mergeProcess.WorkingDirectory = file.directoryname;
           mergeProcess.WindowStyle = ProcessWindowStyle.Hidden;
           //mergeProcess.RedirectStandardOutput = true;
 
@@ -245,9 +267,9 @@ namespace ChapterMerger
 
       }
 
-      if (fileList.hasOrdered && !processor.orderedGroups.Contains(outputPath))
+      if (fileList.hasOrdered && !Analyze.outputGroups.Contains(outputPath))
       {
-        processor.orderedGroups.Add(outputPath + "\\output");
+        Analyze.outputGroups.Add(outputPath + "\\merged");
       }
 
     }

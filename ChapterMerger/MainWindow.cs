@@ -71,10 +71,8 @@ namespace ChapterMerger
     }
 
   /// <summary>
-  /// Enables or Disables sets of controls through the state variable passed
+  /// Enables or Disables sets of controls depending on files added
   /// </summary>
-  /// <param name="state">State of the affected controls</param>
-  /// <param name="listCount">The length of the item list passed. Affects certain controls.</param>
     private void ToggleEnableStates()
     {
       bool state;
@@ -88,19 +86,19 @@ namespace ChapterMerger
       this.saveProjectButton.Enabled = state;
       this.clearListButton.Enabled = state;
 
-      if (Program.hasFFmpeg)
-        this.convertButton.Enabled = state;
-
       if (projectManager.analyze != null && projectManager.analyze.fileLists.Count > 0)
       {
         if (projectManager.analyze.hasOrdered)
         {
           this.executeButton.Enabled = true;
         }
+        //Removed checking of hasFFmpeg as it is no longer necessary.
+          this.convertButton.Enabled = true;
       }
       else
       {
         this.executeButton.Enabled = false;
+        this.convertButton.Enabled = false;
       }
 
     }
@@ -398,8 +396,14 @@ namespace ChapterMerger
 
     private void convertButton_Click(object sender, EventArgs e)
     {
-      ProgressForm progressBar = new ProgressForm(2);
-      progressBar.ShowDialog();
+      if (Program.hasFFmpeg)
+        MessageBox.Show("To use this functionality, FFmpeg must exist in the same directory as this program, or in the PATH variable.\r\n\r\nYou can get ffmpeg here:\r\n https://ffmpeg.org/download.html", "Information");
+      else
+      {
+        ProgressForm progressBar = new ProgressForm(2);
+        progressBar.ShowDialog();
+      }
+
     }
 
 

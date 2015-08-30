@@ -130,7 +130,7 @@ VFilter: subtitles=(input):si=0,scale=-2:480
 Map: 0:v,-0:a</value>
   </data>
   <data name="label13.Text" xml:space="preserve">
-    <value>Note: Providing manual options here will nullify all options in these pages.
+    <value>CAUTION! Providing manual options below will nullify ALL options in these pages.
 
 Use (inputfile) and (outputname) to refer to analyzed input and outputs programmatically.
 

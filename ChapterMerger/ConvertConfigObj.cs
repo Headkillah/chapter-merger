@@ -6,7 +6,7 @@ using System.Text;
 namespace ChapterMerger
 {
   /// <summary>
-  /// Place Holder ConvertConfigure, for now
+  /// Contains the configuration required for conversion process.
   /// </summary>
   public class ConvertConfigure
   {
@@ -16,8 +16,8 @@ namespace ChapterMerger
 
     public string vcodec = "libx264";
     public string acodec = "libmp3lame";
-    public int? videobitkb = 500;
-    public int? audiobitkb = 128;
+    public int? videobitkb = 1000;
+    public int? audiobitkb = 192;
 
     public bool vresize = false;
     public bool maintainAspectRatio = true;
@@ -38,11 +38,12 @@ namespace ChapterMerger
     public int x264outduration = 0;
     public string x264fps = ""; //Used string instead of decimal, since it will be parsed and passed as a string anyway
     public bool usex264opts = false;
+    public bool usex264params = false;  //Added as an alternative to x264opts
     public string x264optsarg = "";
-    public string customx264arg = "";
+    public string customx264arg = ""; //Deprecated, as this can be supplemented by customffmpegarg.
 
     public bool audioexperimental = false;
-    public int audiochannel = 0;
+    public int audiochannel = 2;
     public bool audlangswitch = false;
     public string alanguage = "";
     
@@ -58,15 +59,12 @@ namespace ChapterMerger
     public bool includeSubStreams = true;
     public bool includeAttStreams = true;
 
-    //public string[] vfilters = { "" }; //Temporary placeholders for vfilters; yet for use
-    //public string[] mapping = { "0" };
-
     public string customvfilter = "";
     public string custommapping = "";
     public string customffmpegarg = "";
 
     public int fps = 0;
-    public int rframerate = 0;
+    public string rframerate = ""; //Used string instead of int, since it will be parsed and passed as a string anyway
 
     public string newfileprefix = "";
     public string newfilesuffix = "(Converted)";

@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 
 namespace ChapterMerger
 {
@@ -102,6 +103,10 @@ namespace ChapterMerger
 
     }
 
+    /// <summary>
+    /// Launches the ChapterMerger Form.
+    /// </summary>
+    /// <param name="args"></param>
     static void launchGUI(string[] args)
     {
       Application.EnableVisualStyles();
@@ -132,7 +137,7 @@ namespace ChapterMerger
     /// Returns the path of the external program if exists in the current directory or in PATH variable
     /// </summary>
     /// <param name="exe">The external program to check.</param>
-    /// <returns></returns>
+    /// <returns>The path of the external program.</returns>
     public static string getExe(string exe)
     {
       string currentDirExe = Path.Combine(Program.defaultPath, exe);
@@ -148,6 +153,19 @@ namespace ChapterMerger
       }
 
       return null;
+    }
+
+    public static void ShutdownDevice()
+    {
+      //Currently for Windows only.
+
+      ProcessStartInfo shutdownInfo = new ProcessStartInfo();
+
+      shutdownInfo.FileName = "shutdown";
+      shutdownInfo.Arguments = "-s -t 0";
+
+      Process shutdownProcess = Process.Start(shutdownInfo);
+      
     }
   }
 }

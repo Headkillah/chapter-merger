@@ -29,18 +29,30 @@ using System.Xml.Serialization;
 
 namespace ChapterMerger
 {
+
+  /// <summary>
+  /// Deprecated. Creates files that contain informations regarding Merge Data and Merge script.
+  /// </summary>
   class MakeFile
   {
 
-    //private int progress = 1;
-    //private int processPercent = 0;
+    /// <summary>
+    /// The path for the output file.
+    /// </summary>
+    private string outputPath = Program.defaultPath;
 
-    public static string outputPath = Program.defaultPath;
-    public static string dumpPath = Program.defaultPath + "\\dump";
+    /// <summary>
+    /// The path for the dump file.
+    /// </summary>
+    private string dumpPath = Program.defaultPath + "\\dump";
+
+    /// <summary>
+    /// Determines if this should make a file or not.
+    /// </summary>
     private static bool doMakeFile = false;
 
   /// <summary>
-  /// Deprecated - Creates a script that executes mkvmerge commands to merge analyzed files
+  /// Deprecated. Creates a script that executes mkvmerge commands to merge analyzed files
   /// </summary>
   /// <param name="fileList">The processed FileObjectCollection.</param>
   /// <param name="processor">The Analyze object</param>
@@ -161,7 +173,7 @@ namespace ChapterMerger
           writer.WriteLine("@echo off\r\ncls\r\n\r\npushd \"%~dp0\"\r\nif not exist output mkdir output\r\n");
           writer.Write(makeFileContent);
         }
-        processor.orderedGroups.Add(outputPath);
+        Analyze.outputGroups.Add(outputPath);
       }
       else
       {

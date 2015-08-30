@@ -47,9 +47,6 @@ namespace ChapterMerger
     private void OptionsWindow_Load(object sender, EventArgs e)
     {
       InitializeConfiguration(Config.Configure);
-
-      this.convOptionButton.Enabled = Program.hasFFmpeg;
-
     }
 
     private void okButton_Click(object sender, EventArgs e)

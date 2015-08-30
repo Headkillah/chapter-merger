@@ -141,6 +141,11 @@ namespace ChapterMerger
       this.okButton = new System.Windows.Forms.Button();
       this.cancelButton = new System.Windows.Forms.Button();
       this.defaultButton = new System.Windows.Forms.Button();
+      this.label26 = new System.Windows.Forms.Label();
+      this.label28 = new System.Windows.Forms.Label();
+      this.framerateTextBox = new System.Windows.Forms.TextBox();
+      this.x264paramsCheckBox = new System.Windows.Forms.CheckBox();
+      this.label29 = new System.Windows.Forms.Label();
       this.panel1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.generalTabPage.SuspendLayout();
@@ -197,7 +202,7 @@ namespace ChapterMerger
       this.mappingGroupBox.Controls.Add(this.incSubSCheckBox);
       this.mappingGroupBox.Controls.Add(this.incAudSCheckBox);
       this.mappingGroupBox.Controls.Add(this.incVidSCheckBox);
-      this.mappingGroupBox.Location = new System.Drawing.Point(6, 359);
+      this.mappingGroupBox.Location = new System.Drawing.Point(6, 387);
       this.mappingGroupBox.Name = "mappingGroupBox";
       this.mappingGroupBox.Size = new System.Drawing.Size(311, 115);
       this.mappingGroupBox.TabIndex = 14;
@@ -246,6 +251,9 @@ namespace ChapterMerger
       // 
       // generalGroupBox
       // 
+      this.generalGroupBox.Controls.Add(this.framerateTextBox);
+      this.generalGroupBox.Controls.Add(this.label28);
+      this.generalGroupBox.Controls.Add(this.label26);
       this.generalGroupBox.Controls.Add(this.maintainAspectCheckBox);
       this.generalGroupBox.Controls.Add(this.audchannelTextBox);
       this.generalGroupBox.Controls.Add(this.label23);
@@ -267,7 +275,7 @@ namespace ChapterMerger
       this.generalGroupBox.Controls.Add(this.vcodecLabel);
       this.generalGroupBox.Location = new System.Drawing.Point(6, 7);
       this.generalGroupBox.Name = "generalGroupBox";
-      this.generalGroupBox.Size = new System.Drawing.Size(311, 346);
+      this.generalGroupBox.Size = new System.Drawing.Size(311, 374);
       this.generalGroupBox.TabIndex = 2;
       this.generalGroupBox.TabStop = false;
       this.generalGroupBox.Text = "General";
@@ -322,7 +330,7 @@ namespace ChapterMerger
       // label15
       // 
       this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label15.Location = new System.Drawing.Point(26, 311);
+      this.label15.Location = new System.Drawing.Point(26, 339);
       this.label15.Name = "label15";
       this.label15.Size = new System.Drawing.Size(243, 32);
       this.label15.TabIndex = 4;
@@ -455,7 +463,7 @@ namespace ChapterMerger
       this.fileOptionsGroupBox.Controls.Add(this.newFilePrefixTextBox);
       this.fileOptionsGroupBox.Controls.Add(this.label4);
       this.fileOptionsGroupBox.Controls.Add(this.label3);
-      this.fileOptionsGroupBox.Location = new System.Drawing.Point(6, 480);
+      this.fileOptionsGroupBox.Location = new System.Drawing.Point(6, 508);
       this.fileOptionsGroupBox.Name = "fileOptionsGroupBox";
       this.fileOptionsGroupBox.Size = new System.Drawing.Size(311, 81);
       this.fileOptionsGroupBox.TabIndex = 13;
@@ -519,13 +527,15 @@ namespace ChapterMerger
       this.x264GroupBox.Controls.Add(this.label8);
       this.x264GroupBox.Location = new System.Drawing.Point(6, 7);
       this.x264GroupBox.Name = "x264GroupBox";
-      this.x264GroupBox.Size = new System.Drawing.Size(311, 677);
+      this.x264GroupBox.Size = new System.Drawing.Size(311, 710);
       this.x264GroupBox.TabIndex = 14;
       this.x264GroupBox.TabStop = false;
       this.x264GroupBox.Text = "x264 Options";
       // 
       // x264advancedGroupBox
       // 
+      this.x264advancedGroupBox.Controls.Add(this.label29);
+      this.x264advancedGroupBox.Controls.Add(this.x264paramsCheckBox);
       this.x264advancedGroupBox.Controls.Add(this.label25);
       this.x264advancedGroupBox.Controls.Add(this.x264fpsTextBox);
       this.x264advancedGroupBox.Controls.Add(this.label24);
@@ -547,14 +557,15 @@ namespace ChapterMerger
       this.x264advancedGroupBox.Controls.Add(this.x264hi10CheckBox);
       this.x264advancedGroupBox.Location = new System.Drawing.Point(6, 150);
       this.x264advancedGroupBox.Name = "x264advancedGroupBox";
-      this.x264advancedGroupBox.Size = new System.Drawing.Size(299, 482);
+      this.x264advancedGroupBox.Size = new System.Drawing.Size(299, 528);
       this.x264advancedGroupBox.TabIndex = 13;
       this.x264advancedGroupBox.TabStop = false;
       this.x264advancedGroupBox.Text = "Advanced";
       // 
       // label25
       // 
-      this.label25.Location = new System.Drawing.Point(6, 369);
+      this.label25.Enabled = false;
+      this.label25.Location = new System.Drawing.Point(6, 409);
       this.label25.Name = "label25";
       this.label25.Size = new System.Drawing.Size(254, 31);
       this.label25.TabIndex = 26;
@@ -633,7 +644,8 @@ namespace ChapterMerger
       // 
       // customx264TextBox
       // 
-      this.customx264TextBox.Location = new System.Drawing.Point(6, 403);
+      this.customx264TextBox.Enabled = false;
+      this.customx264TextBox.Location = new System.Drawing.Point(6, 443);
       this.customx264TextBox.Multiline = true;
       this.customx264TextBox.Name = "customx264TextBox";
       this.customx264TextBox.Size = new System.Drawing.Size(287, 59);
@@ -655,6 +667,7 @@ namespace ChapterMerger
       this.x264optsTextBox.Name = "x264optsTextBox";
       this.x264optsTextBox.Size = new System.Drawing.Size(287, 36);
       this.x264optsTextBox.TabIndex = 15;
+      this.x264optsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.x264optsTextBox_KeyPress);
       // 
       // x264optsCheckBox
       // 
@@ -742,7 +755,7 @@ namespace ChapterMerger
       // 
       this.label11.AutoSize = true;
       this.label11.Enabled = false;
-      this.label11.Location = new System.Drawing.Point(3, 635);
+      this.label11.Location = new System.Drawing.Point(3, 685);
       this.label11.Name = "label11";
       this.label11.Size = new System.Drawing.Size(140, 13);
       this.label11.TabIndex = 7;
@@ -880,7 +893,7 @@ namespace ChapterMerger
       // groupBox3
       // 
       this.groupBox3.Controls.Add(this.experAudCodecCheckBox);
-      this.groupBox3.Location = new System.Drawing.Point(6, 782);
+      this.groupBox3.Location = new System.Drawing.Point(6, 795);
       this.groupBox3.Name = "groupBox3";
       this.groupBox3.Size = new System.Drawing.Size(311, 100);
       this.groupBox3.TabIndex = 12;
@@ -970,14 +983,14 @@ namespace ChapterMerger
       this.groupBox1.Controls.Add(this.custFFmpegTextBox);
       this.groupBox1.Location = new System.Drawing.Point(6, 181);
       this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(311, 595);
+      this.groupBox1.Size = new System.Drawing.Size(311, 608);
       this.groupBox1.TabIndex = 10;
       this.groupBox1.TabStop = false;
       this.groupBox1.Text = "Manual Options";
       // 
       // label27
       // 
-      this.label27.Location = new System.Drawing.Point(18, 233);
+      this.label27.Location = new System.Drawing.Point(21, 27);
       this.label27.Name = "label27";
       this.label27.Size = new System.Drawing.Size(274, 190);
       this.label27.TabIndex = 15;
@@ -985,7 +998,7 @@ namespace ChapterMerger
       // 
       // custMapTextBox
       // 
-      this.custMapTextBox.Location = new System.Drawing.Point(9, 532);
+      this.custMapTextBox.Location = new System.Drawing.Point(12, 326);
       this.custMapTextBox.Multiline = true;
       this.custMapTextBox.Name = "custMapTextBox";
       this.custMapTextBox.Size = new System.Drawing.Size(283, 50);
@@ -995,7 +1008,7 @@ namespace ChapterMerger
       // label12
       // 
       this.label12.AutoSize = true;
-      this.label12.Location = new System.Drawing.Point(6, 515);
+      this.label12.Location = new System.Drawing.Point(9, 309);
       this.label12.Name = "label12";
       this.label12.Size = new System.Drawing.Size(125, 13);
       this.label12.TabIndex = 12;
@@ -1003,7 +1016,7 @@ namespace ChapterMerger
       // 
       // custVFilterTextBox
       // 
-      this.custVFilterTextBox.Location = new System.Drawing.Point(9, 453);
+      this.custVFilterTextBox.Location = new System.Drawing.Point(12, 247);
       this.custVFilterTextBox.Multiline = true;
       this.custVFilterTextBox.Name = "custVFilterTextBox";
       this.custVFilterTextBox.Size = new System.Drawing.Size(283, 50);
@@ -1013,7 +1026,7 @@ namespace ChapterMerger
       // label7
       // 
       this.label7.AutoSize = true;
-      this.label7.Location = new System.Drawing.Point(6, 437);
+      this.label7.Location = new System.Drawing.Point(9, 231);
       this.label7.Name = "label7";
       this.label7.Size = new System.Drawing.Size(114, 13);
       this.label7.TabIndex = 10;
@@ -1021,16 +1034,16 @@ namespace ChapterMerger
       // 
       // label13
       // 
-      this.label13.Location = new System.Drawing.Point(18, 20);
+      this.label13.Location = new System.Drawing.Point(9, 392);
       this.label13.Name = "label13";
-      this.label13.Size = new System.Drawing.Size(254, 127);
+      this.label13.Size = new System.Drawing.Size(286, 127);
       this.label13.TabIndex = 9;
       this.label13.Text = resources.GetString("label13.Text");
       // 
       // label6
       // 
       this.label6.AutoSize = true;
-      this.label6.Location = new System.Drawing.Point(6, 147);
+      this.label6.Location = new System.Drawing.Point(9, 519);
       this.label6.Name = "label6";
       this.label6.Size = new System.Drawing.Size(123, 13);
       this.label6.TabIndex = 2;
@@ -1038,7 +1051,7 @@ namespace ChapterMerger
       // 
       // custFFmpegTextBox
       // 
-      this.custFFmpegTextBox.Location = new System.Drawing.Point(9, 163);
+      this.custFFmpegTextBox.Location = new System.Drawing.Point(12, 535);
       this.custFFmpegTextBox.Multiline = true;
       this.custFFmpegTextBox.Name = "custFFmpegTextBox";
       this.custFFmpegTextBox.Size = new System.Drawing.Size(283, 50);
@@ -1073,6 +1086,51 @@ namespace ChapterMerger
       this.defaultButton.Text = "Restore Defaults";
       this.defaultButton.UseVisualStyleBackColor = true;
       this.defaultButton.Click += new System.EventHandler(this.defaultButton_Click);
+      // 
+      // label26
+      // 
+      this.label26.AutoSize = true;
+      this.label26.Location = new System.Drawing.Point(142, 273);
+      this.label26.Name = "label26";
+      this.label26.Size = new System.Drawing.Size(88, 13);
+      this.label26.TabIndex = 30;
+      this.label26.Text = "0 = Default value";
+      // 
+      // label28
+      // 
+      this.label28.AutoSize = true;
+      this.label28.Location = new System.Drawing.Point(6, 310);
+      this.label28.Name = "label28";
+      this.label28.Size = new System.Drawing.Size(73, 13);
+      this.label28.TabIndex = 31;
+      this.label28.Text = "Frame Rate**:";
+      // 
+      // framerateTextBox
+      // 
+      this.framerateTextBox.Location = new System.Drawing.Point(84, 307);
+      this.framerateTextBox.MaxLength = 3;
+      this.framerateTextBox.Name = "framerateTextBox";
+      this.framerateTextBox.Size = new System.Drawing.Size(43, 20);
+      this.framerateTextBox.TabIndex = 32;
+      this.framerateTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.framerateTextBox_KeyPress);
+      // 
+      // x264paramsCheckBox
+      // 
+      this.x264paramsCheckBox.AutoSize = true;
+      this.x264paramsCheckBox.Location = new System.Drawing.Point(140, 251);
+      this.x264paramsCheckBox.Name = "x264paramsCheckBox";
+      this.x264paramsCheckBox.Size = new System.Drawing.Size(122, 17);
+      this.x264paramsCheckBox.TabIndex = 27;
+      this.x264paramsCheckBox.Text = "Enable x264-params";
+      this.x264paramsCheckBox.UseVisualStyleBackColor = true;
+      // 
+      // label29
+      // 
+      this.label29.Location = new System.Drawing.Point(6, 374);
+      this.label29.Name = "label29";
+      this.label29.Size = new System.Drawing.Size(251, 35);
+      this.label29.TabIndex = 28;
+      this.label29.Text = "Deprecated. You can use manual FFmpeg options for custom x264 options.";
       // 
       // OptionsConvertWindow
       // 
@@ -1209,5 +1267,10 @@ namespace ChapterMerger
     private System.Windows.Forms.TextBox custMapTextBox;
     private System.Windows.Forms.CheckBox maintainAspectCheckBox;
     private System.Windows.Forms.Label label27;
+    private System.Windows.Forms.TextBox framerateTextBox;
+    private System.Windows.Forms.Label label28;
+    private System.Windows.Forms.Label label26;
+    private System.Windows.Forms.CheckBox x264paramsCheckBox;
+    private System.Windows.Forms.Label label29;
   }
 }

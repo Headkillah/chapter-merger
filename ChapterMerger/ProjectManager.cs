@@ -31,6 +31,10 @@ using System.Windows.Forms;
 
 namespace ChapterMerger
 {
+
+  /// <summary>
+  /// Holds all useful data regarding the Current Project.
+  /// </summary>
   public class ProjectManager
   {
 

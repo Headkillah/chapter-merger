@@ -112,7 +112,7 @@ namespace ChapterMerger
         backgroundWorker1.RunWorkerAsync();
     }
 
-  //BackgroundWorker - Main process for files
+  //BackgroundWorker - Main analyze process for files
     private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
     {
       Analyze process = new Analyze(backgroundWorker1);
@@ -131,6 +131,7 @@ namespace ChapterMerger
 
     }
 
+  //Global BackgroundWorker ProgressChanged.
     private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
       ProgressState progressState = e.UserState as ProgressState;
@@ -144,6 +145,7 @@ namespace ChapterMerger
       this.detailLabel.Text = progressState.progressDetail;
     }
 
+  //Global BackgroundWorker RunWorkerCompleted.
     private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
 
@@ -193,22 +195,25 @@ namespace ChapterMerger
 
     }
 
-  //BackgroundWorker - Executes script after First BackgroundWorker (Main Process)
+  //Deprecated. BackgroundWorker - Executes script after First BackgroundWorker (Main Process)
     private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
     {
       MainWindow.projectManager.analyze.ExecuteScript();
     }
 
+  //BackgroundWorker - Merges analyzed data from backgroundWorker1 that has ordered chapter.
     private void backgroundWorker3_DoWork(object sender, DoWorkEventArgs e)
     {
       ProjectManager project = MainWindow.projectManager;
 
       e.Result = project.analyze;
 
-      MergeExecute merger = new MergeExecute(backgroundWorker3);
+      Merger merger = new Merger(backgroundWorker3);
 
       progress = 1;
       processPercent = 0;
+
+      Analyze.outputGroups.Clear();
 
       foreach (FileObjectCollection fileList in project.analyze.fileLists)
       {
@@ -226,7 +231,7 @@ namespace ChapterMerger
 
         progress++;
 
-        merger.mergeExecute(fileList, project.analyze, false, processPercent);
+        merger.Merge(fileList, project.analyze, false, processPercent);
       }
 
       if (backgroundWorker3.CancellationPending)
@@ -271,11 +276,14 @@ namespace ChapterMerger
       this.Close();
     }
 
+  //Stops the current BackgroundWorker.
     private void stopButton_Click(object sender, EventArgs e)
     {
       stopButton.Text = "Cancelling...";
       if (doMerge)
         backgroundWorker3.CancelAsync();
+      else if (doConvert)
+        backgroundWorker4.CancelAsync();
       else
         backgroundWorker1.CancelAsync();
       stopButton.Enabled = false;
@@ -292,6 +300,8 @@ namespace ChapterMerger
 
       progress = 1;
       processPercent = 0;
+
+      Analyze.outputGroups.Clear();
 
       foreach (FileObjectCollection fileList in project.analyze.fileLists)
       {
@@ -336,6 +346,11 @@ namespace ChapterMerger
         {
           MessageBox.Show("Processing cancelled.");
         }
+        // If shutdownDevice is true, shutdown the computer.
+        else if (Config.Configure.ConvertConfigure.shutdownDevice)
+        {
+          Program.ShutdownDevice();
+        } 
         else
         {
           // Everything completed normally.

@@ -40,8 +40,6 @@ namespace ChapterMerger
     public static FileObject infoDump(FileObject file)
     {
 
-      //FileObject file = new FileObject(arg);
-
       if (file.extension == ".mkv")
       {
 
@@ -52,7 +50,6 @@ namespace ChapterMerger
          */
         ProcessStartInfo p = new ProcessStartInfo(Program.infoExe);
 
-        //p.FileName = Program.infoExe; //Unneeded since it was supplied to the constructor?
         p.Arguments = "\"" + file.fullpath + "\"";
         p.UseShellExecute = false;
         p.CreateNoWindow = true;
@@ -81,6 +78,11 @@ namespace ChapterMerger
 
     }
 
+    /// <summary>
+    /// Dumps entire media info from FFmpeg output.
+    /// </summary>
+    /// <param name="file">The FileObject to process.</param>
+    /// <returns>The FileObject processed.</returns>
     public static FileObject ffInfoDump(FileObject file)
     {
 
@@ -108,6 +110,11 @@ namespace ChapterMerger
 
     }
 
+    /// <summary>
+    /// Deprecated. Dumps entire media info from FFprobe output.
+    /// </summary>
+    /// <param name="file">The FileObject to process.</param>
+    /// <returns>The FileObject processed.</returns>
     public static FileObject ffProbeDump(FileObject file)
     {
 
@@ -139,7 +146,6 @@ namespace ChapterMerger
 
         process.WaitForExit();
       }
-
       return file;
 
     }

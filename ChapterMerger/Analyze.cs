@@ -31,21 +31,56 @@ using System.Text.RegularExpressions;
 
 namespace ChapterMerger
 {
+
+  /// <summary>
+  /// Analyzes arguments to construct file lists for processing for either Merge or Conversion.
+  /// </summary>
   public partial class Analyze
   {
 
+    /// <summary>
+    /// Progress report in raw count of Arguments processed.
+    /// </summary>
     public int progressArg { get; set;}
+
+    /// <summary>
+    /// Progress report in raw count of Lists processed.
+    /// </summary>
     public int progressList { get; set; }
 
+    /// <summary>
+    /// The ProgressState that holds secondary progress reports.
+    /// </summary>
     private ProgressState progressState = new ProgressState();
 
+    /// <summary>
+    /// Progress report in raw count.
+    /// </summary>
     private int progress = 1;
+
+    /// <summary>
+    /// Progress report in percentage.
+    /// </summary>
     private int processPercent = 0;
 
+    /// <summary>
+    /// The Global BackgroundWorker to send reports to.
+    /// </summary>
     public static System.ComponentModel.BackgroundWorker backgroundWorker;
+
+    /// <summary>
+    /// Determines if the analyzed data has ordered chapter or not.
+    /// </summary>
     public bool hasOrdered = false;
 
-    public List<string> orderedGroups = new List<string>();
+    /// <summary>
+    /// Contains all the output folders for later reuse.
+    /// </summary>
+    public static List<string> outputGroups = new List<string>();
+    
+    /// <summary>
+    /// Contains all FileObjectCollections that were processed and analyzed.
+    /// </summary>
     public List<FileObjectCollection> fileLists = new List<FileObjectCollection>();
 
     public Analyze()
@@ -56,7 +91,7 @@ namespace ChapterMerger
   /// <summary>
   /// Use a BackgroundWorker object to report progress.
   /// </summary>
-  /// <param name="backgroundWorker"></param>
+  /// <param name="backgroundWorker">The Global BackgroundWorker to send reports to.</param>
     public Analyze(System.ComponentModel.BackgroundWorker backgroundWorker)
     {
       Analyze.backgroundWorker = backgroundWorker;
@@ -66,7 +101,7 @@ namespace ChapterMerger
   /// <summary>
   /// Main program - determines arguments if they need to be processed as a list or not for File Object creations
   /// </summary>
-  /// <param name="argument"></param>
+  /// <param name="argument">The arguments.</param>
     public void process(string[] argument)
     {
       
@@ -167,7 +202,7 @@ namespace ChapterMerger
     {
       if (argument == null)
       {
-        foreach (string outputPath in orderedGroups)
+        foreach (string outputPath in outputGroups)
         {
           if (selectFile)
             Process.Start("explorer.exe", string.Format("/select,\"{0}\"", outputPath));
@@ -190,7 +225,7 @@ namespace ChapterMerger
   /// </summary>
     public void ExecuteScript()
     {
-      foreach (string outputPath in orderedGroups)
+      foreach (string outputPath in outputGroups)
       {
         Process process = Process.Start(outputPath);
         process.WaitForExit();

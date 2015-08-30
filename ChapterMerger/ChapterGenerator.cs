@@ -28,14 +28,18 @@ using System.Text.RegularExpressions;
 
 namespace ChapterMerger
 {
+
+  /// <summary>
+  /// Creates/fetches chapter informations from valid media files.
+  /// </summary>
   class ChapterGenerator
   {
 
   /// <summary>
   /// Adds chapter fields to File Objects.
   /// </summary>
-  /// <param name="file">The FileObject processed by InfoDump.</param>
-  /// <returns></returns>
+  /// <param name="file">The FileObject processed by InfoDumper.InfoDump.</param>
+  /// <returns>The FileObjct with chapter fields.</returns>
     public FileObject chapterDump(FileObject file)
     {
       int chapterNum = 0;
@@ -74,6 +78,11 @@ namespace ChapterMerger
       return file;
     }
 
+    /// <summary>
+    /// Adds media informations to FileObjects.
+    /// </summary>
+    /// <param name="file">The FileObject processed by InfoDumper.ffInfoDump.</param>
+    /// <returns>The FileObject with processed media informations.</returns>
     public FileObject mediaDump(FileObject file)
     {
 
@@ -108,6 +117,11 @@ namespace ChapterMerger
       return file;
     }
 
+    /// <summary>
+    /// Deprecated.  Adds media informations to FileObjects using FFprobe.
+    /// </summary>
+    /// <param name="file">The FileObject processed by InfoDumper.ffProbeDump.</param>
+    /// <returns>The FileObject with processed media informations.</returns>
     public FileObject probeMediaDump(FileObject file)
     {
 
