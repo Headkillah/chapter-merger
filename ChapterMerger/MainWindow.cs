@@ -61,7 +61,7 @@ namespace ChapterMerger
 
       if (projectManager.argumentList.Count() > 0)
       {
-        updateDisplay(projectManager.argumentList.ToArray());
+        updateDisplay();
       }
       else
         fileListViewInitialize();
@@ -75,14 +75,21 @@ namespace ChapterMerger
   /// </summary>
   /// <param name="state">State of the affected controls</param>
   /// <param name="listCount">The length of the item list passed. Affects certain controls.</param>
-    private void ToggleEnableStates(bool state, int mode = 0)
+    private void ToggleEnableStates()
     {
-      //this.makeScriptButton.Enabled = state;
-      //this.execScriptCheckBox.Enabled = state;
+      bool state;
+
+      if (projectManager.argumentList.Count > 0)
+        state = true;
+      else
+        state = false;
+
       this.analyzeButton.Enabled = state;
-      //this.executeButton.Enabled = state;
       this.saveProjectButton.Enabled = state;
       this.clearListButton.Enabled = state;
+
+      if (Program.hasFFmpeg)
+        this.convertButton.Enabled = state;
 
       if (projectManager.analyze != null && projectManager.analyze.fileLists.Count > 0)
       {
@@ -90,23 +97,11 @@ namespace ChapterMerger
         {
           this.executeButton.Enabled = true;
         }
-        if (Program.hasFFmpeg)
-          this.convertButton.Enabled = state;
       }
       else
       {
         this.executeButton.Enabled = false;
       }
-
-      if (!state)
-      {
-        this.Text = "ChapterMerger - New Project *";
-        this.convertButton.Enabled = state;
-        this.executeButton.Enabled = state;
-      }
-        
-      //if (!state | mode == 1)
-      //  this.executeButton.Enabled = false;
 
     }
 
@@ -127,7 +122,7 @@ namespace ChapterMerger
           }
         }
 
-        updateDisplay(projectManager.argumentList.ToArray());
+        updateDisplay();
 
       }
     }
@@ -145,7 +140,7 @@ namespace ChapterMerger
         }
 
 
-        updateDisplay(projectManager.argumentList.ToArray());
+        updateDisplay();
 
       }
     }
@@ -155,9 +150,10 @@ namespace ChapterMerger
     {
       fileListViewInitialize();
 
-      ToggleEnableStates(false);
-
       projectManager.ClearProject();
+
+      updateDisplay();
+
     }
 
   /// <summary>
@@ -218,7 +214,7 @@ namespace ChapterMerger
         }
 
         if (projectManager.argumentList.Count > 0)
-          updateDisplay(projectManager.argumentList.ToArray());
+          updateDisplay();
 
       }
     }
@@ -253,22 +249,29 @@ namespace ChapterMerger
   /// <summary>
   /// Add Items - this method is called when adding items, either through dialog or drag/drop events
   /// </summary>
-  /// <param name="items">The items to be added to update the file list box</param>
-    private void addItems(string[] items)
+    private void addItems()
     {
 
-      if (!this.fileListBox.Visible)
-        this.fileListBox.Show();
-
-      fileListBox.Items.Clear();
-
-      if (listViewIsInitialized)
-        listViewIsInitialized = false;
-
-
-      foreach (string item in items)
+      if (projectManager.argumentList.Count > 0)
       {
-        fileListBox.Items.Add(Path.GetFileName(item).TruncateMiddle(50));
+        if (!this.fileListBox.Visible)
+          this.fileListBox.Show();
+
+        fileListBox.Items.Clear();
+
+        if (listViewIsInitialized)
+          listViewIsInitialized = false;
+
+
+        foreach (string item in projectManager.argumentList)
+        {
+          fileListBox.Items.Add(Path.GetFileName(item).TruncateMiddle(50));
+        }
+
+      }
+      else
+      {
+        this.fileListBox.Hide();
       }
       
     }
@@ -287,7 +290,7 @@ namespace ChapterMerger
         projectManager.analyze.hasOrdered = process.hasOrdered;
       }
 
-      ToggleEnableStates(true);
+      ToggleEnableStates();
     }
 
   //Merge! - executeButton
@@ -318,12 +321,7 @@ namespace ChapterMerger
         {
           projectManager = ProjectManager.openProject(openFileDialog2.FileName);
 
-          if (!String.IsNullOrWhiteSpace(projectManager.projectFileName))
-            this.Text = "ChapterMerger - " + projectManager.projectFileName + " *";
-          else
-            this.Text = "ChapterMerger - " + Path.GetFileName(openFileDialog2.FileName) + " *";
-
-          updateDisplay(projectManager.argumentList.ToArray(), 1);
+          updateDisplay();
         }
         catch (Exception ex)
         {
@@ -363,7 +361,7 @@ namespace ChapterMerger
       {
         projectManager.saveProject(file);
         projectManager.projectFileName = Path.GetFileName(file);
-        this.Text = "ChapterMerger - " + projectManager.projectFileName + " *";
+        updateDisplay();
       }
       catch (Exception ex)
       {
@@ -375,14 +373,20 @@ namespace ChapterMerger
   /// <summary>
   /// Updates the display that displays the file list.
   /// </summary>
-  /// <param name="items">The updated item list to display.</param>
   /// <param name="mode">If 1, disables the merge button.</param>
-    private void updateDisplay(string[] items, int mode = 0)
+    private void updateDisplay()
     {
 
-      addItems(items);
+      addItems();
 
-      ToggleEnableStates(true, mode);
+      ToggleEnableStates();
+
+      if (projectManager.argumentList.Count < 1 && String.IsNullOrWhiteSpace(projectManager.projectFileName))
+        this.Text = "ChapterMerger - New Project *";
+      else if (!String.IsNullOrWhiteSpace(projectManager.projectFileName))
+        this.Text = "ChapterMerger - " + projectManager.projectFileName + " *";
+      else
+        this.Text = "ChapterMerger - " + Path.GetFileName(openFileDialog2.FileName) + " *";
 
     }
 

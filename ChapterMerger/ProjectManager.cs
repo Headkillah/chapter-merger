@@ -153,6 +153,7 @@ namespace ChapterMerger
   /// </summary>
     public void ClearProject()
     {
+      this.projectFileName = "";
       this.argumentList.Clear();
       /*
       if (this.analyze.fileLists.Count > 0)
