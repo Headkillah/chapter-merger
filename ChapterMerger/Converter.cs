@@ -57,6 +57,11 @@ namespace ChapterMerger
     private List<string> filterChains = new List<string>();
 
     /// <summary>
+    /// Stores the current ffmpeg command for external use.
+    /// </summary>
+    public string currentCommand = "";
+
+    /// <summary>
     /// Create a Converter instance using ConvertConfigure configuration.
     /// </summary>
     /// <param name="ConvConfig">ConvertConfigure instance for Converter configuration.</param>
@@ -198,6 +203,8 @@ namespace ChapterMerger
       //Set final ffmpegArgs
           ffmpegArgs += "-i \"" + file.fullpath + "\"" + fileFFmpegOptions + " \"" + outputFile + "." + ConvConfig.format + "\"";
 
+        currentCommand = ffmpegArgs;
+
      /*
       * Routine before converting
       * Checks if current backgroundWorker operation is cancelled
@@ -214,6 +221,10 @@ namespace ChapterMerger
           return;
         }
 
+        if (ConvConfig.showCommands)
+        {
+          Program.Message("Current command:\r\n\r\n" + currentCommand, "Diagnostics");
+        }
 
       //Main process
         ProcessStartInfo convertProcess = new ProcessStartInfo();
@@ -222,17 +233,22 @@ namespace ChapterMerger
         convertProcess.Arguments = ffmpegArgs;
 
         convertProcess.UseShellExecute = false;
-        convertProcess.CreateNoWindow = false;
+
+        if (!Config.Configure.ConvertConfigure.showFFmpegWindow) //Added check for diagnostics
+        {
+          convertProcess.CreateNoWindow = true;
+          convertProcess.WindowStyle = ProcessWindowStyle.Hidden;
+          convertProcess.RedirectStandardInput = true;  //Preparation for an eminent interactive ffmpeg thread.
+        }
+        else
+        {
+          convertProcess.CreateNoWindow = false;
+        }
         convertProcess.WorkingDirectory = file.directoryname;
-        //convertProcess.WindowStyle = ProcessWindowStyle.Hidden;
-        //convertProcess.RedirectStandardInput = true;
 
         progressState.progressDetail = "Converting...";
         this.backgroundWorker.ReportProgress(fileListPercent, progressState);
 
-        //Diagnostics
-        //System.Windows.Forms.MessageBox.Show("Converting.\r\n\r\nArguments: " + ffmpegArgs, "Diagnostics");
-          
         using (Process process = Process.Start(convertProcess))
         {
           process.WaitForExit();
@@ -244,13 +260,17 @@ namespace ChapterMerger
         {
           ffmpegArgs = "-i \"" + file.fullpath + "\" \"" + outputFile + "." + ConvConfig.externalsubsext + "\"";
 
+          currentCommand = ffmpegArgs;
+
+          if (ConvConfig.showCommands)
+          {
+            Program.Message("Current command:\r\n\r\n" + currentCommand, "Diagnostics");
+          }
+
           convertProcess.Arguments = ffmpegArgs;
 
           progressState.progressDetail = "Creating external subtitles...";
           this.backgroundWorker.ReportProgress(fileListPercent, progressState);
-
-          //Diagnostics
-          //System.Windows.Forms.MessageBox.Show("Creating external subs.\r\n\r\nArguments: " + ffmpegArgs, "Diagnostics");
 
           using (Process process = Process.Start(convertProcess))
           {
@@ -369,6 +389,11 @@ namespace ChapterMerger
           if (!String.IsNullOrWhiteSpace(ConvConfig.x264optsarg))
             ffmpegOptions += @" -x264opts """ + ConvConfig.x264optsarg + @"""";
         }
+        else if (ConvConfig.usex264params)
+        {
+          if (!String.IsNullOrWhiteSpace(ConvConfig.x264optsarg))
+            ffmpegOptions += @" -x264-params """ + ConvConfig.x264optsarg + @"""";
+        }
 
         //X264FPS
         if (!String.IsNullOrWhiteSpace(ConvConfig.x264fps))
@@ -412,7 +437,7 @@ namespace ChapterMerger
         ffmpegOptions += @" -ac " + ConvConfig.audiochannel;
 
       //Misc. Options
-      if (!String.IsNullOrWhiteSpace(ConvConfig.rframerate))
+      if (!String.IsNullOrWhiteSpace(ConvConfig.rframerate) && int.Parse(ConvConfig.rframerate) > 0 )
         ffmpegOptions += @" -r " + ConvConfig.rframerate;
     }
 

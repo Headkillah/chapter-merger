@@ -30,18 +30,55 @@ namespace ChapterMerger
 {
   static class Program
   {
-
+    
+    /// <summary>
+    /// Stores the current machine's PATH environment variable's value.
+    /// </summary>
     private static string environmentPath = Environment.GetEnvironmentVariable("PATH");
-    //public static string thisProgramPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+    /// <summary>
+    /// The default path used for most file operations. Currently points to the current user's Documents.
+    /// </summary>
     public static string defaultPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+    /// <summary>
+    /// The path for mkvmerge.
+    /// </summary>
     public static string mergeExe;
+
+    /// <summary>
+    /// The path for mkvinfo.
+    /// </summary>
     public static string infoExe;
+
+    /// <summary>
+    /// The path for ffmpeg.
+    /// </summary>
     public static string ffmpegExe;
+
+    /// <summary>
+    /// The path for ffprobe.
+    /// </summary>
     public static string ffprobeExe;
 
+    /// <summary>
+    /// Determines if mkvmerge is present.
+    /// </summary>
     public static bool hasMkvMerge = false;
+
+    /// <summary>
+    /// Determines if mkvinfo is present.
+    /// </summary>
     public static bool hasMkvInfo = false;
+
+    /// <summary>
+    /// Determines if ffmpeg is present.
+    /// </summary>
     public static bool hasFFmpeg = false;
+
+    /// <summary>
+    /// Determines if ffprobe is present.
+    /// </summary>
     public static bool hasFFprobe = false;
 
     /// <summary>
@@ -53,19 +90,7 @@ namespace ChapterMerger
 
       //Config.Initialize();
 
-      mergeExe = Program.getExe("mkvmerge.exe");
-      infoExe = Program.getExe("mkvinfo.exe");
-      ffmpegExe = Program.getExe("ffmpeg.exe");   //added for convert function
-      ffprobeExe = Program.getExe("ffprobe.exe"); //added for convert function
-
-      if (!String.IsNullOrWhiteSpace(mergeExe))
-        hasMkvMerge = true;
-      if (!String.IsNullOrWhiteSpace(infoExe))
-        hasMkvInfo = true;
-      if (!String.IsNullOrWhiteSpace(ffmpegExe))
-        hasFFmpeg = true;
-      if (!String.IsNullOrWhiteSpace(ffprobeExe))
-        hasFFprobe = true;
+      checkDependencies();  //Grouped the former commands into this new baby.
 
       if (!hasMkvMerge || !hasMkvInfo)
       {
@@ -91,7 +116,7 @@ namespace ChapterMerger
       {
         if (s == "-g" || s == "--gui")
         {
-          Config.Configure.launchGui = true;
+          Config.Configure.useGui = true;
         }
         else
         {
@@ -115,7 +140,7 @@ namespace ChapterMerger
     }
 
     /// <summary>
-    /// Checks if required external program exist in the PATH variable
+    /// Checks if an external program exists in the PATH variable
     /// </summary>
     /// <param name="exe">The external program to check.</param>
     /// <returns></returns>
@@ -155,6 +180,9 @@ namespace ChapterMerger
       return null;
     }
 
+    /// <summary>
+    /// Shutdowns the current device (A fancy term.)
+    /// </summary>
     public static void ShutdownDevice()
     {
       //Currently for Windows only.
@@ -167,5 +195,88 @@ namespace ChapterMerger
       Process shutdownProcess = Process.Start(shutdownInfo);
       
     }
+
+    /// <summary>
+    /// Checks for the program's current dependencies.
+    /// </summary>
+    public static void checkDependencies()
+    {
+      mergeExe = Program.getExe("mkvmerge.exe");
+      infoExe = Program.getExe("mkvinfo.exe");
+      ffmpegExe = Program.getExe("ffmpeg.exe");
+      ffprobeExe = Program.getExe("ffprobe.exe");
+
+      if (!String.IsNullOrWhiteSpace(mergeExe))
+        hasMkvMerge = true;
+      if (!String.IsNullOrWhiteSpace(infoExe))
+        hasMkvInfo = true;
+      if (!String.IsNullOrWhiteSpace(ffmpegExe))
+        hasFFmpeg = true;
+      if (!String.IsNullOrWhiteSpace(ffprobeExe))
+        hasFFprobe = true;
+    }
+
+    /// <summary>
+    /// Show a message informing the user, with GUI or not.
+    /// </summary>
+    /// <param name="message">The message to show.</param>
+    /// <param name="title">The title of the message.</param>
+    /// <param name="customDialog">If true, use CustomDialog form.</param>
+    /// <param name="button1">The first button text for CustomDialog form.</param>
+    /// <param name="button2">The second button text for CustomDialog form.</param>
+    /// <param name="button3">The third button text for CustomDialog form.</param>
+    public static void Message(string message, string title = "Information", bool customDialog = false, string button1 ="OK", string button2 = "", string button3 = "")
+    {
+      if (Config.Configure.useGui)
+      {
+        if (customDialog)
+          CustomDialog.Show(message, title, button1, button2, button3);
+        else
+          MessageBox.Show(message, title);
+      }
+      else
+      {
+        Console.WriteLine(title);
+      }
+    }
+
+    /// <summary>
+    /// Checks if file extension is valid for merging/converting.
+    /// </summary>
+    /// <param name="file">The FileObject to process.</param>
+    /// <returns>True if file extension is valid; else, false.</returns>
+    public static bool ValidateExtension(FileObject file)
+    {
+      bool valid = false;
+
+      //Temporary list of extensions; maybe replaced by a more proper global list in the future.
+      string[] extensions = {
+                              ".mkv",
+                              ".mp4",
+                              ".mpeg",
+                              ".avi",
+                              ".wmv",
+                              ".aac",
+                              ".ogg",
+                              ".mp3",
+                              ".m4a",
+                              ".jpg",
+                              ".jpeg",
+                              ".png",
+                              ".bmp",
+                              ".tga"
+                            };
+
+      foreach (string extension in MediaData.extensions)
+      {
+        if (file.extension == extension)
+          valid = true;
+        else
+          valid = false;
+      }
+
+      return valid;
+    }
+
   }
 }

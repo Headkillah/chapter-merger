@@ -63,6 +63,10 @@ namespace ChapterMerger
       foreach (string s in list)
       {
 
+        progressState.progressDetail = "Creating file entry...";
+
+        Analyze.backgroundWorker.ReportProgress(processor.progressArg, progressState);
+
         FileObject file = new FileObject(s);
 
         processPercent = progress.ToPercentage(list.Count);
@@ -78,135 +82,137 @@ namespace ChapterMerger
           return;
         }
 
-        try
+        if (file.extension == ".mkv")
         {
-          file = InfoDumper.infoDump(file);
-          if (Program.hasFFmpeg) file = InfoDumper.ffInfoDump(file);
-        }
-        catch (Exception ex)
-        {
-          MessageBox.Show("Error:\r\n\r\n" + ex.Message, "Error");
-        }
-
-        progressState.progressDetail = "Dumping MKV info...";
-
-        Analyze.backgroundWorker.ReportProgress(processor.progressArg, progressState);
-        
-        file = chapterGet.chapterDump(file);
-        if (!String.IsNullOrEmpty(file.ffInfo)) file = chapterGet.mediaDump(file);
-
-        if (!Config.Configure.includeMkvInfoOnFiles)
-          file.mkvInfo = null;
-
-        if (!Config.Configure.includeMediaInfoOnFiles)
-          file.ffInfo = null;
-
-        fileList.addFile(file);
-
-      //For Diagnoses purposes only
-        if (Config.Configure.diagnose >= 30)
-        {
-          Console.WriteLine("Chapter Atom count: {0}\n", file.chapterAtom.Count, file.mkvInfo);
-
-          foreach (ChapterAtom chapter in file.chapterAtom)
+          try
           {
-            {
-              Console.WriteLine("File name: {0}\nChapter Number: {2}\nTime Start: {3}\nTime End: {4}\nSuid: {5}\n",
-                file.filename,
-                chapter.chapterInfo,
-                chapter.chapterNum,
-                chapter.timeStart,
-                chapter.timeEnd,
-                chapter.suid);
-
-            }
-
+            file = InfoDumper.infoDump(file);
+          }
+          catch (Exception ex)
+          {
+            Program.Message("Error:\r\n\r\n" + ex.Message, "Error");
           }
 
+          progressState.progressDetail = "Dumping MKV info...";
+
+          Analyze.backgroundWorker.ReportProgress(processor.progressArg, progressState);
+
+          file = chapterGet.chapterDump(file);
+
+          if (!Config.Configure.includeMkvInfoOnFiles)
+            file.mkvInfo = null;
+
+          if (!Config.Configure.includeMediaInfoOnFiles)
+            file.ffInfo = null;
+
+          progressState.progressDetail = "Getting chapters' info...";
+
+          Analyze.backgroundWorker.ReportProgress(processor.progressArg, progressState);
+
+          fileList.hasMKV = true;
         }
 
-        progressState.progressDetail = "Getting chapters' info...";
-        
-        Analyze.backgroundWorker.ReportProgress(processor.progressArg, progressState);
+        if (Program.hasFFmpeg)
+        {
 
+          progressState.progressDetail = "Dumping media info...";
+
+          Analyze.backgroundWorker.ReportProgress(processor.progressArg, progressState);
+
+          try
+          {
+            file = InfoDumper.ffInfoDump(file);
+          }
+          catch (Exception ex)
+          {
+            Program.Message("Error:\r\n\r\n" + ex.Message, "Error");
+          }
+
+          if (!String.IsNullOrEmpty(file.ffInfo)) file = chapterGet.mediaDump(file);
+
+        }
+
+        fileList.addFile(file);
 
         progress++;
       }
 
-
-      SuidLister suidList = getSuid(fileList);
-
-      progressState.progressDetail = "Creating SUID list...";
-      Analyze.backgroundWorker.ReportProgress(processor.progressArg, progressState);
-
-      fileList = tracklist.arrangeTrack(fileList, suidList, processor);
-
-      progressState.progressDetail = "Arranging new tracklist for every file...";
-      Analyze.backgroundWorker.ReportProgress(processor.progressArg, progressState);
-
-    //For Diagnostic purposes only
-      if (Config.Configure.diagnose >= 30)
+      if (fileList.hasMKV)
       {
-        foreach (Suid suid in suidList.suidList)
-        {
+        SuidLister suidList = CreateSuidLister(fileList);
 
+        progressState.progressDetail = "Creating SUID list...";
+        Analyze.backgroundWorker.ReportProgress(processor.progressArg, progressState);
+
+        fileList = tracklist.arrangeTrack(fileList, suidList, processor);
+
+        progressState.progressDetail = "Arranging new tracklist for every file...";
+        Analyze.backgroundWorker.ReportProgress(processor.progressArg, progressState);
+
+        //For Diagnostic purposes only
+        if (Config.Configure.diagnose >= 30)
+        {
+          foreach (Suid suid in suidList.suidList)
           {
-            Console.WriteLine("SUID filename: " + suid.fileName);
-            Console.WriteLine("SUID: " + suid.suid);
-            Console.WriteLine("\n");
+
+            {
+              Console.WriteLine("SUID filename: " + suid.fileName);
+              Console.WriteLine("SUID: " + suid.suid);
+              Console.WriteLine("\n");
+            }
+          }
+
+          Console.WriteLine("fileList.fileList.Count: " + fileList.fileList.Count + "\n");
+
+          foreach (FileObject file in fileList.fileList)
+          {
+
+            //Console.WriteLine("Merge Argument count: {0}\n", file.mergeArgument.Count);
+
+            foreach (MergeArgument merge in file.mergeArgument)
+            {
+
+              Console.WriteLine("Merge Argument:\nFile name: {0}\nTime Code: {1}\nFile Argument: {2}\nChapter Number: {3}\n",
+                  file.filename,
+                  merge.timeCode,
+                  merge.fileName,
+                  merge.chapterNum);
+
+            }
+
+            foreach (TimeCode time in file.timeCode)
+            {
+              Console.WriteLine("Time Code Argument: {0}\n", time.timeCode);
+            }
+
+            foreach (DelArgument del in file.delArgument)
+            {
+              Console.WriteLine("Del Argument: {0}\n", del.fileName);
+            }
+
           }
         }
 
-        Console.WriteLine("fileList.fileList.Count: " + fileList.fileList.Count + "\n");
-
-        foreach (FileObject file in fileList.fileList)
+        if (Config.Configure.doMakeScript)
         {
+          makeFile.makeFile(fileList, processor);
 
-          //Console.WriteLine("Merge Argument count: {0}\n", file.mergeArgument.Count);
-
-          foreach (MergeArgument merge in file.mergeArgument)
-          {
-
-            Console.WriteLine("Merge Argument:\nFile name: {0}\nTime Code: {1}\nFile Argument: {2}\nChapter Number: {3}\n",
-                file.filename,
-                merge.timeCode,
-                merge.fileName,
-                merge.chapterNum);
-
-          }
-
-          foreach (TimeCode time in file.timeCode)
-          {
-            Console.WriteLine("Time Code Argument: {0}\n", time.timeCode);
-          }
-
-          foreach (DelArgument del in file.delArgument)
-          {
-            Console.WriteLine("Del Argument: {0}\n", del.fileName);
-          }
-
+          progressState.progressDetail = "Creating Merge Script...";
+          Analyze.backgroundWorker.ReportProgress(processor.progressArg, progressState);
         }
+
       }
-
-      processor.fileLists.Add(fileList);
 
       if (Config.Configure.doMakeXml)
       {
-        makeFile.makeFile(fileList, processor);
+        makeFile.makeXML(fileList, processor);
 
         progressState.progressDetail = "Dumping XML file...";
         Analyze.backgroundWorker.ReportProgress(processor.progressArg, progressState);
       }
+
+      processor.fileLists.Add(fileList);
       
-      if (Config.Configure.doMakeScript)
-      {
-        makeFile.makeXML(fileList, processor);
-
-        progressState.progressDetail = "Creating Merge Script...";
-        Analyze.backgroundWorker.ReportProgress(processor.progressArg, progressState);
-      }
-        
-
     }
 
 /// <summary>
@@ -215,7 +221,7 @@ namespace ChapterMerger
 /// </summary>
 /// <param name="fileList">The FileObjectCollection processed by InfoDump.</param>
 /// <returns>The SuidLister with the list of all SUIDs present.</returns>
-    public static SuidLister getSuid(FileObjectCollection fileList)
+    public static SuidLister CreateSuidLister(FileObjectCollection fileList)
     {
 
       SuidLister suidLister = new SuidLister();

@@ -201,12 +201,24 @@ namespace ChapterMerger
         string[] filePaths = (string[])(e.Data.GetData(DataFormats.FileDrop));
         foreach (string fileLoc in filePaths)
         {
-          if (Path.GetExtension(fileLoc) == ".mkv" || Path.GetExtension(fileLoc) == "")
-          {
-            if (!projectManager.argumentList.Contains(fileLoc))
+          /*
+           * 
+           * NOT used for performance reasons.
+           * 
+          foreach (string extension in MediaData.extensions)
+            if (Path.GetExtension(fileLoc) == extension || Path.GetExtension(fileLoc) == "")
             {
-              projectManager.argumentList.Add(fileLoc);
+              if (!projectManager.argumentList.Contains(fileLoc))
+              {
+                projectManager.argumentList.Add(fileLoc);
+              }
             }
+           * 
+           * */
+
+          if (!projectManager.argumentList.Contains(fileLoc))
+          {
+            projectManager.argumentList.Add(fileLoc);
           }
 
         }
@@ -282,11 +294,14 @@ namespace ChapterMerger
       ProgressForm progressBar = new ProgressForm(arguments, true);
       progressBar.ShowDialog();
 
+      /*
       if (Config.Configure.projectIncludeFileList && process != null)
       {
         projectManager.analyze.fileLists = process.fileLists;
         projectManager.analyze.hasOrdered = process.hasOrdered;
       }
+       * 
+       * */
 
       ToggleEnableStates();
     }
@@ -396,7 +411,9 @@ namespace ChapterMerger
 
     private void convertButton_Click(object sender, EventArgs e)
     {
-      if (Program.hasFFmpeg)
+      Program.checkDependencies();  //This makes the program check for dependencies again during runtime.
+
+      if (!Program.hasFFmpeg)
         MessageBox.Show("To use this functionality, FFmpeg must exist in the same directory as this program, or in the PATH variable.\r\n\r\nYou can get ffmpeg here:\r\n https://ffmpeg.org/download.html", "Information");
       else
       {

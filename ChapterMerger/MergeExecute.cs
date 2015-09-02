@@ -152,7 +152,7 @@ namespace ChapterMerger
             {
               if (file.splitCount > 1)
               {
-                mergeArgumentList.Add("\"" + merge.fullPath + "\"");
+                mergeArgumentList.Add("\"" + Path.Combine(outputPath, merge.fileName) + "\"");
               }
               else
                 mergeArgumentList.Add("\"" + merge.originalFullPath + "\"");

@@ -11,6 +11,8 @@ namespace ChapterMerger
   public class ConvertConfigure
   {
     public bool shutdownDevice = false;
+    public bool showCommands = false; //Added for diagnostics
+    public bool showFFmpegWindow = true; //Added for diagnostics; better as true for now, as an interactive hidden FFmpeg thread is yet to be constructed.
 
     public string format = "mkv";
 

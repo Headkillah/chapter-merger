@@ -156,12 +156,16 @@ namespace ChapterMerger
 
             Analyze.backgroundWorker.ReportProgress(progressArg, progressState);
 
-            string[] s = Directory.GetFiles(fullpath, "*.mkv");
+            List<string> folderFiles = new List<string>();
 
-            foreach (string argitem in s)
-              filteredArgs.Add(argitem);
+            foreach (string extension in MediaData.extensions)
+              foreach (string folderFile in Directory.GetFiles(fullpath, "*" + extension))
+              {
+                folderFiles.Add(folderFile);
+                filteredArgs.Add(folderFile);
+              }
 
-            processList.processList(s.ToList(), Path.GetFileNameWithoutExtension(arg), this, fullpath, argument.Length);
+            processList.processList(folderFiles, Path.GetFileNameWithoutExtension(arg), this, fullpath, argument.Length);
 
             progress++;
 

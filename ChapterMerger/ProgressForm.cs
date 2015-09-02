@@ -41,14 +41,18 @@ namespace ChapterMerger
     private int progress;
     private int processPercent;
 
+    public Analyze analyzeData = MainWindow.projectManager.analyze;
+
+  /// <summary>
+  /// Create a ProgressForm with default options. The current default behavior is to analyze current file list.
+  /// </summary>
     public ProgressForm()
     {
       InitializeComponent();
-
     }
 
   /// <summary>
-  /// Gets the passed list of argument and analyzes it by using the Processor instance.
+  /// Gets the passed list of argument and analyzes it by using the Analyze instance.
   /// </summary>
   /// <param name="args">A string array that includes all filelist view arguments.</param>
     public ProgressForm(string[] args)
@@ -59,8 +63,22 @@ namespace ChapterMerger
       
     }
 
+    /// <summary>
+    /// Gets the passed list of argument and analyzes it by using an Analyze instance.
+    /// </summary>
+    /// <param name="args">A string array that includes all filelist view arguments.</param>
+    /// <param name="analyzeData">The Analyze instance to use.</param>
+    public ProgressForm(string[] args, Analyze analyzeData)
+    {
+      this.args = args;
+      this.analyzeData = analyzeData;
+
+      InitializeComponent();
+
+    }
+
   /// <summary>
-  /// Custom constructor - sets doMerge
+  /// Deprecated. Create a ProgressForm and sets its doMerge value
   /// </summary>
   /// <param name="doMerge">If true, calls the merge method, using the processed filelists in the main Processor instance.</param>
     public ProgressForm(bool doMerge)
@@ -69,6 +87,10 @@ namespace ChapterMerger
       InitializeComponent();
     }
 
+    /// <summary>
+    /// Create a ProgressForm with different modes, with the default ProjectManager Analyze instance.
+    /// </summary>
+    /// <param name="mode">Modes: 0 for XML creation (deprecated), 1 for merge, 2 for convert.</param>
     public ProgressForm(int mode)
     {
       switch (mode)
@@ -86,10 +108,16 @@ namespace ChapterMerger
           break;
       }
 
+      analyzeData = MainWindow.projectManager.analyze;
+
       InitializeComponent();
     }
 
-  //Custom constructors - gets file lists to process
+    /// <summary>
+    /// Deprecated. Create a ProgressForm with file lists to process
+    /// </summary>
+    /// <param name="args">A string array that includes all filelist view arguments.</param>
+    /// <param name="doMakeXml">If true, create the analyzed data in an XML.</param>
     public ProgressForm(string[] args, bool doMakeXml)
     {
       this.args = args;
@@ -97,6 +125,33 @@ namespace ChapterMerger
 
       InitializeComponent();
 
+    }
+
+    /// <summary>
+    /// Create a ProgressForm with different modes, and a custom Analyze instance.
+    /// </summary>
+    /// <param name="mode">Modes: 0 for XML creation (deprecated), 1 for merge, 2 for convert.</param>
+    /// <param name="analyzeData">The Analyze instance to use for the mode.</param>
+    public ProgressForm(int mode, Analyze analyzeData)
+    {
+      switch (mode)
+      {
+        case 0:
+          this.doMakeXml = true;
+          break;
+        case 1:
+          this.doMerge = true;
+          break;
+        case 2:
+          this.doConvert = true;
+          break;
+        default:
+          break;
+      }
+
+      this.analyzeData = analyzeData;
+
+      InitializeComponent();
     }
 
   //ProgressForm OnLoad
@@ -115,11 +170,11 @@ namespace ChapterMerger
   //BackgroundWorker - Main analyze process for files
     private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
     {
-      Analyze process = new Analyze(backgroundWorker1);
+      var previousData = analyzeData;
 
-      MainWindow.projectManager.analyze = process;
+      analyzeData = new Analyze(backgroundWorker1);
 
-      process.process(args);
+      analyzeData.process(args);
 
       if (backgroundWorker1.CancellationPending)
       {
@@ -127,7 +182,10 @@ namespace ChapterMerger
         return;
       }
 
-      e.Result = process;
+      if (previousData == MainWindow.projectManager.analyze)
+        MainWindow.projectManager.analyze = analyzeData;
+
+      e.Result = analyzeData;
 
     }
 
@@ -135,6 +193,7 @@ namespace ChapterMerger
     private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
       ProgressState progressState = e.UserState as ProgressState;
+
       progressBar1.Value = e.ProgressPercentage;
       progressBar2.Value = progressState.progressPercent;
 
@@ -145,7 +204,6 @@ namespace ChapterMerger
       this.detailLabel.Text = progressState.progressDetail;
     }
 
-  //Global BackgroundWorker RunWorkerCompleted.
     private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
 
@@ -204,9 +262,7 @@ namespace ChapterMerger
   //BackgroundWorker - Merges analyzed data from backgroundWorker1 that has ordered chapter.
     private void backgroundWorker3_DoWork(object sender, DoWorkEventArgs e)
     {
-      ProjectManager project = MainWindow.projectManager;
-
-      e.Result = project.analyze;
+      e.Result = analyzeData;
 
       Merger merger = new Merger(backgroundWorker3);
 
@@ -215,7 +271,7 @@ namespace ChapterMerger
 
       Analyze.outputGroups.Clear();
 
-      foreach (FileObjectCollection fileList in project.analyze.fileLists)
+      foreach (FileObjectCollection fileList in analyzeData.fileLists)
       {
 
         if (backgroundWorker3.CancellationPending)
@@ -227,11 +283,11 @@ namespace ChapterMerger
           return;
         }
 
-        processPercent = progress.ToPercentage(project.analyze.fileLists.Count);
+        processPercent = progress.ToPercentage(analyzeData.fileLists.Count);
 
         progress++;
 
-        merger.Merge(fileList, project.analyze, false, processPercent);
+        merger.Merge(fileList, analyzeData, false, processPercent);
       }
 
       if (backgroundWorker3.CancellationPending)
@@ -244,7 +300,8 @@ namespace ChapterMerger
 
     private void backgroundWorker3_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
-      
+      //var dialogComplete = new CustomDialog();
+
       DialogResult result = new DialogResult();
 
       // Check to see if an error occurred in the
@@ -265,11 +322,37 @@ namespace ChapterMerger
           // Everything completed normally.
           // process the response using e.Result
           Analyze processor = e.Result as Analyze;
-          result = MessageBox.Show("Merging complete! View output files?", "Confirm", MessageBoxButtons.YesNo);
 
-          if (result == DialogResult.Yes)
+          var dialogComplete = new CustomDialog("Merging complete!", "Confirm", "OK", "Convert", "View in Explorer");
+
+          result = dialogComplete.ShowDialog();
+
+          //result = CustomDialog.Show("Merging complete!\n\nBut!\n\nWait!\n\nThere's more to it than it seems apparently through your boggling eyes (Yes, that's a new English word).\n\nOkay.", "Confirm", "OK", "Convert", "View in Explorer");
+
+          if (result == DialogResult.OK)
           {
-            processor.LaunchInExplorer();
+
+            if (dialogComplete.buttonPressed == "View in Explorer")
+              processor.LaunchInExplorer();
+            else if (dialogComplete.buttonPressed == "Convert")
+            {
+
+              Analyze analyzeMerged = new Analyze();
+
+              var mergedAnalyze = new ProgressForm(Analyze.outputGroups.ToArray(), analyzeMerged);
+
+              mergedAnalyze.ShowDialog();
+
+              analyzeMerged = mergedAnalyze.analyzeData;
+
+              var mergedConvert = new ProgressForm(2, analyzeMerged);
+              
+              mergedConvert.ShowDialog();
+
+            }
+            else
+              this.Close();
+
           }
         }
 
@@ -292,9 +375,8 @@ namespace ChapterMerger
   //BackgroundWorker - Execute Conversion
     private void backgroundWorker4_DoWork(object sender, DoWorkEventArgs e)
     {
-      ProjectManager project = MainWindow.projectManager;
 
-      e.Result = project.analyze;
+      e.Result = analyzeData;
 
       Converter converter = new Converter(Config.Configure.ConvertConfigure, backgroundWorker4);
 
@@ -303,7 +385,7 @@ namespace ChapterMerger
 
       Analyze.outputGroups.Clear();
 
-      foreach (FileObjectCollection fileList in project.analyze.fileLists)
+      foreach (FileObjectCollection fileList in analyzeData.fileLists)
       {
 
         if (backgroundWorker4.CancellationPending)
@@ -315,7 +397,7 @@ namespace ChapterMerger
           return;
         }
 
-        processPercent = progress.ToPercentage(project.analyze.fileLists.Count);
+        processPercent = progress.ToPercentage(analyzeData.fileLists.Count);
 
         progress++;
 

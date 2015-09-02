@@ -161,6 +161,8 @@ namespace ChapterMerger
       thisConf.subindex = int.Parse(this.subIndexTextBox.Text);
 
       thisConf.shutdownDevice = this.shutdownCheckBox.Checked;
+      thisConf.showCommands = this.showMessageBoxCheckBox.Checked;  //Added for diagnostics
+      thisConf.showFFmpegWindow = this.showFFmpegCheckBox.Checked;  //Added for diagnostics
 
       thisConf.vscaler = this.vidScalerComboBox.Text;
       thisConf.customffmpegarg = this.custFFmpegTextBox.Text;
@@ -226,6 +228,8 @@ namespace ChapterMerger
       this.subIndexTextBox.Text = ConvertConfigure.subindex.ToString();
 
       this.shutdownCheckBox.Checked = ConvertConfigure.shutdownDevice;
+      this.showMessageBoxCheckBox.Checked = ConvertConfigure.showCommands;  //Added for diagnostics
+      this.showFFmpegCheckBox.Checked = ConvertConfigure.showFFmpegWindow;  //Added for diagnostics
 
       this.vidScalerComboBox.Text = ConvertConfigure.vscaler;
       this.custFFmpegTextBox.Text = ConvertConfigure.customffmpegarg;

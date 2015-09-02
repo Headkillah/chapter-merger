@@ -42,9 +42,11 @@ namespace ChapterMerger
       var suidobj = new Suid();
 
       suidobj.fileName = file.filename;
+      suidobj.fullPath = file.fullpath;
       suidobj.suid = file.suid;
 
-      suidList.Add(suidobj);
+      if (!String.IsNullOrWhiteSpace(suidobj.suid))
+        suidList.Add(suidobj);
     }
 
     public void addSuid(FileObject file)
@@ -57,7 +59,8 @@ namespace ChapterMerger
 
       //Console.WriteLine("New SUID Object suid: " + file.suid);
 
-      suidList.Add(suidobj);
+      if (!String.IsNullOrWhiteSpace(suidobj.suid))
+        suidList.Add(suidobj);
     }
 
   }
@@ -69,6 +72,7 @@ namespace ChapterMerger
     public string folderPath { get; set; }
     public string name { get; set; }
     public bool hasOrdered { get; set; }
+    public bool hasMKV { get; set; }
 
     public void addFile(FileObject file)
     {

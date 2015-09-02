@@ -32,7 +32,7 @@ namespace ChapterMerger
     public int diagnose = 0;
     public bool shutdownDevice = false;
 
-    public bool launchGui = true; //deprecated; We have a full GUI program now.
+    public bool useGui = true; //deprecated; We have a full GUI program now.
     //public bool doAnalyze = false;
     public bool doMakeXml = false;
     public bool doMakeScript = false;

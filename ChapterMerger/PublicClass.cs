@@ -83,18 +83,13 @@ namespace ChapterMerger
     public string progressDetail { get; set; }
     public int progressPercent { get; set; }
     public int progressArg { get; set; }
+    public Object data { get; set; }  //For misc. progress data. Maybe seldom used.
   }
 
   public class MediaInfo
   {
     public string inputInfo { get; set; }
-    //public string vcodec { get; set; }  //removed; MediaStream already includes this
-    //public string acodec { get; set; }  //removed; MediaStream already includes this
     public string duration { get; set; }
-    //public int vheight { get; set; }    //removed; MediaStream already includes this
-    //public int vwidth { get; set; }     //removed; MediaStream already includes this
-    //public int videobitkb { get; set; } //removed; input info doesn't provide this data
-    //public int audiobitkb { get; set; } //removed; input info doesn't provide this data
     public int bitratekb { get; set; }
     public List<MediaStream> mediaStreams { get; set; }
 
@@ -117,5 +112,28 @@ namespace ChapterMerger
     Image,
     Subtitle,
     Attachment
+  }
+
+  public static class MediaData
+  {
+    //Temporary list of extensions; maybe replaced by a more proper global list in the future.
+    public static string[] extensions = {
+                                          ".mkv",
+                                          ".mp4",
+                                          ".mpeg",
+                                          ".avi",
+                                          ".wmv",
+                                          ".aac",
+                                          ".ogg",
+                                          ".mp3",
+                                          ".m4a",
+                                          ".jpg",
+                                          ".jpeg",
+                                          ".png",
+                                          ".bmp",
+                                          ".tga"
+                                        };
+
+
   }
 }

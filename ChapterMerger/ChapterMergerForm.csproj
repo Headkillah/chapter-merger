@@ -85,6 +85,12 @@
     <Compile Include="Converter.cs" />
     <Compile Include="ExtensionClass.cs" />
     <Compile Include="AnalyzeList.cs" />
+    <Compile Include="CustomDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomDialog.Designer.cs">
+      <DependentUpon>CustomDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="MergeExecute.cs" />
     <Compile Include="Collection.cs" />
     <Compile Include="Config.cs" />
@@ -124,6 +130,9 @@
     <Compile Include="TrackLister.cs" />
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomDialog.resx">
+      <DependentUpon>CustomDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
