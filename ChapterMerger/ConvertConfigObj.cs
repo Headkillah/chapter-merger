@@ -1,4 +1,25 @@
-﻿using System;
+﻿/*
+ * 
+This file is part of the ChapterMerger project
+Copyright (C) 2015 Mon C.A.S.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -46,6 +67,7 @@ namespace ChapterMerger
 
     public bool audioexperimental = false;
     public int audiochannel = 2;
+    public string ahrate = "";  //Used string instead of int, as its default value is empty/null (Could use a nullable type, but ain't nobody got time for that)
     public bool audlangswitch = false;
     public string alanguage = "";
     
@@ -60,6 +82,7 @@ namespace ChapterMerger
     public bool includeAudStreams = true;
     public bool includeSubStreams = true;
     public bool includeAttStreams = true;
+    public bool includeDatStreams = true; //For metadata, etc.
 
     public string customvfilter = "";
     public string custommapping = "";
@@ -84,7 +107,7 @@ namespace ChapterMerger
     veryfast,
     faster,
     fast,
-    medium = 0,
+    medium, //Changed back to previous value; causes unexpected behaviour
     slow,
     slower,
     veryslow,

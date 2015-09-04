@@ -80,6 +80,7 @@
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
     <Compile Include="ChapterGenerator.cs" />
+    <Compile Include="Chapters.cs" />
     <Compile Include="ConfigObj.cs" />
     <Compile Include="ConvertConfigObj.cs" />
     <Compile Include="Converter.cs" />

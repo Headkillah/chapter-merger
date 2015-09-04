@@ -176,7 +176,7 @@ namespace ChapterMerger
       }
 
     //for individual files: process the built list after foreach loop
-      if (argList.Count > 1)
+      if (argList.Count > 0)
       {
 
         processPercent = 100;

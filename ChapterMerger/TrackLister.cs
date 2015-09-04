@@ -79,7 +79,7 @@ namespace ChapterMerger
           //mergeargument = mergeargument + chaptera.timeStart + chaptera.timeEnd + chaptera.suidFileName;
         }
 
-
+        
       //Second loop that uses index to properly determine which chapter needs to be added as a MergeArgument
         for (int i = 0; i < file.chapterAtom.Count; i++)
         {

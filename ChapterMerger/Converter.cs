@@ -1,4 +1,25 @@
-﻿using System;
+﻿/*
+ * 
+This file is part of the ChapterMerger project
+Copyright (C) 2015 Mon C.A.S.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -291,7 +312,7 @@ namespace ChapterMerger
     }
 
     /// <summary>
-    /// This will set initial general configuration for each file processed to use.
+    /// This will build the initial general argument for each file processed to use.
     /// </summary>
     public void InitializeConfiguration()
     {
@@ -314,7 +335,7 @@ namespace ChapterMerger
       }
       else
       //Simple Mapping Options
-        if (!ConvConfig.includeVidStreams && !ConvConfig.includeAudStreams && !ConvConfig.includeSubStreams && !ConvConfig.includeAttStreams)
+        if (!ConvConfig.includeVidStreams && !ConvConfig.includeAudStreams && !ConvConfig.includeSubStreams && !ConvConfig.includeAttStreams && !ConvConfig.includeDatStreams)
         {
           ffmpegOptions += @" -map -0";
         }
@@ -337,6 +358,8 @@ namespace ChapterMerger
             ffmpegOptions += @" -map -0:s";
           if (!ConvConfig.includeAttStreams || ConvConfig.useSubFilter)
             ffmpegOptions += @" -map -0:t";
+          if (!ConvConfig.includeDatStreams)
+            ffmpegOptions += @" -map -0:d";
         }
 
 
@@ -418,7 +441,7 @@ namespace ChapterMerger
       }
       else if (ConvConfig.videobitkb > 0)
       {
-        ffmpegOptions += @" -b:v " + ConvConfig.videobitkb.ToString();
+        ffmpegOptions += @" -b:v " + ConvConfig.videobitkb.ToString() + "k";
       }
 
       //Audio Codec
@@ -431,10 +454,13 @@ namespace ChapterMerger
 
       //Audio Quality
       if (ConvConfig.audiobitkb > 0)
-        ffmpegOptions += @" -b:a " + ConvConfig.audiobitkb.ToString();
+        ffmpegOptions += @" -b:a " + ConvConfig.audiobitkb.ToString() + "k";
 
       if (ConvConfig.audiochannel > 0)
         ffmpegOptions += @" -ac " + ConvConfig.audiochannel;
+
+      if (!String.IsNullOrWhiteSpace(ConvConfig.ahrate) && int.Parse(ConvConfig.ahrate) > 0 && ConvConfig.ahrate.Length == 5)
+        ffmpegOptions += @" -ar " + ConvConfig.ahrate;
 
       //Misc. Options
       if (!String.IsNullOrWhiteSpace(ConvConfig.rframerate) && int.Parse(ConvConfig.rframerate) > 0 )

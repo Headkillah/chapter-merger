@@ -27,7 +27,9 @@ using System.Threading.Tasks;
 
 namespace ChapterMerger
 {
-  //Public Object Suid: represents SUID information format for SuidLister usage
+  /// <summary>
+  /// Represents SUID information format for SuidLister usage
+  /// </summary>
   public class Suid
   {
     public string fileName { get; set; }
@@ -35,7 +37,9 @@ namespace ChapterMerger
     public string suid { get; set; }
   }
 
-  //Public Object ChapterAtom: represents individual chapters for every File Object
+  /// <summary>
+  /// Represents individual chapters for every File Object
+  /// </summary>
   public class ChapterAtom
   {
     public string chapterInfo { get; set; }
@@ -46,6 +50,10 @@ namespace ChapterMerger
     public string suidFileName { get; set; }
     public string suidFullPath { get; set; }
 
+    /// <summary>
+    /// Add a file that represents this chapter's externally linked SUID.
+    /// </summary>
+    /// <param name="file">The representing FileObject.</param>
     public void addSuidFileName(FileObject file)
     {
       this.suidFileName = file.filename;
@@ -53,7 +61,9 @@ namespace ChapterMerger
     }
   }
 
-  //Public Objects MergeArgument, DelArgument, TimeCode: each holds respective information for every File Object
+  /// <summary>
+  /// Holds information on what and how the files will be merged.
+  /// </summary>
   public class MergeArgument
   {
     public string timeCode { get; set; }
@@ -65,17 +75,26 @@ namespace ChapterMerger
 
   }
 
+  /// <summary>
+  /// Holds the list of files to be deleted.
+  /// </summary>
   public class DelArgument
   {
     public string fileName { get; set; }
     public string fullPath { get; set; }
   }
 
+  /// <summary>
+  /// Holds the entire timecodes for splitting.
+  /// </summary>
   public class TimeCode
   {
     public string timeCode { get; set; }
   }
 
+  /// <summary>
+  /// Holds mutable progress data.
+  /// </summary>
   public class ProgressState
   {
     public string fileName { get; set; }
@@ -86,6 +105,9 @@ namespace ChapterMerger
     public Object data { get; set; }  //For misc. progress data. Maybe seldom used.
   }
 
+  /// <summary>
+  /// Holds the file's general media information.
+  /// </summary>
   public class MediaInfo
   {
     public string inputInfo { get; set; }
@@ -95,6 +117,9 @@ namespace ChapterMerger
 
   }
 
+  /// <summary>
+  /// Holds information of individual media streams inside the container.
+  /// </summary>
   public class MediaStream
   {
     public MediaType mediaType { get; set; }
@@ -104,6 +129,9 @@ namespace ChapterMerger
 
   }
 
+  /// <summary>
+  /// A list of media types.
+  /// </summary>
   public enum MediaType
   {
     None,
@@ -114,9 +142,16 @@ namespace ChapterMerger
     Attachment
   }
 
+  /// <summary>
+  /// Models data involved with various tasks like file handling, conversion, and merging.
+  /// </summary>
   public static class MediaData
   {
     //Temporary list of extensions; maybe replaced by a more proper global list in the future.
+
+    /// <summary>
+    /// Holds a list of known file types/extensions.
+    /// </summary>
     public static string[] extensions = {
                                           ".mkv",
                                           ".mp4",

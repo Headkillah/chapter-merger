@@ -166,6 +166,7 @@ namespace ChapterMerger
 
       thisConf.vscaler = this.vidScalerComboBox.Text;
       thisConf.customffmpegarg = this.custFFmpegTextBox.Text;
+      thisConf.audioexperimental = this.experAudCodecCheckBox.Checked;
 
       thisConf.x264faststart = this.x264fastStartCheckBox.Checked;
       thisConf.x264level = this.x264levelComboBox.Text;
@@ -180,6 +181,7 @@ namespace ChapterMerger
       thisConf.custommapping = this.custMapTextBox.Text;
       thisConf.customvfilter = this.custVFilterTextBox.Text;
       thisConf.audiochannel = int.Parse(this.audchannelTextBox.Text);
+      thisConf.ahrate = this.frequencyTextBox.Text; //Sampling Frequency
       thisConf.audlangswitch = this.audLangSwitchCheckBox.Checked;
       thisConf.alanguage = this.langCodeComboBox.Text;
 
@@ -190,6 +192,7 @@ namespace ChapterMerger
       thisConf.includeAudStreams = this.incAudSCheckBox.Checked;
       thisConf.includeSubStreams = this.incSubSCheckBox.Checked;
       thisConf.includeAttStreams = this.incAttSCheckBox.Checked;
+      thisConf.includeDatStreams = this.incDatSCheckBox.Checked;  //For metadata, etc.
 
       Config.writeConfiguration();
 
@@ -233,6 +236,7 @@ namespace ChapterMerger
 
       this.vidScalerComboBox.Text = ConvertConfigure.vscaler;
       this.custFFmpegTextBox.Text = ConvertConfigure.customffmpegarg;
+      this.experAudCodecCheckBox.Checked = ConvertConfigure.audioexperimental;
 
       this.x264fastStartCheckBox.Checked = ConvertConfigure.x264faststart;
       this.x264levelComboBox.Text = ConvertConfigure.x264level;
@@ -247,6 +251,7 @@ namespace ChapterMerger
       this.custMapTextBox.Text = ConvertConfigure.custommapping;
       this.custVFilterTextBox.Text = ConvertConfigure.customvfilter;
       this.audchannelTextBox.Text = ConvertConfigure.audiochannel.ToString();
+      this.frequencyTextBox.Text = ConvertConfigure.ahrate; //Sampling Frequency
       this.audLangSwitchCheckBox.Checked = ConvertConfigure.audlangswitch;
       this.langCodeComboBox.Text = ConvertConfigure.alanguage;
 
@@ -256,6 +261,7 @@ namespace ChapterMerger
       this.incAudSCheckBox.Checked = ConvertConfigure.includeAudStreams;
       this.incSubSCheckBox.Checked = ConvertConfigure.includeSubStreams;
       this.incAttSCheckBox.Checked = ConvertConfigure.includeAttStreams;
+      this.incDatSCheckBox.Checked = ConvertConfigure.includeDatStreams;  //For metadata, etc.
 
       this.vheightTextBox.Enabled = resizeVidCheckBox.Checked;
       this.vwidthTextBox.Enabled = resizeVidCheckBox.Checked;
@@ -282,25 +288,6 @@ namespace ChapterMerger
       this.langCodeComboBox.Enabled = audLangSwitchCheckBox.Checked;
     }
 
-    /*
-     * Legacy Code
-     * 
-    private void numberTextBox_TextChanged(object sender, EventArgs e)
-    {
-      bool textValid = Regex.Match(vkbitTextBox.Text, @"^\d*$").Success;
-
-      if (!textValid)
-      {
-        MessageBox.Show("Please input numbers only.");
-        vkbitTextBox.Text = vkbitTextBoxOldText;
-      }
-      else
-      {
-        vkbitTextBoxOldText = vkbitTextBox.Text;
-      }
-    }
-     * 
-     * */
 
   /*
    * Custom Validation for a textbox.
@@ -475,5 +462,14 @@ namespace ChapterMerger
       e.Handled = this.ValidateKeyPress(sender, e).Handled;
     }
 
+    private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+    {
+      e.Handled = this.ValidateKeyPress(sender, e).Handled;
+    }
+
+    private void number_KeyPress(object sender, KeyPressEventArgs e)
+    {
+      e.Handled = this.ValidateKeyPress(sender, e).Handled;
+    }
   }
 }

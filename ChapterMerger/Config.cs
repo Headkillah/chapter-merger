@@ -37,12 +37,18 @@ namespace ChapterMerger
     public static string configPath = Program.defaultPath;
     public static string configFile = Path.Combine(configPath, "config.xml");
 
+    /// <summary>
+    /// Initializes a default Configure instance and loads it.
+    /// </summary>
     public static void Initialize()
     {
       Configure = new Configure();
       Configure.ConvertConfigure = new ConvertConfigure();
     }
 
+    /// <summary>
+    /// Serializes and writes the configuration file defined in this method's parent class.
+    /// </summary>
     public static void writeConfiguration()
     {
       XmlSerializer xmlWrite = new XmlSerializer(typeof(Configure));
@@ -67,6 +73,9 @@ namespace ChapterMerger
 
     }
 
+    /// <summary>
+    /// Deserializes and loads the configuration file defined in this method's parent class.
+    /// </summary>
     public static void getConfiguration()
     {
 
@@ -90,6 +99,10 @@ namespace ChapterMerger
 
     }
 
+    /// <summary>
+    /// Despite its name, this only adds a default ConvertConfigure for the Configure instance when there is none.
+    /// </summary>
+    /// <param name="configuration">The Configure instance to process.</param>
     public static void setConfiguration(Configure configuration)
     {
       Configure = configuration;

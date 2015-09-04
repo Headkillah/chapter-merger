@@ -118,7 +118,7 @@ namespace ChapterMerger
     }
 
     /// <summary>
-    /// Deprecated.  Adds media informations to FileObjects using FFprobe.
+    /// Deprecated. Adds media informations to FileObjects using FFprobe.
     /// </summary>
     /// <param name="file">The FileObject processed by InfoDumper.ffProbeDump.</param>
     /// <returns>The FileObject with processed media informations.</returns>
