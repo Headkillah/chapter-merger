@@ -68,7 +68,6 @@ namespace ChapterMerger
       this.aboutButton = new System.Windows.Forms.Button();
       this.label1 = new System.Windows.Forms.Label();
       this.fileListPanel = new System.Windows.Forms.Panel();
-      this.openFileDialog3 = new System.Windows.Forms.OpenFileDialog();
       this.fileListPanel.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -253,11 +252,6 @@ namespace ChapterMerger
       this.fileListPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.fileList_DragDrop);
       this.fileListPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.fileList_DragEnter);
       // 
-      // openFileDialog3
-      // 
-      this.openFileDialog3.FileName = "openFileDialog3";
-      this.openFileDialog3.Filter = "Chapter file|*.xml";
-      // 
       // MainWindow
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -308,7 +302,6 @@ namespace ChapterMerger
     private System.Windows.Forms.Button aboutButton;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Panel fileListPanel;
-        private System.Windows.Forms.OpenFileDialog openFileDialog3;
     }
 }
 
