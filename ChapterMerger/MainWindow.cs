@@ -423,7 +423,32 @@ namespace ChapterMerger
 
     }
 
+    /// <summary>
+    /// Diagnostic. Demo method for chapter file parsing.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void parseXmlButton_Click(object sender, EventArgs e)
+    {
+      DialogResult result = openFileDialog3.ShowDialog();
 
+      if (result == DialogResult.OK)
+      {
+
+        try
+        {
+          ChaptersObject chapter = ChaptersObject.LoadChapterFile(openFileDialog3.FileName);
+
+          MessageBox.Show(chapter.InterpretChapterFile());
+
+          chapter.SaveChapterFile(Path.Combine(Program.defaultPath, Path.GetFileNameWithoutExtension(openFileDialog3.FileName) + "_parsed" + Path.GetExtension(openFileDialog3.FileName)));
+        }
+        catch (Exception ex)
+        {
+          MessageBox.Show(ex.Message);
+        }
+
+      }
+    }
   }
-
 }
